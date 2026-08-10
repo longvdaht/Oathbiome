@@ -1,0 +1,112 @@
+<div
+  class="hero__countdown"
+  style="--block-padding-bottom: {{ block.settings.padding_bottom }}px;"
+  data-countdown-block
+  data-aos="hero"
+  data-aos-anchor="{{ section.id }}"
+  data-aos-order="auto"
+  {{ block.shopify_attributes }}
+>
+  {%- render 'countdown-timer',
+    end_date: block.settings.end_date,
+    end_time: block.settings.end_time,
+    period: block.settings.period,
+    digits_font_size: block.settings.digits_font_size,
+    text_font_size: block.settings.text_font_size,
+    end_message: block.settings.end_message,
+    hide_on_complete: block.settings.hide_on_complete
+  -%}
+</div>
+
+{% schema %}
+{
+  "name": "Countdown timer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "placeholder": "2025-12-31",
+      "default": "2025-12-31",
+      "info": "Use format \"YYYY-MM-DD\". Expiration date is based on the [store primary timezone](/admin/settings/general)."
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time",
+      "default": "11:59",
+      "placeholder": "11:59",
+      "info": "Use 12-hour time convention in format \"HH:MM\""
+    },
+    {
+      "type": "radio",
+      "id": "period",
+      "label": "AM/PM",
+      "options": [
+        {"value": "am", "label": "AM"},
+        {"value": "pm", "label": "PM"}
+      ],
+      "default": "am"
+    },
+    {
+      "type": "richtext",
+      "id": "end_message",
+      "label": "End of timer message",
+      "default": "<p>Offer has expired</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_complete",
+      "label": "Hide block after end of timer",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "digits_font_size",
+      "label": "Digits size",
+      "default": "heading-x-large",
+      "options": [
+        {"value": "heading-mini", "label": "Mini"},
+        {"value": "heading-x-small", "label": "Extra small"},
+        {"value": "heading-small", "label": "Small"},
+        {"value": "heading-medium", "label": "Medium"},
+        {"value": "heading-large", "label": "Large"},
+        {"value": "heading-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_font_size",
+      "label": "Date size",
+      "default": "body-small",
+      "options": [
+        {"value": "body-x-small", "label": "Extra small"},
+        {"value": "body-small", "label": "Small"},
+        {"value": "body-medium", "label": "Medium"},
+        {"value": "body-large", "label": "Large"},
+        {"value": "body-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown timer"
+    }
+  ]
+}
+{% endschema %}

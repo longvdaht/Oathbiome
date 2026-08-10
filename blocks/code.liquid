@@ -1,0 +1,44 @@
+<div
+  class="hero__custom-code"
+  style="--block-padding-bottom: {{ block.settings.padding_bottom }}px;"
+  data-aos="hero"
+  data-aos-anchor="{{ section.id }}"
+  data-aos-order="auto"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.code }}
+</div>
+
+{% schema %}
+{
+  "name": "Custom code",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "code",
+      "label": "Custom code",
+      "default": "<p>Once you write some custom code, it will render right here.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom code"
+    }
+  ]
+}
+{% endschema %}

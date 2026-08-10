@@ -1,0 +1,149 @@
+.faq .accordion__title {
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0;
+  padding-bottom: 0;
+  padding-right: 30px;
+  padding-top: 0;
+}
+
+.faq .accordion__content p {
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0;
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.faq .faq-bottom p {
+  font-family: var(--FONT-STACK-SUBHEADING);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  margin-top: 2px;
+}
+
+.faq .accordion__content {
+  padding-bottom: 0;
+  padding-right: 60px;
+}
+
+.faq .accordion__heading {
+  margin-bottom: 52px;
+}
+
+.faq .accordion {
+  padding-bottom: 25px;
+  padding-top: 24px;
+  border-bottom: solid 0px var(--color-medium-gray);
+  margin-top: 0;
+}
+
+.faq .accordion:first-child {
+  border-top: solid 1px var(--color-medium-gray);
+}
+
+.faq .accordion:last-child {
+  border-bottom: solid 1px var(--color-medium-gray);
+}
+
+.faq collapsible-elements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+}
+
+.faq .accordion-group__items {
+  display: block;
+}
+
+.faq [data-collapsible-trigger] .icon {
+  top: 50%;
+  right: 4px;
+  width: 14px;
+}
+
+.faq-bottom {
+  margin-top: 55px;
+}
+
+.faq-bottom p a {
+  background-size: 0% 1px;
+}
+
+.faq-bottom p a:hover {
+  display: inline;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0 0 5px;
+  color: var(--link);
+  line-height: normal;
+  background: linear-gradient(to right, currentcolor, currentcolor);
+  background-size: 100% 1px;
+  background-position: 50% 86%;
+  background-repeat: no-repeat;
+  transition: color .25s ease-in, background-size .25s ease-in;
+}
+
+.faq-bottom h6 {
+  margin-bottom: 0;
+}
+
+.faq {
+  margin-bottom: 146px;
+}
+
+
+@media(max-width: 989px) {
+  .faq collapsible-elements {
+    grid-template-columns: 1fr;
+  }
+
+  .faq .accordion-group__items:nth-child(2) .accordion:first-child {
+    border-top: none;
+  }
+
+  .faq .accordion__title,
+  .faq .accordion__content p {
+    font-size: 15px;
+  }
+
+  .faq .accordion__heading {
+    margin-bottom: 32px;
+  }
+
+  .faq .accordion__content p {
+    margin-top: 2px;
+  }
+
+  .faq .accordion__content {
+    padding-right: 50px;
+  }
+
+  .faq .accordion {
+    padding-bottom: 21px;
+  }
+
+  .faq .faq-bottom p {
+    font-size: 14px;
+    line-height: 140%;
+    margin-top: 0px;
+  }
+
+  .faq-bottom {
+    margin-top: 35px;
+  }
+
+  .faq {
+    margin-bottom: 95px;
+  }
+
+  .faq [data-collapsible-trigger] .icon {
+    right: 0;
+  }
+}

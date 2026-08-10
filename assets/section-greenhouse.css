@@ -1,0 +1,189 @@
+.section-greenhouse .title:before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: var(--color-medium-gray);
+  position: absolute;
+  left: -20px;
+  top: 10px;
+}
+
+.no-job-position {
+  position: relative;
+  display: none;
+}
+
+.job-opening {
+  position: relative;
+}
+
+.section-greenhouse.wrapper-container.no-job .no-job-position {
+  display: block;
+}
+
+.section-greenhouse.wrapper-container.no-job .job-opening {
+  display: none;
+}
+
+.no-job-position p {
+  margin: 0;
+}
+
+.no-job-position p.title {
+  margin-bottom: 25px;
+}
+
+.no-job-position p.description {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 145%;
+  letter-spacing: -.03em;
+  color: var(--color-brown);
+}
+
+.no-job-position .button-wrapper {
+  margin-top: 34px;
+}
+
+.no-job-position .button-wrapper .btn {
+  width: fit-content;
+}
+
+.no-job-position .text-wrapper {
+  max-width: 538px;
+}
+
+.job-opening h4 {
+  margin: 0 0 36px;
+}
+
+.wrapper-container {
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.job-card {
+  background-color: var(--color-green);
+  border-radius: 10px;
+  aspect-ratio: 382/196;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.job-card .job-title {
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 115%;
+  letter-spacing: -.03em;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.job-card .apply-btn {
+  margin-top: 30px;
+  width: fit-content;
+}
+
+.job-card .btn.btn-icon.btn-green span {
+  background-color: #ffffff1a;
+}
+
+.job-card .btn.btn-icon.btn-green::after {
+  background: url('icon-arrow-media.svg') no-repeat center center;
+  right: -2px;
+}
+
+.job-card .btn.btn-icon.btn-green::before {
+  background: url('icon-arrow-media.svg') no-repeat center center;
+  right: -2px;
+}
+
+.job-wrapper {
+  margin-left: -36px;
+  margin-right: -17px;
+}
+
+.content-wrapper {
+  width: calc(307/382*100%);
+}
+
+.location {
+  margin: 0;
+  font-family: var(--font-abc-diatype);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 145%;
+  letter-spacing: .01em;
+  color: var(--color-white);
+}
+
+@media screen and (min-width: 901px) {
+  .section-greenhouse .title:before {
+    left: -50px;
+    width: 30px;
+  }
+
+  .no-job-position p.description {
+    font-size: 20px;
+  }
+
+  .no-job-position p.title {
+    margin-bottom: 30px;
+  }
+
+  .no-job-position .button-wrapper {
+    margin-top: 42px;
+  }
+
+  .job-opening h4 {
+    margin-bottom: 44px;
+  }
+
+  .job-card {
+    max-height: 170px;
+    border-radius: 20px;
+  }
+
+  .job-list {
+    gap: 30px;
+  }
+
+  .job-wrapper {
+    margin: 0 -20px;
+  }
+
+  .job-card .job-title {
+    font-size: 36px;
+    line-height: 113%;
+    letter-spacing: -.04em;
+    margin-bottom: 6px;
+  }
+
+  .location {
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    width: 100%;
+  }
+
+  .job-card .apply-btn {
+    margin-top: 0;
+  }
+
+  .wrapper-container {
+    border-bottom: 0;
+  }
+}

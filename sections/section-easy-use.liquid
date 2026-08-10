@@ -1,0 +1,108 @@
+{{ 'section-easy-use.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-easy-use.js' | asset_url }}" defer="defer"></script>
+
+<div class="section-easy-use wrapper">
+  <div class="heading-content">
+    {%- if section.settings.heading != blank -%}
+      <h4>{{ section.settings.heading }}</h4>
+    {%- endif -%}
+    {%- if section.settings.descriptions != blank -%}
+      <div class="body-large">{{ section.settings.descriptions }}</div>
+    {%- endif -%}
+  </div>
+  <div class="items">
+    {%- for block in section.blocks -%}
+      <div class="item block-{{ block.id }}">
+        {% if block.settings.video_url != blank %}
+          <video 
+            class="has-video" 
+            muted 
+            loop 
+            playsinline 
+            preload="auto" 
+            {% if block.settings.image != blank %}
+              poster="{{ block.settings.image | img_url: 'large' }}"
+            {% endif %}
+          >
+            <source src="{{ block.settings.video_url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% elsif block.settings.image != blank %}
+          <img src="{{ block.settings.image | img_url: 'large' }}">
+        {% endif %}
+        <div class="content-desc">
+          {%- if block.settings.title != blank -%}
+          <h6>{% if block.settings.show_icon %}{% render 'vector-right-icon' %}{% endif %}{{ block.settings.title }}</h6>
+          {%- endif -%}
+          {%- if block.settings.content != blank -%}
+            <div class="details-large">{{ block.settings.content }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Section Easy to Use",
+  "class": "easy-use-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "descriptions",
+      "label": "Descriptions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Block-image",
+      "name": "Block with Image or Video",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Fallback Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "MP4 Video URL (Takes Priority Over Image)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Easy to Use",
+      "blocks": [
+        {
+          "type": "Block-image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

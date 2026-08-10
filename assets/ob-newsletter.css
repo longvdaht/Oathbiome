@@ -1,0 +1,253 @@
+.ob-newsletter__wrapper {
+}
+
+.ob-newsletter__box {
+  position: relative;
+}
+
+.ob-newsletter__image {
+  height: 908px;
+}
+
+.ob-newsletter__image img {
+  max-width: 100%;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
+.ob-newsletter__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  backdrop-filter: blur(10px);
+}
+
+.ob-newsletter__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 25px;
+  gap: 30px;
+  min-height: 488px;
+}
+
+.ob-newsletter__title {
+  margin: 30px 0 20px;
+}
+
+.ob-newsletter__form-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.ob-newsletter__form-fields {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-family: var(--font-abc-diatype);
+}
+
+.ob-newsletter__input-field {
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.ob-newsletter__input-field:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.ob-newsletter__input-field input,
+.ob-newsletter__input-field textarea {
+  padding: 10px;
+  padding-bottom: 0;
+  border: none;
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  width: 100%;
+  font-family: var(--font-abc-diatype);
+}
+
+.ob-newsletter__input-field input {
+  height: 30px;
+}
+
+.ob-newsletter__input-field textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+.ob-newsletter__interest-label {
+  padding: 10px;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  height: 30px;
+}
+
+.ob-newsletter__input-field input::placeholder,
+.ob-newsletter__input-field textarea::placeholder {
+  color: var(--color-white);
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+.ob-newsletter__input-field input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-white) !important;
+}
+
+.ob-newsletter__form-submit button {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 51px;
+  padding: 10px;
+  border: 1px solid var(--color-white);
+  font-family: var(--font-abc-diatype);
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+}
+
+.ob-newsletter__form-submit button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ob-newsletter__interest-label.active svg {
+  transform: rotate(180deg);
+}
+
+.ob-newsletter__form-submit button svg path {
+  stroke: currentColor;
+}
+
+.ob-newsletter__interest-options-wrapper {
+  display: none;
+}
+
+.ob-newsletter__interest-options-wrapper.active {
+  display: block;
+}
+
+.ob-newsletter__interest-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 40px 0 20px;
+}
+
+.ob-newsletter__interest-option {
+  display: flex;
+  align-items: center;
+}
+
+.ob-newsletter__interest-option input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+.ob-newsletter__interest-option label {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+  justify-content: flex-start;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 400;
+  letter-spacing: 0;
+  height: 11px;
+}
+
+.ob-newsletter__interest-option label:before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--color-white);
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.ob-newsletter__interest-option input:checked + label:before {
+  background-color: var(--color-white);
+}
+
+.ob-newsletter__form-wrapper .newsletter__message {
+  font-style: normal;
+  padding: 5px 0 0;
+  background-color: transparent;
+  max-width: 450px;
+  margin: 0;
+  font-weight: 300;
+}
+
+@media screen and (min-width: 750px) {
+  .ob-newsletter__image {
+    height: 948px;
+  }
+  
+  .ob-newsletter__content {
+    max-width: 1205px;
+    left: 50%;
+    top: 116px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+  }
+
+  .ob-newsletter__content-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+    min-height: 515px;
+  }
+
+  .ob-newsletter__form-wrapper {
+    width: calc((100% - 30px) / 2);
+  }
+
+  .ob-newsletter__title {
+    margin: 5px 0 0;
+  }
+
+  .ob-newsletter__input-field input,
+  .ob-newsletter__input-field textarea,
+  .ob-newsletter__interest-label {
+    font-size: 15px;
+  }
+
+  .ob-newsletter__interest-option label {
+    font-size: 15px;
+  }
+
+  .ob-newsletter__form-fields-wrapper {
+    min-height: 455px;
+    gap: 0;
+  }
+
+  .ob-newsletter__form-submit button {
+    margin-top: -1px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .ob-newsletter__title {
+    font-size: 24px;
+  }
+}

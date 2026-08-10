@@ -1,0 +1,139 @@
+{% comment %}
+<div class="klaviyo-popup hidden" js-klaviyo-popup>
+  <div class="popup-content" js-klaviyo-content>
+    <div class="close" js-klaviyo-close><svg id="Icons" height="512" viewBox="0 0 64 64" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m4.59 59.41a2 2 0 0 0 2.83 0l24.58-24.58 24.59 24.58a2 2 0 0 0 2.83-2.83l-24.59-24.58 24.58-24.59a2 2 0 0 0 -2.83-2.83l-24.58 24.59-24.59-24.58a2 2 0 0 0 -2.82 2.82l24.58 24.59-24.58 24.59a2 2 0 0 0 0 2.82z"/></svg></div>
+  
+     <div js-california-form class="klaviyo-form-VnmpWi hidden"></div>
+     <div js-normal-form class="klaviyo-form-YtMCTP hidden"></div>
+  </div>
+</div>
+
+
+<style>
+   .klaviyo-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .klaviyo-popup .popup-content {
+        max-width: 500px;
+        background: #fff;
+        padding: 30px;
+          position: relative;
+    }
+    .klaviyo-popup .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+    }
+     .klaviyo-popup .close svg {
+        width: 20px;
+        height: 20px;
+    }
+
+  @media only screen and (max-width:749px) {
+    .klaviyo-popup .popup-content {
+        width: 90%;
+        padding: 16px;
+    }
+  }
+</style>
+{% endcomment %}
+
+{% unless template contains 'index' %}
+  <script>
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  }
+
+  function getCookie(name) {
+    return document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r
+    }, '');
+  }
+
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   const popup = document.querySelector('[js-klaviyo-popup]');
+  //   const closeBtn = document.querySelector('[js-klaviyo-close]');
+  //   const content = document.querySelector('[js-klaviyo-popup] [js-klaviyo-content]');
+
+  //   if (!getCookie('newsletter_popup_shown')) {
+  //     setTimeout(() => {
+  //        popup.classList.remove('hidden');
+  //        document.body?.classList.add('overflow-hidden');
+  //     }, 1000);
+      
+      
+  //     setCookie('newsletter_popup_shown', 'yes', 3);
+  //   }
+  //   closeBtn.addEventListener('click', function () {
+  //     popup.classList.add('hidden');
+  //     document.body?.classList.remove('overflow-hidden');
+  //   });
+  //   document.addEventListener("click", (event) => {
+  //     if(event.target.closest('[js-klaviyo-content]') != content) {
+  //       popup.classList.add('hidden');
+  //       document.body?.classList.remove('overflow-hidden');
+  //     }
+  //   });
+  // });
+
+
+  fetch('https://ipapi.co/json/')
+  .then(response => response.json())
+  .then(data => {
+    
+    //console.log('Country:', data, data.region_code);
+    const windowWidth = window.innerWidth;
+    const expireDays = "{{ settings.klaviyo_days }}";
+   console.log('data', data);
+    if(data.country == 'US' && data.region_code == 'CA') {
+      console.log('RUN1111111');
+       if (!getCookie('newsletter_popup_shown')) {
+            setTimeout(() => {
+              if(windowWidth <= 749) {
+                  window._klOnsite = window._klOnsite || [];
+                  window._klOnsite.push(['openForm', 'QXsQBg']);
+              }
+              else {
+                  window._klOnsite = window._klOnsite || [];
+                  window._klOnsite.push(['openForm', 'VX4UQY']);
+              } 
+            }, 1000);
+            setCookie('newsletter_popup_shown', 'yes', expireDays);
+       }
+    }
+    else {
+        console.log('RUN2222');
+       if (!getCookie('newsletter_popup_shown')) {
+            setTimeout(() => {
+              if(windowWidth <= 749) {
+                  window._klOnsite = window._klOnsite || [];
+                  window._klOnsite.push(['openForm', 'XnYc79']);
+              }
+              else {
+                  window._klOnsite = window._klOnsite || [];
+                  window._klOnsite.push(['openForm', 'Wwujis']);
+              } 
+            }, 1000);
+            setCookie('newsletter_popup_shown', 'yes', expireDays);
+       }
+    }
+  })
+  .catch(error => {
+    console.error('Geolocation error:', error);
+  });
+
+
+</script>
+{% endunless %}

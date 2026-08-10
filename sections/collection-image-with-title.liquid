@@ -1,0 +1,245 @@
+{{ 'collection-image-with-title.css' | asset_url | stylesheet_tag }}
+<!-- /sections/collection-image-with-title.liquid -->
+{%- liquid
+  assign banner_layout = section.settings.banner_layout
+  assign overlay_opacity = section.settings.overlay_opacity | times: 0.01
+  assign show_overlay_text = section.settings.show_overlay_text
+  assign show_header_backdrop = false
+  assign show_title = section.settings.show_title
+  assign show_description = section.settings.show_description
+  assign title = collection.title
+  assign description = collection.description
+
+  if description == blank
+    assign show_description = false
+  endif
+-%}
+
+{%- style -%}
+  .collection-image-with-title {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+
+  .collection-image-with-title .collection__image .hero__description h3 {
+    color: {{ section.settings.text_color }}
+  }
+
+  .collection-image-with-title .collection__image h1.hero__title {
+    color: {{ section.settings.text_color }}
+  }
+
+{%- endstyle -%}
+
+{%- capture collection_content -%}
+  {%- if show_title or show_description -%}
+    <div class="hero__content__wrapper{% if show_header_backdrop %} backdrop--linear{% endif %} {% if banner_layout == 'overlay' %} frame__item{% endif %}">
+      <div class="hero__content{% if show_overlay_text %} backdrop--radial{% endif %}{% if hero_transparent %} hero__content--transparent{% endif %}"{% if overlay_opacity != 0.0 %} style="--overlay-opacity: {{ overlay_opacity }};"{% endif %}>
+        {%- if show_title -%}
+          <h1 class="hero__title h3">
+            {{ title }}
+
+            {%- render 'superscript', superscript_collection: collection -%}
+          </h1>
+        {%- endif -%}
+
+        {%- if description != blank and show_description -%}
+          <div class="hero__description rte">{{ description }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture image_overlay -%}
+  {%- unless show_overlay_text or overlay_opacity == 0.0 -%}
+    <div class="image-overlay" style="--overlay-opacity: {{ overlay_opacity }};"></div>
+  {%- endunless -%}
+{%- endcapture -%}
+
+<section
+  class="collection-image-with-title section-padding wrapper"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-image-with-title"
+  {% unless section.settings.show_image and collection.image %}
+    data-prevent-transparent-header
+  {% endunless %}
+>
+  {%- if collection.image and section.settings.show_image -%}
+    {%- if banner_layout == 'inline' -%}
+      <div class="collection__image-inline">
+    {%- endif -%}
+
+    <div
+      class="collection__image {{ section.settings.height }} {{ section.settings.mobile_height }}{% if banner_layout == 'overlay' %} frame{% endif %}"
+      data-overlay-header
+    >
+      {%- if banner_layout == 'overlay' -%}
+        {{ collection_content }}
+      {%- endif -%}
+
+      {{ image_overlay }}
+
+      <div class="hero__image{% if banner_layout == 'overlay' %} frame__item{% endif %}">
+        {%- render 'image-hero',
+          image: collection.image,
+          desktop_height: section.settings.height,
+          mobile_height: section.settings.mobile_height,
+          loading: 'eager',
+          fetchpriority: 'high',
+          preload: 'true'
+        -%}
+      </div>
+    </div>
+
+    {%- if banner_layout == 'inline' -%}
+      <div class="collection__title-wrapper {{ section.settings.height }} {{ section.settings.mobile_height }}">
+        {{ collection_content }}
+      </div>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    {%- if show_title or show_description -%}
+      <div class="collection__title collection__title--no-image" style="background-color: {{ section.settings.background_color }};">
+        {%- if show_title -%}
+          <h1 class="hero__title h3">
+            {{ title }}
+
+            {%- render 'superscript', superscript_collection: collection -%}
+          </h1>
+        {%- endif -%}
+
+        {%- if description != blank and show_description -%}
+          <div class="hero__description rte">{{ description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Image with title",
+  "class": "section-overlay-header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Title and Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Collection image"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color for banner ",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show collection image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "banner_layout",
+      "label": "Layout",
+      "default": "overlay",
+      "options": [
+        {"value": "inline", "label": "Inline"},
+        {"value": "overlay", "label": "Overlay"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "default": "five-fifty-height-hero",
+      "options": [
+        {"value": "image-height", "label": "Image height"},
+        {"value": "five-fifty-height-hero", "label": "550px"},
+        {"value": "four-fifty-height-hero", "label": "450px"},
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_height",
+      "label": "Height",
+      "default": "five-fifty-height-hero--mobile",
+      "options": [
+        {"value": "image-height--mobile", "label": "Image height"},
+        {"value": "five-fifty-height-hero--mobile", "label": "550px"},
+        {"value": "four-fifty-height-hero--mobile", "label": "450px"},
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay_text",
+      "label": "Overlay behind text only",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

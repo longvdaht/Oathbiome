@@ -1,0 +1,125 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_8EcT8T": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1101552493",
+        "video_poster_image": "shopify://shop_images/Grasslands.jpg",
+        "show_video_popup": false,
+        "title": "<p>Grasslands</p>",
+        "text": "<p>Restore the prairies.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_intro_text_HhBMjr": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Replenish the soil microbiome to nourish the herds and strengthen livelihoods.",
+        "descriptions": "<p>Vibrant grasslands start in an hidden underground world. A healthy soil microbiome improves forage density and nutrition, enabling ranchers to raise healthier livestock while restoring soil fertility. With strong microbial support, pastures retain more water, combat erosion, and sequester more carbon.<br/><br/><em>Feed the soil, feed the herd.</em></p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 150,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "section_scroll_accrodion_CakLRH": {
+      "type": "section-scroll-accrodion",
+      "blocks": {
+        "accordion_WmbpXe": {
+          "type": "accordion",
+          "settings": {
+            "title": "Enhanced Resiliency",
+            "text": "Rebuilds soil structure, which increases resiliency against stresses like droughts, fires, and storms.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Resiliency.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_wLhnLb": {
+          "type": "accordion",
+          "settings": {
+            "title": "Carbon Drawdown",
+            "text": "Healthier soil captures more carbon, enhancing fertility, and generating economic opportunities through natural carbon removal credits and insets.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/CarbonDrawdown.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_J3nFjU": {
+          "type": "accordion",
+          "settings": {
+            "title": "Increased Growth and Vitality",
+            "text": "Improves forage density and nutrition for a healthier herd.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Increased_Vitality.mp4",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "accordion_WmbpXe",
+        "accordion_wLhnLb",
+        "accordion_J3nFjU"
+      ],
+      "name": "Scroll Section",
+      "settings": {}
+    },
+    "section_lets_talk_ebLCxH": {
+      "type": "section-lets-talk",
+      "name": "Lets Talk",
+      "settings": {
+        "title": "Let's talk.",
+        "subtitle": "Reach out to",
+        "button_text": "grasslands@oathbiome.com",
+        "link_text": "",
+        "link": "",
+        "padding_top": 148,
+        "padding_bottom": 148,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_8EcT8T",
+    "section_intro_text_HhBMjr",
+    "section_scroll_accrodion_CakLRH",
+    "section_lets_talk_ebLCxH"
+  ]
+}

@@ -1,0 +1,44 @@
+.mri__section--wrapper {
+  --padding-top: var(--section-padding-top-mobile);
+  --padding-bottom: var(--section-padding-bottom-mobile);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+.mri__section--content {
+  padding-left: 21px;
+  display: flex;
+  flex-direction: column;
+  gap: 77px;
+}
+
+.mri__section--title {
+  margin: 0;
+  line-height: 100%;
+  letter-spacing: -0.04em;
+}
+
+.mri__section--description p {
+  margin: 0 0 10px;
+}
+
+.mri__section--description p:last-child {
+  margin-bottom: 0;
+}
+@media screen and (min-width: 750px) {
+  .mri__section--wrapper {
+    --padding-top: var(--section-padding-top);
+    --padding-bottom: var(--section-padding-bottom);
+  }
+  .mri__section--content {
+    padding-left: 30px;
+    gap: 25px;
+  }
+  .mri__section--description {
+    max-width: 505px;
+  }
+}
+@media screen and (max-width: 749px) {
+  .mri__section--title {
+    font-size: 40px;
+  }
+}

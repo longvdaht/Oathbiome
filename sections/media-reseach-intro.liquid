@@ -1,0 +1,93 @@
+{{ 'media-research-intro.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="media-research-intro-section"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;"
+>
+  <div class="wrapper-container">
+    <div class="mri__section--wrapper">
+      {%- if section.settings.title != blank or section.settings.description != blank -%}
+        <div class="mri__section--content">
+          {%- if section.settings.title != blank -%}
+            <h3 class="mri__section--title text-m">{{ section.settings.title }}</h3>
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            <div class="mri__section--description text-mini">{{ section.settings.description }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Media Research Intro",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Intro Title",
+      "default": "Image Cards"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Intro Description"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding for mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding for mobile",
+      "default": 18
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media Research Intro",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

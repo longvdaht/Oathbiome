@@ -1,0 +1,152 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "toolbar": {
+          "type": "toolbar",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "menu": "",
+            "show_border": true,
+            "border_opacity": 20,
+            "show_social_links": true,
+            "show_gift_card": true,
+            "show_locale_selector": true,
+            "show_country_selector": true,
+            "show_country_name": false,
+            "show_country_flag": false,
+            "color_scheme": "scheme-1",
+            "padding_top": 4,
+            "padding_bottom": 4
+          }
+        },
+        "image-1": {
+          "type": "image",
+          "settings": {
+            "position": "1",
+            "aspect_ratio": 1,
+            "wide_image": false,
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "title": "Shop the Lookbook",
+            "link_text": "",
+            "link": "",
+            "text_color": "#fcfbf9"
+          }
+        },
+        "image-2": {
+          "type": "image",
+          "settings": {
+            "position": "2",
+            "aspect_ratio": 1,
+            "wide_image": false,
+            "overlay_opacity": 5,
+            "overlay_color": "#000000",
+            "title": "Product title",
+            "link_text": "",
+            "link": "",
+            "text_color": "#fcfbf9"
+          }
+        },
+        "image-3": {
+          "type": "image",
+          "settings": {
+            "position": "2",
+            "aspect_ratio": 1,
+            "wide_image": false,
+            "overlay_opacity": 5,
+            "overlay_color": "#000000",
+            "title": "Product title",
+            "link_text": "",
+            "link": "",
+            "text_color": "#fcfbf9"
+          }
+        },
+        "image-4": {
+          "type": "image",
+          "settings": {
+            "position": "2",
+            "aspect_ratio": 1,
+            "wide_image": false,
+            "overlay_opacity": 5,
+            "overlay_color": "#000000",
+            "title": "Product title",
+            "link_text": "",
+            "link": "",
+            "text_color": "#fcfbf9"
+          }
+        },
+        "image-5": {
+          "type": "image",
+          "settings": {
+            "position": "2",
+            "aspect_ratio": 1,
+            "wide_image": false,
+            "overlay_opacity": 5,
+            "overlay_color": "#000000",
+            "title": "Product title",
+            "link_text": "",
+            "link": "",
+            "text_color": "#fcfbf9"
+          }
+        }
+      },
+      "block_order": [
+        "toolbar",
+        "image-1",
+        "image-2",
+        "image-3",
+        "image-4",
+        "image-5"
+      ],
+      "settings": {
+        "header_sticky": true,
+        "show_separator_line": true,
+        "separator_opacity": 0,
+        "show_icons": false,
+        "icon_as_circle": false,
+        "cart_icon_family": "bag",
+        "logo": "shopify://shop_images/logo-oath-biome.png",
+        "logo_without_banner": "shopify://shop_images/logo-black.png",
+        "logo_sticky": "shopify://shop_images/logo-oath-biome-sticky.png",
+        "logo_max_limit": 80,
+        "logo_max_limit_sticky": 80,
+        "logo_max_limit_mobile": 66,
+        "logo_max_limit_sticky_mobile": 80,
+        "main_menu_linklist": "",
+        "enable_search": false,
+        "show_social_icons": false,
+        "show_locale_selector": false,
+        "show_country_selector": false,
+        "show_country_name": false,
+        "show_country_flag": false,
+        "highlight_item": "Sale",
+        "highlight_item_color": "#d02e2e",
+        "transparent_home": true,
+        "transparent_collection": false,
+        "transparent_article": false,
+        "transparent_page": true,
+        "transparent_product_page": false,
+        "transparent_blog_page": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

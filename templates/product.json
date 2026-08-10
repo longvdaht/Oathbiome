@@ -1,0 +1,403 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "subheading_option": "none",
+            "heading_font_size": "heading-small",
+            "padding_bottom": 10,
+            "padding_bottom_mb": 4
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "text_font_size": "body-x-large",
+            "padding_bottom": 20,
+            "padding_bottom_mb": 20
+          }
+        },
+        "description_9yhhXY": {
+          "type": "description",
+          "settings": {
+            "show_read_more": true,
+            "padding_bottom": 20,
+            "padding_bottom_mb": 28
+          }
+        },
+        "accordion_xthmUt": {
+          "type": "accordion",
+          "settings": {
+            "show_description": false,
+            "show_read_more": false,
+            "default_open": false,
+            "heading": "Details",
+            "text": "<p>Details</p>",
+            "padding_bottom": 0
+          }
+        },
+        "accordion_wQm8wf": {
+          "type": "accordion",
+          "settings": {
+            "show_description": false,
+            "show_read_more": false,
+            "default_open": false,
+            "heading": "Benefits",
+            "text": "<p>Benefits</p>",
+            "padding_bottom": 20
+          }
+        },
+        "siblings_RcVdkT": {
+          "type": "siblings",
+          "settings": {
+            "heading": "Tree System Size",
+            "sibling_color": "Tree System Size",
+            "padding_bottom": 16
+          }
+        },
+        "divider_Myncaw": {
+          "type": "divider",
+          "settings": {
+            "show_line": true,
+            "padding_bottom": 20
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "show_quantity": true,
+            "use_quantity_popup": false,
+            "button_type": "btn--brown",
+            "button_size": "",
+            "button_style": "btn--solid",
+            "show_payment_button": false,
+            "button_type_dynamic": "btn--secondary",
+            "button_size_dynamic": "",
+            "button_style_dynamic": "btn--solid",
+            "show_gift_card_recipient": false,
+            "padding_bottom": 32
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "description_9yhhXY",
+        "accordion_xthmUt",
+        "accordion_wQm8wf",
+        "siblings_RcVdkT",
+        "divider_Myncaw",
+        "buttons"
+      ],
+      "settings": {
+        "product_sticky_enable": true,
+        "variant_image_scroll": true,
+        "show_cart_bar": true,
+        "enable_zoom": false,
+        "enable_video_looping": false,
+        "image_layout": "thumbnails-left",
+        "image_size": "normal",
+        "mobile_image_style": "slider",
+        "color_scheme": "scheme-9",
+        "padding_top": 60,
+        "padding_bottom": 30
+      }
+    },
+    "section_divider_U3wjFN": {
+      "type": "section-divider",
+      "settings": {
+        "color": "#cbbeaf"
+      }
+    },
+    "section_collection_rygjRe": {
+      "type": "section-collection",
+      "custom_css": [
+        ".product-item__swatches__holder {display: none;}",
+        ".grid-outer {padding: 0px;}"
+      ],
+      "settings": {
+        "featured_collection": "oath-featured-collection",
+        "use_data_metafields": true,
+        "heading": "You May Also Like",
+        "heading_font_size": "heading-x-small",
+        "description": "",
+        "text_font_size": "body-x-large",
+        "layout": "inline",
+        "link_text": "",
+        "link_url": "",
+        "button_type": "btn--primary",
+        "button_size": "",
+        "button_style": "btn--solid",
+        "show_arrow": false,
+        "layout_desktop": "grid",
+        "grid": 4,
+        "rows": 4,
+        "width": "wrapper",
+        "layout_mobile": "2",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 80,
+        "padding_top_mb": 18,
+        "padding_bottom_mb": 18,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_product_image_slider_fzzVwc": {
+      "type": "section-product-image-slider",
+      "blocks": {
+        "image_slide_ehXdTy": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/Ohio-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/Ohio-After.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        },
+        "image_slide_GQYGUk": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/Catalina-Foothills-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/Catalina-Foothills-After_45b1304b-2d5e-4e36-b651-242da6452974.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        },
+        "image_slide_waGiQg": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/ReTreeDetail-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/ReTreeDetail-After.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        },
+        "image_slide_JFR4y8": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/MeredithY-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/MeredithY-After.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        },
+        "image_slide_LCqW4r": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/Retree-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/Retree-After.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        },
+        "image_slide_k4GMmd": {
+          "type": "image_slide",
+          "settings": {
+            "image_1": "shopify://shop_images/LisaG-Before.jpg",
+            "label_1": "Endangered",
+            "is_thriving_1": false,
+            "image_2": "shopify://shop_images/LisaG-After.jpg",
+            "label_2": "Thriving",
+            "is_thriving_2": true
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_ehXdTy",
+        "image_slide_GQYGUk",
+        "image_slide_waGiQg",
+        "image_slide_JFR4y8",
+        "image_slide_LCqW4r",
+        "image_slide_k4GMmd"
+      ],
+      "settings": {
+        "title": "Better inputs, beautiful outputs.",
+        "subtitle": "Oath Soil Life is backed by decades of research, with proven efficacy across thousands of crops and diverse soil ecosystems.",
+        "button_text": "Learn More",
+        "button_link": "#",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_accordion_group_bMhwh3": {
+      "type": "section-accordion-group",
+      "blocks": {
+        "question_CY4bWk": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Who can apply Oath Soil Life?",
+            "content": "<p>Oath Soil Life can be applied by anyone: including arborists, landscapers, homeowners, farmers, and foresters.</p>"
+          }
+        },
+        "question_qi6jQW": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "What is in Oath Soil Life?",
+            "content": "<p>Oath Soil Life is a microbial consortium of naturally occurring, non-GMO, beneficial soil microbes. We provide these rhizobacterial and mycorrhizal microbes with an optional broad spectrum of organic minerals and humates.</p>"
+          }
+        },
+        "question_cJVxJe": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Are the microbes organic or genetically modified?",
+            "content": "<p>Oath Soil Life is OMRI-listed for organic use and is non-GMO (neither genetically modified nor gene-edited).</p>"
+          }
+        },
+        "question_KDLME8": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Is there efficacy data?",
+            "content": "<p>Yes, we encourage you to review our efficacy <a href=\"https://www.oathsoillife.com/media-research/www-oathsoillife-com-media-research-oaths-trial-data\"><span style=\"text-decoration:underline\">data</span></a> from decades of research trials and learn more <a href=\"https://www.oathsoillife.com/about\"><span style=\"text-decoration:underline\">about</span></a> our R&D efforts to sequence the DNA of the soil microbiome.</p>"
+          }
+        },
+        "question_GT97F8": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Is it safe / do I need a license to apply?",
+            "content": "<p>Because Oath Soil Life is non-toxic, application requires no certifications or special personal protective equipment. The ideal application method depends on your crop type, soil condition, and growing scale (e.g., drench, inject, broadcast spray). As with the handling of any powder, you may wish to wear safety glasses and/or a mask. [<span style=\"text-decoration:underline\"><strong>Link to SDS (Safety Data Sheet)</strong></span>]</p>"
+          }
+        },
+        "question_fja8Qi": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "How do you treat trees with Oath Soil Life?",
+            "content": "<p>We recommend treating trees with a simple <span style=\"text-decoration:underline\">basal drench</span> or <span style=\"text-decoration:underline\">soil injection</span>, for professionals. Reapply Day 30 and Day 60. Repeat this three-month protocol annually.</p>"
+          }
+        },
+        "question_HnCxrm": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "How do you treat trees of various sizes?",
+            "content": "<p>Our Tree Systems are designed to deliver 10g of microbes per tree to any tree between 5-15 inches in diameter. When sizing your Tree Systems, we recommend counting smaller trees (&lt;5 in.) as “½ trees” and larger trees as multiples: “2 trees” (16-25in DBH), “3 trees” (26-35 in DBH), etc.</p>"
+          }
+        },
+        "question_j6LyKg": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Can you provide more details about the specific changes observed by the certified arborists after conditioning the soil of distressed or elder trees with the Oath Soil Life System?",
+            "content": "<p>Certified arborists have observed, after conditioning the soil with our microbes, new epicormic growth, shoot elongation, increase in canopy density, leaf size increase, increase in resin production, reduction in soil compaction, an increase in soil water-holding capacity. Most results are visible within 120 days.</p>"
+          }
+        },
+        "question2_7JdzNG": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "How do you treat lawns & gardens with Oath Soil Life?",
+            "content_2": "<p>We recommend broadcast spraying across lawn and garden soil, aiming downward to drive the mix past the surface down into the roots. Reapply monthly or bi-monthly throughout the growing season. <span style=\"text-decoration:underline\">Link to QSG Instruction Guide</span> for more information on application instructions and sizing your treatment plot.</p>"
+          }
+        },
+        "question2_dgtr3g": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Do I need to reapply?",
+            "content_2": "<p>Yes, the probiotic benefits of Oath Soil Life compound with each application, especially as stressors in our environment like drought, extreme temperatures, storms and salinity persist.</p>"
+          }
+        },
+        "question2_QnHyY4": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Does Oath work with Botanical Gardens?",
+            "content_2": "<p>Oath proudly partners with public and private gardens on soil health care. Please email <a href=\"mailto:Care@OathSoilLife.com\"><span style=\"text-decoration:underline\">Care@OathSoilLife.com</span></a> to learn more about our work with the gardens and APGA partner programs. You can also <a href=\"https://www.youtube.com/watch?v=iMdWJTdnFWg\"><span style=\"text-decoration:underline\">watch</span></a> our case study with the Tucson Botanical Gardens. </p>"
+          }
+        },
+        "question2_Kw9PzN": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Can Oath Soil Life be applied with biochar?",
+            "content_2": "<p>Yes, Oath Soil Life can be applied with biochar, and in fact, there are synergistic benefits for your soil and plant health to applying Oath Soil Life microbes and biochar together. However, like microbes, not all biochars are created equal or sustainably; it’s important to know the particle size, source, and sustainability of your supplier.</p>"
+          }
+        },
+        "question2_Gw94Ux": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "What else can and cannot be applied with Oath Soil Life?",
+            "content_2": "<p><strong>Compatible with: </strong>Biochar, compost, organic fertilizers, kelp-based amendments, humic acids, fulvic acids, and sea minerals. </p><p><strong>Do not apply alongside:</strong> Systemic chemical fungicides and pesticides, or synthetic fertilizers.</p>"
+          }
+        },
+        "question2_fxgLr4": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Can you apply in the winter / freezing temps?",
+            "content_2": "<p>Oath Soil Life cannot be applied in freezing temperatures. If the soil experiences a hard freeze, the microbes need to be reapplied once thawed.</p>"
+          }
+        },
+        "question2_VDLE3M": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "How does the Oath Soil Life System contribute to increasing water holding capacity?",
+            "content_2": "<p>Soil is heterogeneous. This means soil varies inch by inch and ecosystem by ecosystem. The Oath Soil Life System microbes create a natural polymer which is hydrophilic. This sticky polymer holds loose soil together and opens up compacted soil pores building stable aggregates.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_CY4bWk",
+        "question_qi6jQW",
+        "question_cJVxJe",
+        "question_KDLME8",
+        "question_GT97F8",
+        "question_fja8Qi",
+        "question_HnCxrm",
+        "question_j6LyKg",
+        "question2_7JdzNG",
+        "question2_dgtr3g",
+        "question2_QnHyY4",
+        "question2_Kw9PzN",
+        "question2_Gw94Ux",
+        "question2_fxgLr4",
+        "question2_VDLE3M"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "text_bottom": "<h6>More Questions?</h6><p>Ask us! <a href=\"mailto:Care@oathsoillife.com\" title=\"mailto:Care@oathsoillife.com\">Care@OathSoilLife.com</a></p>",
+        "title": "Frequently asked questions.",
+        "padding_top": 100,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_divider_U3wjFN",
+    "section_collection_rygjRe",
+    "section_product_image_slider_fzzVwc",
+    "section_accordion_group_bMhwh3"
+  ]
+}

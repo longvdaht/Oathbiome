@@ -1,0 +1,131 @@
+.section-easy-use {
+  padding-top: 97px;
+  padding-top: 0;
+}
+
+.section-easy-use .heading-content .body-large {
+  margin-bottom: 42px;
+}
+
+.section-easy-use .heading-content h4 {
+  margin-bottom: 26px;
+}
+
+.section-easy-use .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 11px;
+}
+
+.section-easy-use .item img {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.section-easy-use .item {
+  margin-bottom: 60px;
+}
+
+.section-easy-use .item .details-large {
+  font-size: 16px;
+  max-width: 80%;
+}
+
+.section-easy-use .heading-content {
+  max-width: 40%;
+}
+
+.section-easy-use .item h6 {
+  margin: 21px 0 2px;
+  display: block;
+}
+
+.section-easy-use .details-large p {
+  margin: 0;
+}
+
+.section-easy-use .item {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-easy-use .content-desc {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.section-easy-use h6 {
+  flex: 1;
+  display: flex;
+}
+
+.easy-use-section {
+  position: relative;
+  z-index: 2;
+}
+
+.icon-vector-right {
+  margin-right: 5px;
+}
+
+@media (max-width: 989px) {
+  .section-easy-use {
+    padding-top: 54px;
+  }
+
+  .section-easy-use .heading-content {
+    max-width: 100%;
+  }
+
+  .section-easy-use .item .details-large {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 749px) {
+  .page-homeowner .section-testimonial__container {
+    padding-bottom: 22px;
+  }
+  .section-easy-use .items {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .section-easy-use .heading-content h4 {
+    margin-bottom: 19px;
+  }
+
+  .section-easy-use .item h6 {
+    margin: 14px 0 1px;
+  }
+
+  .section-easy-use .item .details-large {
+    font-size: 14px;
+  }
+
+  .section-easy-use .item {
+    margin-bottom: 36px;
+  }
+
+  .section-easy-use .heading-content .body-large {
+    margin-bottom: 34px;
+  }
+
+  .section-easy-use .item .details-large {
+    max-width: 95%;
+  }
+
+  .section-easy-use .item img {
+    border-radius: 15px;
+  }
+}
+.section-easy-use .item video {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+  height: auto;
+  object-fit: cover;
+}

@@ -1,0 +1,115 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
+{{ 'spotlight-data-image.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'spotlight-data-image.js' | asset_url }}" defer="defer"></script>
+
+<div class="spotlight-carousel-wrapper {{ section.blocks.size }}">
+  <div class="flickity-carousel" id="spotlight-carousel-{{ section.id }}">
+    {% assign media_count = 0 %}
+    {% for block in section.blocks %}
+      {% assign has_image = block.settings.image %}
+      {% assign has_video = block.settings.use_video %}
+      {% if has_image or has_video %}
+        {% assign media_count = media_count | plus: 1 %}
+        <div class="carousel-cell block-{{ block.id }}">
+          {% if has_video %}
+            {% assign video_type = '' %}
+            {% assign video_src = '' %}
+            {% if block.settings.normal_video != blank %}
+              {% assign video_type = 'mp4' %}
+              {% assign video_src = block.settings.normal_video.sources[1].url %}
+            {% elsif block.settings.video_url != blank %}
+              {% assign video_type = 'youtube' %}
+              {% assign video_url = block.settings.video_url %}
+              {% assign video_src = block.settings.video_url | escape %}
+
+              {% if video_url contains 'v=' %}
+                {% assign video_id = video_url | split: 'v=' | last | split: '&' | first %}
+              {% else %}
+                {% assign video_id = video_url | split: '/' | last %}
+              {% endif %}
+            {% endif %}
+
+            {% if video_type == 'mp4' and video_src != blank %}
+              <video src="{{ video_src }}" autoplay muted loop playsinline preload="auto" style="width: 100%; height: 100%;"></video>
+            {% elsif video_type == 'youtube' and video_id != blank %}
+              <div class="video-slider__thumb">
+                <img src="https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg" alt="Youtube thumbnail" loading="lazy">
+                <div class="video-thumbnail open-video-popup" onclick="openCustomVideoPopup({ type: 'youtube', src: '{{ video_src }}' })">
+                  {% render 'play-button' %}
+                </div>
+              </div>
+            {% endif %}
+          {% elsif has_image %}
+            <img class="img-desktop" src="{{ block.settings.image | image_url: width: 1600 }}" alt="Slide Image" loading="lazy">
+            <img class="img-mobile" src="{{ block.settings.image_mobile | image_url: width: 1600 }}" alt="Slide Image" loading="lazy">
+          {% endif %}
+          <div class="small-text"><p>{{ block.settings.small_text }}</p></div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Spotlight Data Image",
+  "tag": "section",
+  "class": "spotlight-data-image-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Media Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image mobile"
+        },
+        {
+          "type": "text",
+          "id": "small_text",
+          "label": "Small text"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video",
+          "label": "Use video instead of image",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Video Settings",
+          "info": "Only one popup option can be used at a time."
+        },
+        {
+          "type": "video",
+          "id": "normal_video",
+          "label": "MP4/MOV"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Youtube link",
+          "accept": ["youtube"]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spotlight Carousel",
+      "category": "Image",
+      "blocks": [
+        { "type": "media" }
+      ]
+    }
+  ]
+}
+{% endschema %}

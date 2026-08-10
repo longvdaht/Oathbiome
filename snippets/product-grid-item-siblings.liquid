@@ -1,0 +1,180 @@
+{%- for entry in settings.siblings -%}
+  {%- assign sibling_products = entry.product_list.value -%}
+  {%- assign has_siblings = sibling_products | has: 'id', product.id -%}
+
+  {%- if has_siblings and sibling_products != blank -%}
+    {%- case part -%}
+      {%- when 'html' -%}
+        {% comment %} Main "<product-item-siblings>" element's HTML {% endcomment %}
+        {%- liquid
+          assign count = sibling_products.count
+          assign count_string_one = 'collections.general.colors_with_count.one' | t
+          assign count_string_other = 'collections.general.colors_with_count.other' | t
+
+          if count > 5 and settings.collection_swatch_style == 'limited'
+            assign sibling_swatches_left = count | minus: 5
+          endif
+        -%}
+
+        <product-item-siblings class="product-item__siblings product-item__swatches__holder product-item__swatches__holder--{{ settings.swatch_style }} product-item__swatches__holder--{{ settings.collection_swatch_style }}">
+          <native-scrollbar
+            class="radio__fieldset radio__fieldset--swatches radio__fieldset--pgi"
+            data-sibling-fieldset
+          >
+            <div class="selector-wrapper__scrollbar" data-sibling-inner data-scrollbar>
+              {%- liquid
+                assign any_sibling_cutline = false
+                assign siblings_limit = 50
+                if settings.collection_swatch_style == 'limited'
+                  assign siblings_limit = 5
+                endif
+              -%}
+
+              {%- for sib_product in sibling_products limit: siblings_limit -%}
+                {%- liquid
+                  assign current_class = ''
+                  assign sib_product_compare_at_price = ''
+                  if sib_product.handle == product.handle
+                    assign current_class = ' sibling__link--current'
+                  endif
+
+                  if settings.currency_code_enable
+                    assign sib_product_price = sib_product.price | money_with_currency
+                  else
+                    assign sib_product_price = sib_product.price | money
+                  endif
+
+                  if sib_product.compare_at_price > sib_product.price
+                    if settings.currency_code_enable
+                      assign sib_product_compare_at_price = sib_product.compare_at_price | money_with_currency
+                    else
+                      assign sib_product_compare_at_price = sib_product.compare_at_price | money
+                    endif
+                  endif
+
+                  if sib_product.price == 0 and sib_product.price_varies == false
+                    assign sib_product_price = 'general.money.free' | t
+                  endif
+
+                  assign sib_cutline = sib_product.metafields.theme.cutline | strip_html
+                  assign legacy_metafield_color = sib_product.metafields.theme.sibling_color.value | default: sib_product.metafields.theme.sibling_colour.value | default: sib_product.metafields.theme.siblings_color.value | default: sib_product.metafields.theme.siblings_colour.value | default: sib_product.metafields.theme.siblings_colors.value | default: sib_product.metafields.theme.siblings_colours.value
+                  assign sib_color = legacy_metafield_color | default: sib_product.title
+                  assign swatch_color = sib_color | handle
+
+                  if sib_cutline != blank
+                    assign any_sibling_cutline = true
+                  endif
+                -%}
+
+                <tooltip-component
+                  class="swatches swatch__button swatch__button--{{ settings.swatch_style }} swatch-{{ swatch_color }}"
+                  style="
+                    --animation-delay: {{ forloop.index0 | times: 50 }}ms;
+                    --swatch: var(--{{ swatch_color }});
+                  "
+                  data-tooltip="{{ sib_color }}"
+                  data-swap-handle="{{ sib_product.handle }}"
+                  data-swap-url="{{ sib_product.url }}"
+                  data-sibling-link="{{ sib_product.url }}"
+                  data-sibling-price="{{ sib_product_price | strip_html }}"
+                  data-sibling-compare-at-price="{{ sib_product_compare_at_price | strip_html }}"
+                  data-sibling-cutline="{{ sib_cutline }}"
+                  data-sibling-image="{{ sib_product.featured_media.preview_image.src | image_url }}"
+                  tabindex="0"
+                >
+                  <div class="sibling__link{{ current_class }}">
+                    {%- if settings.sibling_style == 'image' -%}
+                      {%- liquid
+                        case settings.swatch_size
+                          when 'regular'
+                            assign sibling_width = 1.15 | times: settings.base_font_size | round
+                          when 'large'
+                            assign sibling_width = 2.3 | times: settings.base_font_size | round
+                        endcase
+
+                        assign sibling_sizes = sibling_width | append: 'px'
+                        assign sibling_width_15x = sibling_width | times: 1.5
+                        assign sibling_width_2x = sibling_width | times: 2
+                        assign sibling_widths = sibling_width | append: ', ' | append: sibling_width_15x | append: ', ' | append: sibling_width_2x
+                      -%}
+
+                      {%- render 'image',
+                        image: sib_product.featured_media.preview_image,
+                        width: sibling_width_2x,
+                        height: sibling_width_2x,
+                        widths: sibling_widths,
+                        sizes: sibling_sizes,
+                        aspect_ratio: 1
+                      -%}
+                    {%- endif -%}
+                  </div>
+                </tooltip-component>
+              {%- endfor -%}
+
+              {%- if settings.collection_swatch_style == 'limited' and sibling_swatches_left > 0 -%}
+                <div class="swatch-limited">{{ '+' | append: sibling_swatches_left }}</div>
+              {%- endif -%}
+            </div>
+
+            {%- if settings.collection_swatch_style == 'text-slider' or settings.collection_swatch_style == 'slider' -%}
+              <div class="selector-wrapper__actions">
+                <button
+                  type="button"
+                  class="radio__fieldset__arrow radio__fieldset__arrow--prev is-hidden"
+                  data-scrollbar-arrow-prev
+                >
+                  {%- render 'icon-nav-arrow-left' -%}
+                  <span class="visually-hidden">{{ 'products.general.see_all' | t }}</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="radio__fieldset__arrow radio__fieldset__arrow--next is-hidden"
+                  data-scrollbar-arrow-next
+                >
+                  {% render 'icon-nav-arrow-right' %}
+                  <span class="visually-hidden">{{ 'products.general.see_all' | t }}</span>
+                </button>
+              </div>
+            {%- endif -%}
+          </native-scrollbar>
+
+          {%- if settings.collection_swatch_style == 'text' or settings.collection_swatch_style == 'text-slider' -%}
+            <span class="product-item__swatches__count">
+              <span data-sibling-count>
+                {{- count }}
+                {{ count | pluralize: count_string_one, count_string_other -}}
+              </span>
+            </span>
+          {%- endif -%}
+        </product-item-siblings>
+
+      {%- when 'line-item-props' -%}
+        {% comment %} Siblings line item property in product form {% endcomment %}
+        {%- liquid
+          assign sibling_property_name = 'general.siblings.label' | t | strip_html | escape
+          assign sibling_property_value = ''
+
+          if sibling_products != blank and product.variants.size == 1
+            assign title_down = product.title | downcase
+            assign sibling = product.metafields.theme.sibling_color.value | default: product.metafields.theme.sibling_colour.value | default: product.metafields.theme.siblings_color.value | default: product.metafields.theme.siblings_colour.value | default: product.metafields.theme.siblings_colors.value | default: product.metafields.theme.siblings_colours.value
+            assign sibling_down = sibling | downcase
+            unless title_down contains sibling_down
+              assign sibling_property_value = sibling | strip_html | escape
+            endunless
+          endif
+        -%}
+        {%- if sibling_property_value != blank -%}
+          <input
+            type="hidden"
+            name="properties[{{ sibling_property_name }}]"
+            value="{{ sibling_property_value }}"
+          >
+        {%- endif -%}
+
+      {%- when 'image' -%}
+        {% comment %} Image container placed inside the product item's media wrapper {% endcomment %}
+        <div class="product-item__bg__sibling" data-product-image-sibling></div>
+    {%- endcase -%}
+  {%- endif -%}
+{%- endfor -%}

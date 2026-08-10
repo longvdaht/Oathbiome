@@ -1,0 +1,205 @@
+<!-- /snippets/product-siblings.liquid -->
+
+{%- liquid
+  assign product_api = product_api | default: false
+
+  assign legacy_sibling_color = block.settings.sibling_color | default: product.metafields.theme.sibling_color.value | default: product.metafields.theme.sibling_colour.value | default: product.metafields.theme.siblings_color.value | default: product.metafields.theme.siblings_colour.value | default: product.metafields.theme.siblings_colors.value | default: product.metafields.theme.siblings_colours.value
+  assign sibling_color = legacy_metafield_color | default: product.title
+  assign hide_labels_class = ''
+
+  if settings.show_labels == false
+    assign hide_labels_class = ' variant__labels--hide'
+  endif
+-%}
+
+{%- for entry in settings.siblings -%}
+
+  {%- assign sibling_products = entry.product_list.value -%}
+  {%- assign has_siblings = sibling_products | has: 'id', product.id -%}
+
+  {%- if has_siblings and sibling_products != blank -%}
+    {%- if settings.sibling_style == 'title' -%}
+      <div class="siblings title">
+        <h3 class="heading body-large">{{ block.settings.heading }}</h3>
+        <div class="group-options">
+          {%- for sib_product in sibling_products limit: 50 -%}
+            {%- liquid
+              assign modifier_class = ''
+              if sib_product.handle == product.handle
+                assign modifier_class = ' sibling__link--current'
+              endif
+
+              if sib_product.available == false
+                assign modifier_class = modifier_class | append: ' sibling__link--sold-out'
+              endif
+
+              assign legacy_metafield_color = sib_product.metafields.theme.sibling_color.value | default: sib_product.metafields.theme.sibling_colour.value | default: sib_product.metafields.theme.siblings_color.value | default: sib_product.metafields.theme.siblings_colour.value | default: sib_product.metafields.theme.siblings_colors.value | default: sib_product.metafields.theme.siblings_colours.value
+              assign sib_color = legacy_metafield_color | default: sib_product.title
+              assign swatch_color = sib_color | handle
+              assign sib_title = sib_product.metafields.theme.siblings_color.value
+            -%}
+            <a
+              href="{{ sib_product.url }}"
+              class="sibling__link{{ modifier_class }}"
+              data-swap-url="{{ sib_product.url }}"
+              data-swap-target="{{ section.id }}--{{ sib_product.handle }}"
+            >
+              {{ sib_title }}
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const siblingLinks = document.querySelectorAll('.sibling__link');
+          if (siblingLinks.length > 0) {
+            siblingLinks.forEach(function (link) {
+              link.addEventListener('click', function (e) {
+                e.preventDefault();
+          
+                const url = this.getAttribute('href');
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+          
+                setTimeout(function () {
+                  window.location.href = url;
+                }, 100);
+              });
+            });
+          }
+        });
+      </script>
+    {%- else -%}
+      <div
+        class="product__block{% if settings.show_lines %} product__block--lines{% endif %} product__siblings{{ hide_labels_class }} block-padding"
+        {{ block_style }}
+        {% if animation_name %}
+          data-animation="{{ animation_name }}"
+          data-animation-duration="{{ animation_duration }}"
+          data-animation-delay="{{ animation_delay }}"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        {% comment %} Form ID must match value in product-form.liquid {% endcomment %}
+        <input
+          type="hidden"
+          form="{{ product_form_id }}"
+          name="properties[{{ 'general.siblings.label' | t }}]"
+          value="{{ sibling_color }}"
+        >
+
+        <fieldset>
+          <div class="radio__fieldset radio__fieldset--swatches">
+            <legend class="radio__legend">
+              <span class="radio__legend__label">
+                <span class="radio__legend__option-name">{{ 'general.siblings.label' | t }}</span>
+
+                {%- if settings.show_labels -%}
+                  {%- capture label -%}
+                    {%- if sibling_color != blank -%}
+                      <small class="radio__legend__value">{{ sibling_color }}</small>
+                    {%- endif -%}
+                  {%- endcapture -%}
+                {%- endif -%}
+
+                {%- if current_variant.metafields.theme.color_description != blank -%}
+                  {%- assign form_style = settings.form_style -%}
+
+                  {%- capture color_description -%}
+                    <small class="radio__legend__value radio__legend__color__description">{{ current_variant.metafields.theme.color_description }}</small>
+                  {%- endcapture -%}
+                {%- endif -%}
+
+                {%- if form_style == 'classic' -%}
+                  <div class="radio__legend__values">
+                {%- endif -%}
+                {{ label -}}
+                {{ color_description }}
+                {%- if form_style == 'classic' -%}
+                  </div>
+                {%- endif -%}
+              </span>
+            </legend>
+
+            <div class="radio__buttons">
+              {%- for sib_product in sibling_products limit: 50 -%}
+                {%- liquid
+                  assign modifier_class = ''
+                  if sib_product.handle == product.handle
+                    assign modifier_class = ' sibling__link--current'
+                  endif
+
+                  if sib_product.available == false
+                    assign modifier_class = modifier_class | append: ' sibling__link--sold-out'
+                  endif
+
+                  assign legacy_metafield_color = sib_product.metafields.theme.sibling_color.value | default: sib_product.metafields.theme.sibling_colour.value | default: sib_product.metafields.theme.siblings_color.value | default: sib_product.metafields.theme.siblings_colour.value | default: sib_product.metafields.theme.siblings_colors.value | default: sib_product.metafields.theme.siblings_colours.value
+                  assign sib_color = legacy_metafield_color | default: sib_product.title
+                  assign swatch_color = sib_color | handle
+
+                  capture swatch_image
+                    if settings.sibling_style == 'image'
+                      case settings.swatch_size
+                        when 'regular'
+                          assign sibling_width = 2.2 | times: settings.base_font_size | round
+                        when 'large'
+                          assign sibling_width = 3 | times: settings.base_font_size | round
+                      endcase
+
+                      assign sibling_sizes = sibling_width | append: 'px'
+                      assign sibling_width_15x = sibling_width | times: 1.5
+                      assign sibling_width_2x = sibling_width | times: 2
+                      assign sibling_widths = sibling_width | append: ', ' | append: sibling_width_15x | append: ', ' | append: sibling_width_2x
+
+                      render 'image', image: sib_product.featured_media.preview_image, width: sibling_width_2x, height: sibling_width_2x, widths: sibling_widths, sizes: sibling_sizes, aspect_ratio: 1, show_backfill: false
+                    endif
+                  endcapture
+                -%}
+
+                <tooltip-component
+                  class="swatches swatch__button swatch__button--{{ settings.swatch_style }} swatch-{{ swatch_color | handle }}"
+                  style="--swatch: var(--{{ swatch_color }});"
+                  data-tooltip="{{ sib_color }}"
+                >
+                  {%- if product_api -%}
+                    {%- assign unique = section.id | append: '-' | append: sib_product.id -%}
+
+                    <quick-add-product>
+                      <div data-quick-add-holder="{{ sib_product.id }}">
+                        <a
+                          href="{{ sib_product.url }}"
+                          class="sibling__link{{ modifier_class }}"
+                          data-quick-add-btn
+                          data-sibling-swapper
+                          data-quick-add-modal-handle="{{ sib_product.handle }}"
+                        >
+                          {{ swatch_image }}
+                          <span class="visually-hidden">{{ swatch_color }}</span>
+                        </a>
+
+                        {%- render 'product-quick-add-modal-template', product_id: sib_product.id, unique: unique -%}
+                      </div>
+                    </quick-add-product>
+                  {%- else -%}
+
+                    <a
+                      href="{{ sib_product.url }}"
+                      class="sibling__link{{ modifier_class }}"
+                      data-swap-url="{{ sib_product.url }}"
+                      data-swap-target="{{ section.id }}--{{ sib_product.handle }}"
+                    >
+                      {{ swatch_image }}
+                      <span class="visually-hidden">{{ swatch_color }}</span>
+                    </a>
+                  {%- endif -%}
+                </tooltip-component>
+              {%- endfor -%}
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}

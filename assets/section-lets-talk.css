@@ -1,0 +1,38 @@
+.section-lets-talk a {
+  position: relative;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  border: none;
+  padding-bottom: 2px;
+}
+
+.section-lets-talk a:before {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 2px;
+  background: currentColor;
+}
+
+.section-lets-talk h4 {
+  line-height: 105%;
+  letter-spacing: -.04em;
+}
+
+@media (min-width: 901px) {
+  .section-lets-talk {
+    border-top: 1px solid var(--color-medium-gray);
+  }
+}
+
+@media (max-width: 900px) {
+  .section-lets-talk h4 {
+    font-size: 24px;
+  }
+
+  .section-lets-talk {
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+}

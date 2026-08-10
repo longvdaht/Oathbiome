@@ -1,0 +1,326 @@
+.section-animation {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.section-animation .heading:before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: var(--color-medium-gray);
+  position: absolute;
+  left: -20px;
+  top: 10px;
+}
+
+.section-animation .heading {
+  position: relative;
+  margin: 0 0 36px;
+}
+
+.section-animation__container {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.section-animation__item {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+}
+
+.section-animation__content, .section-animation__video {
+  width: 100%;
+  position: relative;
+  height: auto;
+  overflow: hidden;
+}
+
+.section-animation__content {
+  padding: 61px var(--outer) 25px;
+}
+
+.section-animation__video video {
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  max-height: 378px;
+  min-height: 378px;
+  width: 100%;
+}
+
+.section-animation__video svg {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.section-animation__content--title, .section-animation__content--description, .section-animation__content--subheading {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.section-animation__content--description {
+  display: none;
+}
+
+.section-dots {
+  color: var(--color-dark-gray);
+  margin: 0;
+  cursor: pointer;
+}
+
+.section-dots:hover {
+  color: var(--color-medium-gray);
+}
+
+.section-dots.active {
+  color: var(--color-white);
+}
+
+.section-animation__content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.section-animation__item--intro .section-animation__content {
+  gap: 0;
+  justify-content: space-between;
+}
+
+.section-animation__header-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.icon-hidden {
+  display: none;
+}
+
+.section-animation__regular-icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.section-mobile-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  gap: 35px;
+}
+
+.section-mobile-controls .mobile-indicator p {
+  font-family: var(--font-abc-diatype);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: .02em;
+  color: var(--color-white);
+}
+
+.mobile-indicator {
+  color: var(--color-white);
+  display: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.intro-mobile-heading {
+  display: none;
+}
+
+@media (max-width: 749px) {
+  .section-number__container {
+    position: absolute;
+    top: calc(50% + 240px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .section-number__container .section-dots {
+    display: none;
+  }
+
+  .intro-mobile-heading {
+    display: block;
+    color: var(--color-brown);
+    margin-left: 41px;
+  }
+
+  .intro-mobile-heading .section-animation__content--title {
+    font-size: 24px;
+    line-height: 115%;
+    letter-spacing: -.03em;
+    color: var(--color-brown);
+  }
+
+  .intro-mobile-heading .section-animation__content--description {
+    font-family: var(--font-abc-diatype);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 145%;
+    letter-spacing: .01em;
+    color: var(--color-brown);
+    display: block;
+  }
+
+  .intro-mobile-heading .section-animation__content {
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+
+  .section-animation__video.section-animation__video--intro video.mobile-hidden {
+    display: none;
+  }
+
+  .section-animation__video--intro img {
+    width: 100%;
+    height: auto;
+  }
+
+  .mobile-show {
+    display: block;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 145%;
+    letter-spacing: -0.03em;
+  }
+
+  .custom-section-animation.wrapper-container {
+    width: 100%;
+    border-left: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .custom-section-animation.wrapper-container:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: var(--color-medium-gray);
+    position: absolute;
+    left: 20px;
+    top: 0;
+  }
+
+  .custom-section-animation.wrapper-container .wrapper-content {
+    padding: 0;
+  }
+
+  .section-animation .heading {
+    margin-left: 41px;
+  }
+
+  .section-animation__container {
+    margin: 0 3px;
+  }
+
+  .section-number__container .mobile-indicator {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 750px) {
+  .section-mobile-controls {
+    display: none;
+  }
+
+  .section-animation .heading {
+    margin-bottom: 58px;
+  }
+
+  .section-animation__container {
+    max-height: 700px;
+    height: 100%;
+    border-radius: 20px;
+    margin: 0 -20px;
+  }
+
+  .section-animation__content--description {
+    display: block;
+    max-width: 485px;
+  }
+
+  .section-animation__content--title {
+    max-width: 100%;
+  }
+
+  .section-number__container {
+    display: flex;
+    gap: 45px;
+    position: absolute;
+    bottom: 50px;
+    left: calc(var(--outer) + 52px);
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .section-number__container.hidden {
+    opacity: 0;
+  }
+
+  .section-animation__content {
+    padding: 52px 52px 58px;
+  }
+
+  .section-animation__item {
+    flex-direction: row;
+    min-height: 700px;
+    height: 100%;
+  }
+
+  .section-animation__video video {
+    max-height: unset;
+    min-height: unset;
+  }
+
+  .section-animation__content, .section-animation__video {
+    width: 50%;
+  }
+
+  .section-animation__header-group {
+    gap: 15px;
+  }
+
+  .mobile-show {
+    display: none;
+  }
+}
+
+@media (min-width: 750px) and (max-width: 989px) {
+  .section-animation__content {
+    padding: 16px 20px;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .section-animation .heading:before {
+    left: -50px;
+    width: 30px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .section-animation__content--subheading.subhead-s {
+    font-size: 16px;
+  }
+} 

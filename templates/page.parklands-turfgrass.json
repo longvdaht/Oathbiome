@@ -1,0 +1,322 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_8EcT8T": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1101552772",
+        "video_poster_image": "shopify://shop_images/Parklands.jpg",
+        "show_video_popup": false,
+        "title": "<p>Parklands & Turfgrass</p>",
+        "text": "<p>The roots of a strong community.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_intro_text_QHQK9N": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Replenish the soil microbiome  to protect our families’ playgrounds.",
+        "descriptions": "<p>Parks, schools, and sports fields thrive when the soil teems with life. Healthy soils conserve water, reduce the need for chemical treatments, and promote health and community connection.  <br/><br/><em>Green spaces help us grow together.</em></p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 150,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "section_scroll_accrodion_h4N9QP": {
+      "type": "section-scroll-accrodion",
+      "blocks": {
+        "accordion_jxHPmQ": {
+          "type": "accordion",
+          "settings": {
+            "title": "Input Efficiency",
+            "text": "Revitalizes nutrient cycling and increases water holding capacity, allowing land managers to reduce expenses and model sustainable stewardship.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/InputEfficiency.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_RkTG7Y": {
+          "type": "accordion",
+          "settings": {
+            "title": "Increased Growth and Vitality",
+            "text": "Revitalizes our shared spaces, making them healthier and safer to enjoy.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Increased_Vitality.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_KGCg93": {
+          "type": "accordion",
+          "settings": {
+            "title": "Enhanced Resiliency",
+            "text": "Rebuilds soil structure, which bolsters natural defenses against stresses such as droughts, fires, and storms.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Resiliency.mp4",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "accordion_jxHPmQ",
+        "accordion_RkTG7Y",
+        "accordion_KGCg93"
+      ],
+      "name": "Scroll Section",
+      "settings": {}
+    },
+    "section_intro_text_Crf4gM": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Spotlight: Catalina Foothills High School",
+        "descriptions": "<h4>Oath Soil Life substantially improves quality and appearance of turfgrass.</h4>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 200,
+        "padding_bottom": 36,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "spotlight_data_image_whzXM9": {
+      "type": "spotlight-data-image",
+      "blocks": {
+        "media_tYGU9D": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_2_Desktop_4.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6_HR.jpg",
+            "small_text": "",
+            "use_video": false,
+            "video_url": ""
+          }
+        },
+        "media_t773qF": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_1_Desktop_6.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_7a.jpg",
+            "small_text": "Catalina Foothills School District Turf Study",
+            "use_video": false,
+            "video_url": ""
+          }
+        },
+        "media_BdGAjV": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_2_Desktop_4.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6b_1ffcbea9-1d26-44cf-919a-4417cdf04d97.jpg",
+            "small_text": "",
+            "use_video": false,
+            "video_url": ""
+          }
+        },
+        "media_ghXwi3": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_1_Desktop_6.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6c_afe35ca7-b955-4b5d-93bc-4e01e2cd19bc.jpg",
+            "small_text": "",
+            "use_video": false,
+            "video_url": ""
+          }
+        },
+        "media_HQ4eaf": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_2_Desktop_4.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6d_aa63c59b-316b-42af-9746-834d4e677960.jpg",
+            "small_text": "",
+            "use_video": false,
+            "video_url": ""
+          }
+        },
+        "media_9M3Bet": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_1_Desktop_6.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6e_955304ba-dd3a-469f-9b2c-0afbea308b69.jpg",
+            "small_text": "",
+            "use_video": false,
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "media_tYGU9D",
+        "media_t773qF",
+        "media_BdGAjV",
+        "media_ghXwi3",
+        "media_HQ4eaf",
+        "media_9M3Bet"
+      ],
+      "name": "Spotlight Carousel",
+      "settings": {}
+    },
+    "section_image_data_gCegNg": {
+      "type": "section-image-data",
+      "blocks": {
+        "image_fTrx7x": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_2_Desktop_4.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6_HR.jpg"
+          }
+        },
+        "image_gW9UQe": {
+          "type": "image",
+          "name": "Image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Parklands_and_Turfgrass_1_Desktop_6.jpg",
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6a.jpg"
+          }
+        },
+        "image_JHBtTr": {
+          "type": "image",
+          "name": "Image",
+          "disabled": true,
+          "settings": {
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6b.jpg"
+          }
+        },
+        "image_TWz3KY": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6c.jpg"
+          }
+        },
+        "image_RVPhqC": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6d.jpg"
+          }
+        },
+        "image_CGEL3q": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_mobile": "shopify://shop_images/Parklands_and_Turfgrass_Mobile_6d_e5ced97e-cd16-40f2-9a25-ea20c30ae0d0.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_fTrx7x",
+        "image_gW9UQe",
+        "image_JHBtTr",
+        "image_TWz3KY",
+        "image_RVPhqC",
+        "image_CGEL3q"
+      ],
+      "disabled": true,
+      "name": "Section Image Data",
+      "settings": {
+        "heading": "",
+        "descriptions": "",
+        "image_description_desktop": "",
+        "image_description": "",
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 200
+      }
+    },
+    "image_grid_lightbox_gdkqMY": {
+      "type": "image-grid-lightbox",
+      "blocks": {
+        "media_JcCfCN": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/square_image_2.jpg",
+            "small_text": "Before Treatment"
+          }
+        },
+        "media_bjzjih": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/square_image_1.jpg",
+            "small_text": "After Two Treatments"
+          }
+        },
+        "media_hEbT7L": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/square_image_3.jpg",
+            "small_text": "After Five Treatments"
+          }
+        }
+      },
+      "block_order": [
+        "media_JcCfCN",
+        "media_bjzjih",
+        "media_hEbT7L"
+      ],
+      "name": "Image Grid Lightbox",
+      "settings": {}
+    },
+    "section_lets_talk_kWmLqp": {
+      "type": "section-lets-talk",
+      "name": "Lets Talk",
+      "settings": {
+        "title": "Let's talk",
+        "subtitle": "Reach out to",
+        "button_text": "turf@oathbiome.com.",
+        "link_text": "",
+        "link": "",
+        "padding_top": 148,
+        "padding_bottom": 148,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_8EcT8T",
+    "section_intro_text_QHQK9N",
+    "section_scroll_accrodion_h4N9QP",
+    "section_intro_text_Crf4gM",
+    "spotlight_data_image_whzXM9",
+    "section_image_data_gCegNg",
+    "image_grid_lightbox_gdkqMY",
+    "section_lets_talk_kWmLqp"
+  ]
+}

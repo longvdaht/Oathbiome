@@ -1,0 +1,173 @@
+{{ 'section-image.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media (min-width: 901px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-{{ section.id }} wrapper-container image-info section-image-data">
+  <div class="section-image-data__main">
+    {% if section.blocks.size > 0 %}
+      {% if section.settings.heading != blank or section.settings.descriptions != blank %}
+        <div class="pl-50 pr-50">
+          <div class="heading-content">
+            {%- if section.settings.heading != blank -%}
+              <div class="subhead-lg">{{ section.settings.heading }}</div>
+            {%- endif -%}
+            {%- if section.settings.descriptions != blank -%}
+              <div class="h4">{{ section.settings.descriptions }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {% endif %}
+      <div class="image__container">
+        {% for block in section.blocks %}
+          {% if block.type == 'image' %}
+            <div class="image-item block-{{ block.id }}">
+              {% if block.settings.image != blank %}
+                <img class="hidden-mobile" src="{{ block.settings.image |  image_url: width: 2646 }}" alt="">
+              {% endif %}
+
+              {% if block.settings.image_mobile != blank %}
+                <img class="hidden-desktop" src="{{ block.settings.image_mobile |  image_url: width: 1150 }}" alt="">
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if section.settings.image_description_desktop != blank %}
+      <div class="border-b text-center pl-50 pr-50 hidden-mobile details-s image__description">
+        {{ section.settings.image_description_desktop }}
+      </div>
+    {% endif %}
+    {% if section.settings.image_description != blank %}
+      <div class="border-b text-center pl-50 pr-50 hidden-desktop details-s image__description">
+        {{ section.settings.image_description }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Section Image Data",
+  "class": "section-image",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Section Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "descriptions",
+      "label": "Descriptions",
+      "default": "Section description goes here."
+    },
+    {
+      "type": "text",
+      "id": "image_description_desktop",
+      "label": "Image Description (Desktop)"
+    },
+    {
+      "type": "text",
+      "id": "image_description",
+      "label": "Image Description (Mobile)",
+      "default": "Study Citing Information"
+    },
+    {
+      "type": "header",
+      "content": "Section Style Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image Mobile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Image Data",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "image",
+          "name": "Image"
+        },
+        {
+          "type": "image",
+          "name": "Image"
+        },
+        {
+          "type": "image",
+          "name": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

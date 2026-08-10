@@ -1,0 +1,68 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_8EcT8T": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "image",
+        "width": "wrapper--full",
+        "video": "shopify://files/videos/Myles Shank-coworkers-collaborating-in-office-674890-filmsupply.mp4",
+        "video_social_link": "https://vimeo.com/1101552614",
+        "image": "shopify://shop_images/Careers_page_photos-5.jpg",
+        "show_video_popup": false,
+        "title": "<p>Join us in the Soil Health Movement</p>",
+        "text": "<p>Come help Oath Biome create the premier global biologicals platform ... with a purpose.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_greenhouse_jobs_LihFd6": {
+      "type": "section-greenhouse-jobs",
+      "name": "Section Greenhouse",
+      "settings": {
+        "heading": "Current Openings",
+        "heading_empty": "We don’t currently have any open positions.",
+        "description": "We’re always interested in connecting with talented professionals who share our values. Submit your resume and we’ll keep you in mind for future opportunities.",
+        "button_text": "Get in Touch",
+        "button_url": "shopify://pages/media-research",
+        "padding_top": 100,
+        "padding_bottom": 150,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 60
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_8EcT8T",
+    "section_greenhouse_jobs_LihFd6"
+  ]
+}

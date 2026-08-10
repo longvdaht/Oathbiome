@@ -1,0 +1,381 @@
+{{ 'section-testimonial-with-rows.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-testimonial-with-rows.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media screen and (min-width: 901px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="wrapper-container section-{{ section.id }}-padding section-testimonial-rows">
+  <div class="testimonial-main hidden-mobile">
+    {%- assign count = '' -%}
+    {%- for block in section.blocks -%}
+      {%- assign count = count | plus: 1 -%}
+      {%- case block.type -%}
+        {%- when 'olny-text' -%}
+          <div class="testimonial-item testimonial-texts {% if count > 3 %}hidden{% endif %}">
+            {%- if block.settings.content_1 != blank -%}
+              <div class="testimonial-text__item" style="background-color: {{ section.settings.background_color }};">
+                <div class="testimonial-text__content">
+                  <h5 style="color: {{ section.settings.text_color }};"><span class="icon-left">“</span><span>{{ block.settings.content_1 }}”</span></h5>
+                </div>
+                <div class="testimonial-images__bottom">
+                  <div class="cta testimonial-text__name" style="color: {{ section.settings.text_color }};">{{ block.settings.name_1 }}</div>
+                  <div class="cta testimonial-text__title" style="color: {{ section.settings.text_color }};">{{ block.settings.title_1 }}</div>
+                </div>
+              </div>
+              {%- endif -%}
+
+              {%- if block.settings.content_2 -%}
+                <div class="testimonial-text__item" style="background-color: {{ section.settings.background_color }};">
+                  <div class="testimonial-text__content">
+                    <h5 style="color: {{ section.settings.text_color }};"><span class="icon-left">“</span><span>{{ block.settings.content_2 }}”</span></h5>
+                  </div>
+                  <div class="testimonial-images__bottom">
+                    <div class="cta testimonial-text__name" style="color: {{ section.settings.text_color }};">{{ block.settings.name_2 }}</div>
+                    <div class="cta testimonial-text__title" style="color: {{ section.settings.text_color }};">{{ block.settings.title_2 }}</div>
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.content_3 -%}
+                <div class="testimonial-text__item" style="background-color: {{ section.settings.background_color }};">
+                  <div class="testimonial-text__content">
+                    <h5 style="color: {{ section.settings.text_color }};"><span class="icon-left">“</span><span>{{ block.settings.content_3 }}”</span></h5>
+                  </div>
+                  <div class="testimonial-images__bottom">
+                    <div class="cta testimonial-text__name" style="color: {{ section.settings.text_color }};">{{ block.settings.name_3 }}</div>
+                    <div class="cta testimonial-text__title" style="color: {{ section.settings.text_color }};">{{ block.settings.title_3 }}</div>
+                  </div>
+                </div>
+              {%- endif -%}
+          </div>
+        {%- when 'text-with-image' -%}
+          <div class="testimonial-item testimonial-images__item {{ block.settings.image_align }} {% if count > 3 %}hidden{% endif %}">
+            <div class="testimonial-images__content" style="background-color: {{ section.settings.background_color }};">
+              <div class="testimonial-images__top">
+                <h5 style="color: {{ section.settings.text_color }};"><span class="icon-left">“</span><span>{{ block.settings.testimonial_text }}”</span></h5>
+              </div>
+              <div class="testimonial-images__bottom">
+                <div class="cta" style="color: {{ section.settings.text_color }};">{{ block.settings.testimonial_author }}</div>
+                <div class="cta" style="color: {{ section.settings.text_color }};">{{ block.settings.testimonial_company }}</div>
+              </div>
+            </div>
+            <div class="testimonial-images__image">
+              {% if block.settings.testimonial_image %}
+                <img src="{{ block.settings.testimonial_image | img_url: '836x836' }}" alt="{{ block.settings.testimonial_image.alt }}">
+              {% endif %}
+
+              {% if block.settings.video or block.settings.video_url %}
+                <div class="testimonial-images__action">
+                  {% if block.settings.video_url %}
+                    {% assign video_src = '' %}
+                    {% assign video_src = block.settings.video_url %}
+                    <div class="video-thumbnail open-video-popup" 
+                      data-block-id="{{ block.id }}"
+                      data-video-src="{{ video_src | base64_encode }}"
+                      data-video-type="{{  block.settings.video_url.type }}"
+                    >
+                      <button class="btn btn-icon btn-play"><span>{{ block.settings.button_text }}</span></button>
+                    </div>
+                  {% elsif block.settings.video %}
+                    {% assign video_src = '' %}
+                    {% assign last_source = block.settings.video.sources | last %}
+                    {% assign video_src = last_source.url %}
+                    <div
+                      class="video-thumbnail open-video-popup"
+                      data-block-id="{{ block.id }}"
+                      data-video-type="mp4"
+                      data-video-src="{{ video_src | base64_encode }}"
+                    >
+                      <button class="btn btn-icon btn-play"><span>{{ block.settings.button_text }}</span></button>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+    {%- if count > 3 -%}
+      <div class="testimonial-action">
+        <button class="btn btn-icon btn-see-more"><span>See More</span></button>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="testimonial-main-mb hidden-desktop">
+    {%- for block in section.blocks -%}
+      {%- assign count = count | plus: 1 -%}
+      {%- case block.type -%}
+        {%- when 'text-with-image' -%}
+          <div class="testimonial-item testimonial-images__item">
+            <div class="testimonial-images__image">
+              {% if block.settings.testimonial_image %}
+                <img src="{{ block.settings.testimonial_image | img_url: '836x836' }}" alt="{{ block.settings.testimonial_image.alt }}">
+              {% endif %}
+
+              {% if block.settings.video != blank %}
+                <div class="testimonial-images__video">
+                  {% render 'video', video: block.settings.video %}
+                </div>
+              {% endif %}
+
+              {% if block.settings.video or block.settings.video_url %}
+                <div class="testimonial-images__action">
+                  {% if block.settings.video_url %}
+                    {% assign video_src = '' %}
+                    {% assign video_src = block.settings.video_url %}
+                    <div class="video-thumbnail open-video-popup" 
+                      data-block-id="{{ block.id }}"
+                      data-video-src="{{ video_src | base64_encode }}"
+                      data-video-type="{{  block.settings.video_url.type }}"
+                    >
+                      <button class="btn btn-icon btn-play"><span>{{ block.settings.button_text }}</span></button>
+                    </div>
+                  {% elsif block.settings.video %}
+                    {% assign video_src = '' %}
+                    {% assign last_source = block.settings.video.sources | last %}
+                    {% assign video_src = last_source.url %}
+                    <div
+                      class="video-thumbnail open-video-popup"
+                      data-block-id="{{ block.id }}"
+                      data-video-type="mp4"
+                      data-video-src="{{ video_src | base64_encode }}"
+                    >
+                      <button class="btn btn-icon btn-play"><span>{{ block.settings.button_text }}</span></button>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="testimonial-images__content" style="background-color: {{ section.settings.background_color }};">
+              <div class="testimonial-images__top">
+                <h5 style="color: {{ section.settings.text_color }};"><span class="icon-left">“</span><span>{{ block.settings.testimonial_text }}”</span></h5>
+              </div>
+              <div class="testimonial-images__bottom">
+                <div class="cta" style="color: {{ section.settings.text_color }};">{{ block.settings.testimonial_author }}</div>
+                <div class="cta" style="color: {{ section.settings.text_color }};">{{ block.settings.testimonial_company }}</div>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- if count > 3 -%}
+  <script>
+    const toggleButton = document.querySelector('.testimonial-action .btn-see-more');
+    const toggleButtonText = document.querySelector('.testimonial-action .btn-see-more span');
+    const items = document.querySelectorAll('.testimonial-item');
+    let isShowingMore = false;
+    
+    toggleButton.addEventListener('click', () => {
+      isShowingMore = !isShowingMore;
+      
+      items.forEach((item, index) => {
+          if (index > 2) {
+              item.classList.toggle('hidden', !isShowingMore);
+          }
+      });
+      
+      toggleButtonText.textContent = isShowingMore ? 'See Less' : 'See More';
+      toggleButton.classList.toggle('active', isShowingMore);
+    });
+  </script>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Testimonial with rows",
+    "class": "testimonial-with-rows",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Style"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      }, 
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Section Color text"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#103228"
+      }, 
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#fff"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "olny-text",
+        "name": "Only text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name_1",
+            "label": "Name 1"
+          },
+          {
+            "type": "text",
+            "id": "title_1",
+            "label": "Title 1"
+          },
+          {
+            "type": "textarea",
+            "id": "content_1",
+            "label": "Content 1"
+          },
+          {
+            "type": "text",
+            "id": "name_2",
+            "label": "Name 2"
+          },
+          {
+            "type": "text",
+            "id": "title_2",
+            "label": "Title 2"
+          },
+          {
+            "type": "textarea",
+            "id": "content_2",
+            "label": "Content 2"
+          },
+          {
+            "type": "text",
+            "id": "name_3",
+            "label": "Name 3"
+          },
+          {
+            "type": "text",
+            "id": "title_3",
+            "label": "Title 3"
+          },
+          {
+            "type": "textarea",
+            "id": "content_3",
+            "label": "Content 3"
+          }
+        ]
+      },
+      {
+        "type": "text-with-image",
+        "name": "Text with image",
+        "settings": [
+          {
+            "type": "select",
+            "id": "image_align",
+            "label": "Image align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Align left"
+              },
+              {
+                "value": "right",
+                "label": "Align right"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "testimonial_author",
+            "label": "Testimonial Author",
+            "default": "Andy Freeman"
+          },
+          {
+            "type": "text",
+            "id": "testimonial_company",
+            "label": "Testimonial Company",
+            "default": "Ohio Tree MD"
+          },
+          {
+            "type": "image_picker",
+            "id": "testimonial_image",
+            "label": "Testimonial Image"
+          },
+          {
+            "type": "textarea",
+            "id": "testimonial_text",
+            "label": "Testimonial more information",
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button video text"
+          },
+          {
+            "type": "video",
+            "id": "video",
+            "label": "Video"
+          },
+          {
+            "type": "video_url",
+            "id": "video_url",
+            "accept": ["youtube", "vimeo"],
+            "label": "Video URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial with rows",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

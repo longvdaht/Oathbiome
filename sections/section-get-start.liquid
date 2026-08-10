@@ -1,0 +1,61 @@
+{{ 'section-get-start.css' | asset_url | stylesheet_tag }}
+<div class="section-get-start wrapper">
+  <div class="heading-content">
+    {%- if section.settings.heading != blank -%}
+      <h4>{{ section.settings.heading }}</h4>
+    {%- endif -%}
+  </div>
+  <div class="lines">
+    {%- for block in section.blocks  -%}
+      {%- if block.settings.line-text != blank -%}
+        <div class="line">
+          <a href="{{ block.settings.link-text }}">
+            <h2>{{ block.settings.line-text }}</h2>
+            <div class="icon-arrow">{%- render 'icon-get-start' -%}</div>
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Section Easy to Use",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "line-text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link-text",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "section get start",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,50 @@
+.hero__title:before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: var(--color-medium-gray);
+  position: absolute;
+  left: -20px;
+  top: 13px;
+}
+
+.hero__title {
+  font-family: var(--font-fk-roman);
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 115%;
+  letter-spacing: -.03em;
+  margin-bottom: 10px;
+}
+
+.hero__rte p {
+  font-family: var(--font-fk-roman);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 145%;
+  letter-spacing: -.03em;
+  color: var(--color-brown);
+}
+
+@media (min-width: 901px) {
+  .hero__title:before {
+    left: -50px;
+    width: 30px;
+    top: 16px;
+  }
+
+  .hero__title {
+    font-size: 38px;
+    line-height: 105%;
+    letter-spacing: -.04em;
+    margin-bottom: 20px;
+  }
+
+  .hero__rte p {
+    font-size: 20px;
+    line-height: 145%;
+    letter-spacing: -.03em;
+    margin-bottom: 20px;
+  }
+}

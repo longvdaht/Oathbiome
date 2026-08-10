@@ -1,0 +1,263 @@
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+<!-- /sections/footer.liquid -->
+
+{%- liquid
+  assign blocks_size = section.blocks.size
+  assign logo = section.settings.logo
+  assign blocks_code = ''
+-%}
+
+{%- style -%}
+  
+{%- endstyle -%}
+
+<footer class="footer-wrapper" data-section-id="{{ section.id }}" data-section-type="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      {%- if logo -%}
+        {%- liquid
+          assign logo_width = section.settings.logo_image_width
+          assign logo_width_px = logo_width | append: 'px'
+          assign logo_width_2x = logo_width | times: 2
+          assign logo_width_3x = logo_width | times: 3
+          assign logo_widths = logo_width | append: ',' | append: logo_width_2x | append: ',' | append: logo_width_3x
+          assign logo_alt = logo.alt | default: shop.name | strip_html | escape
+        -%}
+        <div class="footer__logo">
+          <a href="{{ routes.root_url }}" class="" style="width: {{ logo_width_px }};">
+            {%- render 'image' image: logo, width: logo_width_2x, widths: logo_widths, sizes: logo_width_px, alt: logo_alt -%}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="footer-midle">
+      {%- if section.blocks.size > 0 -%}
+        <div class="footer__blocks">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_type = block.type
+              assign title = block.settings.title
+
+              if block_type == 'linklist' or block_type == 'social' or block_type == 'text'
+                if block_type == 'linklist'
+                  assign linklist = linklists[block.settings.linklist]
+                  assign title = title | default: linklist.title
+                endif
+              endif
+            -%}
+
+            {%- case block_type -%}
+              {%- when 'linklist' -%}
+                <div class="footer__block footer__block--menu" {{ block.shopify_attributes }}>
+                  <div class="footer-text-medium">
+                    {%- if title != blank -%}
+                      {{ title }}
+                    {%- endif -%}
+                  </div>
+
+                  {%- if linklist != blank -%}
+                    <ul class="footer__quicklinks">
+                      {%- for link in linklist.links -%}
+                        <li><a class="footer-text-regular" href="{{ link.url }}">{{ link.title }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+              {%- when 'social' -%}
+                <div class="footer__block footer__block--social" {{ block.shopify_attributes }}>
+                  <div class="footer-text-medium">
+                    {%- if title != blank -%}
+                      {{ title }}
+                    {%- endif -%}
+                  </div>
+                  <div class="">
+                    {%- render 'social-icons' enable_follow_on_shop: block.settings.enable_follow_on_shop -%}
+                  </div>
+                </div>
+
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="footer__text hidden-desktop">
+        {%- if section.settings.title != blank -%}
+          <h3>{{ section.settings.title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p>{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if settings.terms_conditions_title != blank or settings.privacy_policy_title != blank -%}
+        <div class="footer__block footer__block--customer">
+          <ul class="footer__quicklinks">
+            {%- if settings.terms_conditions_title != blank -%}
+              <li><a class="footer-text-regular" href="{{ settings.terms_conditions_url }}">{{ settings.terms_conditions_title }}</a></li>
+            {%- endif -%}
+            {%- if settings.privacy_policy_title != blank -%}
+              <li><a class="footer-text-regular" href="{{ settings.privacy_policy_url }}">{{ settings.privacy_policy_title }}</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="footer-right hidden-mobile">
+      <div class="footer__text">
+        {%- if section.settings.title != blank -%}
+          <h3>{{ section.settings.title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p>{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (sessionStorage.getItem("scrollToNavTag") === "true") {
+      const navTag = document.getElementById("nav-tag");
+      if (navTag) {
+        navTag.scrollIntoView({ behavior: "smooth" });
+      }
+      sessionStorage.removeItem("scrollToNavTag");
+    }
+
+    document.querySelectorAll(".pagination-custom a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        sessionStorage.setItem("scrollToNavTag", "true");
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+    },
+    {
+      "label": "Logo",
+      "type": "image_picker",
+      "id": "logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_image_width",
+      "label": "Logo width (in pixels)",
+      "min": 50,
+      "max": 400,
+      "step": 5,
+      "unit": "px",
+      "default": 150
+    }
+  ],
+  "blocks" : [
+    {
+      "type": "linklist",
+      "name": "Link list",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "linklist",
+          "label": "Link list",
+          "default": "footer",
+          "info": "This menu won't show dropdown items."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Edit your social settings and accounts in [Theme settings](/admin/themes/current/editor?context=theme)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Social"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Follow on Shop",
+          "info": "Display follow button for your storefront on the Shop app. [Learn more](https://help.shopify.com/manual/online-store/themes/customizing-themes/follow-on-shop)"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_follow_on_shop",
+          "default": false,
+          "label": "Enable Follow on Shop"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "Image width (in pixels)",
+          "min": 50,
+          "max": 400,
+          "step": 5,
+          "unit": "px",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share store details, promotions, or brand content with your customers.</p>"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

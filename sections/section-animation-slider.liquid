@@ -1,0 +1,361 @@
+{{ 'section-animation-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-animation-slider.js' | asset_url }}" defer="defer"></script>
+
+
+{% style %}
+  .custom-section-animation:has(.section-{{ section.id }}) {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  .section-{{ section.id }} .section-animation__container {
+    background-color: {{ section.settings.bg_color }};
+  }
+  
+  .section-{{ section.id }} .section-animation__content--title:not(.mobile), 
+  .section-{{ section.id }} .section-animation__content--description:not(.mobile), 
+  .section-{{ section.id }} .section-animation__content--subheading {
+    color: {{ section.settings.text_color }};
+  }
+
+  .section-{{ section.id }} .section-dots {
+    color: {{ section.settings.counter_text_color }};
+  }
+
+  .section-{{ section.id }} .section-dots:hover {
+    color: {{ section.settings.counter_hover_text_color }};
+  }
+
+  .section-{{ section.id }} .section-dots.active,
+  .section-{{ section.id }} .section-mobile-controls .next-slide, 
+  .section-{{ section.id }} .section-mobile-controls .prev-slide,
+  .section-{{ section.id }} .mobile-indicator {
+    color: {{ section.settings.counter_active_text_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-section-animation:has(.section-{{ section.id }}) {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-{{ section.id }} section-animation">
+  <div class="pl-50 pr-50 wrapper-content">
+    {% if section.settings.heading != blank  %}
+      <h3 class="heading subhead-lg">{{ section.settings.heading }}</h3>
+    {% endif %}
+    
+    {% assign intro_block = nil %}
+    {% for block in section.blocks %}
+      {% if block.settings.slide_type == 'intro' %}
+        {% assign intro_block = block %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="intro-mobile-heading">
+      <div class="content-intro block-wrapper">
+        <div class="section-animation__content">
+          <div class="section-animation__header-group">
+            {% if section.settings.mobile_heading != blank %}
+              <h4 class="section-animation__content--title mobile">{{ section.settings.mobile_heading }}</h4>
+            {% endif %}
+          </div>
+          {% if section.settings.description != blank  %}
+            <p class="section-animation__content--description mobile body-large">{{ section.settings.description | newline_to_br }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="section-animation__container">
+      {% if intro_block %}
+        <div class="section-animation__item section-animation__item--intro block-{{ intro_block.id }}">
+          <div class="section-animation__content">
+            <div class="section-animation__header-group">
+              {% if intro_block.settings.subheading != blank  %}
+                <p class="section-animation__content--subheading subhead-s">{{ intro_block.settings.subheading }}</p>
+              {% endif %}
+              {% if intro_block.settings.heading != blank %}
+                <h4 class="section-animation__content--title mobile-hidden">{{ intro_block.settings.heading }}</h4>
+              {% endif %}
+              {% if intro_block.settings.mobile_heading != blank %}
+                <h4 class="section-animation__content--title mobile-show">{{ intro_block.settings.mobile_heading }}</h4>
+              {% endif %}
+            </div>
+            {% if intro_block.settings.description != blank  %}
+              <p class="section-animation__content--description sub-body body-large">{{ intro_block.settings.description | newline_to_br }}</p>
+            {% endif %}
+          </div>
+          <div class="section-animation__video section-animation__video--intro">
+            {% if intro_block.settings.video_url != blank  %} 
+              {% assign intro_source = intro_block.settings.video_url.sources | last %}
+              <video class="section-animation__video--item mobile-hidden" muted loop playsinline>
+                <source src="{{ intro_source.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              {% if intro_block.settings.custom_image != blank  %}
+                <img class="section-animation__image--item mobile-show" src="{{ intro_block.settings.custom_image | image_url: width: 1200 }}" alt="{{ block.settings.custom_image.alt | escape }}">
+              {% endif %}
+              <div class="section-animation__first-icon">{% render 'play-button' %}</div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      {% assign regular_block_count = 0 %}
+      {% for block in section.blocks %}
+        {% if block.settings.slide_type == 'regular' %}
+          {% assign regular_block_count = regular_block_count | plus: 1 %}
+          <div class="section-animation__item section-animation__item--slide block-{{ block.id }}">
+            <div class="section-animation__content">
+              <div class="section-animation__header-group">
+                {% if block.settings.subheading != blank  %}
+                  <p class="section-animation__content--subheading subhead-s">{{ block.settings.subheading }}</p>
+                {% endif %}
+                
+                {% if block.settings.heading != blank  %}
+                  <h4 class="section-animation__content--title mobile-hidden">{{ block.settings.heading }}</h4>
+                {% endif %}
+
+                {% if block.settings.mobile_heading != blank %}
+                  <h4 class="section-animation__content--title mobile-show">{{ block.settings.mobile_heading }}</h4>
+                {% elsif block.settings.heading != blank %}
+                  <h4 class="section-animation__content--title mobile-show">{{ block.settings.heading }}</h4>
+                {% endif %}
+              </div>
+              {% if block.settings.description != blank %}
+                <p class="section-animation__content--description sub-body body-large">{{ block.settings.description | newline_to_br }}</p>
+              {% endif %}
+            </div>
+            <div class="section-animation__video">
+              {% if block.settings.video_url %}
+                {% assign video_source = block.settings.video_url.sources | last %}
+                <video id="viewport-video" class="section-animation__video--item" muted playsinline>
+                  <source src="{{ video_source.url }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <div class="section-animation__regular-icon icon-hidden">{% render 'play-button' %}</div>
+              {% elsif block.settings.custom_image %}
+                <img class="section-animation__image--item" src="{{ block.settings.custom_image | image_url: width: 1200 }}" alt="{{ block.settings.custom_image.alt | escape }}">
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+    </div>
+
+    {% if regular_block_count > 0 %}
+      <div class="section-number__container hidden">
+        {% assign count = 0 %}
+        {% for block in section.blocks %}
+          {% if block.settings.slide_type == 'regular' %}
+            {% assign count = count | plus: 1 %}
+            <h2 class="section-dots" data-block-id="{{ block.id }}" data-index="{{ count }}">{{ count }}</h2>
+          {% endif %}
+        {% endfor %}
+
+        <div class="section-mobile-controls">
+          <button class="prev-slide">{% render 'arrow-prev' %}</button>
+          <div class="mobile-indicator"><p class="slider-current body-small">1</p>/<p class="slider-total body-small">{{ count }}</p></div>
+          <button class="next-slide">{% render 'arrow-next' %}</button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Section Animation Slider",
+    "class": "custom-section-animation wrapper-container",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "The Oath Microbial Discovery Engine"
+      },
+      {
+        "type": "header",
+        "content": "Mobile intro heading content"
+      },
+      {
+        "type": "text",
+        "id": "mobile_heading",
+        "label": "Mobile Heading",
+        "default": "Soil microbes evolved 1 billion years ago. Without them, there would be no plants."
+      },
+      { 
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "We sequence the genome of each microbe to identify beneficial functions (e.g., enzymatic capacity to degrade plant litter, nitrogen fixation, drought tolerance)."
+      },
+      {
+        "type": "header",
+        "content": "Section Color Settings"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#301912"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "counter_text_color",
+        "label": "Counter Text Color",
+        "default": "#a39280"
+      },
+      {
+        "type": "color",
+        "id": "counter_active_text_color",
+        "label": "Counter Active Text Color/Mobile Indicator Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "counter_hover_text_color",
+        "label": "Counter Hover Text Color",
+        "default": "#a39280"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Animation Block",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "select",
+            "id": "slide_type",
+            "label": "Slide Type",
+            "default": "regular",
+            "options": [
+              {
+                "value": "intro",
+                "label": "Intro Slide"
+              },
+              {
+                "value": "regular",
+                "label": "Regular Slide"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Sub Heading",
+            "default": "Oath Microbial Discovery Engine"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Soil microbes evolved 1 billion years ago. Without them, there would be no plants."
+          },
+          {
+            "type": "text",
+            "id": "mobile_heading",
+            "label": "Mobile Heading",
+            "default": "Default Mobile Heading"
+          },
+          { 
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "380 million years ago, plants developed roots in the soil and co-evolved functional relationships with the microbes surrounding their roots to enhance each other’s ability to survive storms, droughts, floods, fires, and freezes."
+          },
+          {
+            "type": "header",
+            "content": "Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "custom_image",
+            "label": "Custom Image",
+            "info": "Slide intro Image takes priotity over video on mobile"
+          },
+          {
+            "type": "video",
+            "id": "video_url",
+            "label": "MP4 Video URL (Takes Priority Over Image)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section Animation Slider",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "block"
+          },
+          {
+            "type": "block"
+          },
+          {
+            "type": "block"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

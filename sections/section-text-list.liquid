@@ -1,0 +1,149 @@
+{{ 'section-text-list.css' |  asset_url | stylesheet_tag }}
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media (min-width: 990px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .section-{{ section.id }} .text-list__subheading {
+      max-width: {{ section.settings.subheading_size }}%;
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="text-list wrapper section-{{ section.id }}">
+  <div class="text-list__container">
+    {% if section.settings.subheading %}
+      <h3 class="text-list__subheading">{{ section.settings.subheading }}</h3>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="text-list__content">
+        {% for block in section.blocks %}
+          {% if block.settings.text %}
+            <div class="text-list__text">
+              {% render 'check-icon' %}
+              <p class="body-x-large">{{ block.settings.text }}</p>
+            </div>
+          {% endif %} 
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Organic fertilizers in Oath Soil Life play well with other natural plant health care products and protocols."
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Desktop Subheading Size",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings" 
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_list_item",
+      "name": "Text Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Sea minerals"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text List Section",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "text_list_item"
+        },
+        {
+          "type": "text_list_item"
+        },
+        {
+          "type": "text_list_item"
+        },
+        {
+          "type": "text_list_item"
+        },
+        {
+          "type": "text_list_item"
+        },
+        {
+          "type": "text_list_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

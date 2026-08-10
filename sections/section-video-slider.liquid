@@ -1,0 +1,269 @@
+{{ 'section-video-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-video-slider.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  {% for block in section.blocks %}
+    {% if block.settings.thumbnail == blank and block.settings.normal_video == blank and block.settings.video_url == blank %}
+      .video-slider__item block-{{ block.id }} {
+        display: none;
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% if section.blocks.size <= 3 %}
+    @media (min-width: 750px) {
+      .normal-container .video-slider__item {
+        max-width: calc((100vw - 2 * var(--outer)) / {{ section.blocks.size }} - 10px);
+        min-width: calc((100vw - 2 * var(--outer)) / {{ section.blocks.size }} - 10px);
+        height: 100%;
+      }
+    }
+
+    @media (min-width: 1680px) {
+      .normal-container .video-slider__item {
+        max-width: calc((var(--WIDTH-NORMAL) - 2 * var(--outer)) / {{ section.blocks.size }} - 5px);
+        min-width: calc((var(--WIDTH-NORMAL) - 2 * var(--outer)) / {{ section.blocks.size }} - 5px);
+      }
+    }
+  {% endif %}
+{% endstyle %}
+
+<div class="section-{{ section.id }} video-slider">
+  <div class="video-slider__info">
+    {% if section.settings.title %}
+      <h5 class="video-slider__title">{{ section.settings.title }}</h5>
+    {% endif %}
+
+    {% if section.settings.description %}
+      <p class="video-slider__description body-x-large">{{ section.settings.description }}</p>
+    {% endif %}
+
+    <div class="group-button">
+      <div class="custom-prev">
+        {% render 'prev-icon' %}
+      </div>
+      <div class="custom-next">
+        {% render 'next-icon' %}
+      </div>
+    </div>
+  </div>
+  <div class="video-slider__container normal-container">
+    {% for block in section.blocks %}
+      {% assign video_type = '' %}
+      {% assign video_src = '' %}
+      {% assign thumbnail_url = '' %}
+
+      {% if block.settings.normal_video != blank %}
+        {% assign video_type = 'mp4' %}
+        {% assign last_source = block.settings.normal_video.sources | last %}
+        {% assign video_src = last_source.url %}
+        {% if block.settings.normal_video.preview_image %}
+          {% assign thumbnail_url = block.settings.normal_video.preview_image | image_url: width: 800 %}
+        {% endif %}
+      {% elsif block.settings.video_url != blank %}
+        {% assign video_type = 'youtube' %}
+        {% assign video_src = block.settings.video_url | escape %}
+
+        {% assign video_url = block.settings.video_url %}
+        {% assign video_id = '' %}
+        {% if video_url contains 'v=' %}
+          {% assign video_id = video_url | split: 'v=' | last | split: '&' | first %}
+        {% else %}
+          {% assign video_id = video_url | split: '/' | last %}
+        {% endif %}
+        {% assign thumbnail_url = 'https://img.youtube.com/vi/' | append: video_id | append: '/hqdefault.jpg' %}
+      {% endif %}
+
+      {% if block.settings.thumbnail %}
+        {% assign thumbnail_url = block.settings.thumbnail | image_url: width: 800 %}
+      {% endif %}
+
+      {% if thumbnail_url != blank %}
+        <div class="video-slider__item block-{{ block.id }}">
+          <div 
+            class="video-slider__thumb"
+          >
+            <img
+              class="video-slider__img"
+              src="{{ thumbnail_url }}"
+              alt="{{ block.settings.title | escape }}"
+              loading="lazy"
+              width="{{ thumbnail_url.width }}"
+              height="{{ thumbnail_url.height }}"
+            >
+
+            {% if video_type != '' and video_src != blank %}
+              <div
+                class="video-thumbnail open-video-popup"
+                data-block-id="{{ block.id }}"
+                data-video-type="{{ video_type }}"
+                data-video-src="{{ video_src | base64_encode }}"
+              >
+                {% render 'play-button' %}
+              </div>
+            {% endif %}
+          </div>
+
+          {% if block.settings.title != blank %}
+            <h6 class="video-slider__block-title">{{ block.settings.title }}</h6>
+          {% endif %}
+          {% if block.settings.description != blank %}
+            <p class="video-slider__block-description details-large">{{ block.settings.description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Video Slider",
+  "class": "section-video-slider",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Oath Soil Life in the field."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Hear how professionals are adopting Oath Soil Life and how Soil Health Care is changing their business."
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Video Settings",
+          "info": "Only one popup option can be used at a time."
+        },
+        {
+          "type": "video",
+          "id": "normal_video",
+          "label": "MP4"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Youtube link",
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+          "accept": ["youtube"]
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tommy Ferguson"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "American Camps Association President Texas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Slider",
+      "category": "Custom",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      },
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

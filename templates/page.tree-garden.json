@@ -1,0 +1,288 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_8EcT8T": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1104923774?share=copy",
+        "video_poster_image": "shopify://shop_images/Tree_Garden.jpg",
+        "show_video_popup": false,
+        "title": "<p>Tree & Garden</p>",
+        "text": "<p>It starts beneath your feet.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_intro_text_m9G8gC": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Replenish the soil microbiome to make a house a home.",
+        "descriptions": "<p>Whether you are a plant care professional or home grower, you care for trees and gardens because they surround families with life. Healthy soil is vital to unlocking nutrients, protecting roots, promoting blooming, and improving resilience against stresses. Increasing carbon in the soil while saving water and fertilizer is something we can all do to make our environment healthier. <br/><br/><em>Healthy soil feeds more than plants. </em></p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 150,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "section_scroll_accrodion_kkFJdA": {
+      "type": "section-scroll-accrodion",
+      "blocks": {
+        "accordion_kNmdQ9": {
+          "type": "accordion",
+          "settings": {
+            "title": "Increased Growth and Vitality",
+            "text": "Drawing more carbon down into soil builds strength and beauty in our home gardens and shared spaces, adding value to our land and pride in our communities.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Increased_Vitality.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_9xcaBE": {
+          "type": "accordion",
+          "settings": {
+            "title": "Water Savings",
+            "text": "Rebuilding soil structure and pore space increases the soil's ability to hold water.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Water_Savings.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_dcXUKT": {
+          "type": "accordion",
+          "settings": {
+            "title": "Input Efficiency",
+            "text": "Restoring soil health with natural microbes reduces the need for expensive inputs like fertilizers and water.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/InputEfficiency.mp4",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "accordion_kNmdQ9",
+        "accordion_9xcaBE",
+        "accordion_dcXUKT"
+      ],
+      "name": "Scroll Section",
+      "settings": {}
+    },
+    "section_image_data_BfLRxp": {
+      "type": "section-image-data",
+      "blocks": {
+        "image_qNVjde": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Tree_and_Garden_Desktop_6.jpg",
+            "image_mobile": "shopify://shop_images/Tree_and_Garden_Mobile_6a.jpg"
+          }
+        },
+        "image_8LAdjA": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Tree_and_Garden_Mobile_6b.jpg"
+          }
+        },
+        "image_L8LjLQ": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Tree_and_Garden_Mobile_6c.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_qNVjde",
+        "image_8LAdjA",
+        "image_L8LjLQ"
+      ],
+      "name": "Section Image Data",
+      "settings": {
+        "heading": "Spotlight: Tucson Botanical Gardens Pilot Tree Trials",
+        "descriptions": "Oath Soil Life significantly increased nutrient availability, vitality, and growth.",
+        "image_description_desktop": "Tucson Botanical Gardens Pilot Tree Trials",
+        "image_description": "Tucson Botanical Gardens Pilot Tree Trials",
+        "padding_top": 200,
+        "padding_bottom": 55,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 0
+      }
+    },
+    "section_intro_text_Pf9NUb": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Notes from the field.",
+        "descriptions": "",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 96,
+        "padding_bottom": 60,
+        "padding_top_mobile": 96,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "section_testimonial_with_rows_RBgGYP": {
+      "type": "section-testimonial-with-rows",
+      "blocks": {
+        "text_with_image_KFkQMd": {
+          "type": "text-with-image",
+          "settings": {
+            "image_align": "left",
+            "testimonial_author": "Andy Freeman",
+            "testimonial_company": "Ohio Tree MD",
+            "testimonial_image": "shopify://shop_images/Andy-Thumbnail-2.jpg",
+            "testimonial_text": "I've been treating my clients' properties with Oath Soil Life for over 2 years. Soil Health Care has become 30% of my business, and increased my profit margins by 50%.",
+            "button_text": "Meet Andy",
+            "video_url": "https://vimeo.com/1103304945?share=copy"
+          }
+        },
+        "olny_text_eEhTDH": {
+          "type": "olny-text",
+          "disabled": true,
+          "settings": {
+            "name_1": "Tad Jacobs",
+            "title_1": "Treemasters",
+            "content_1": "After applying Oath Soil Life, I saw substantial improvement in the health and vigor of historically declining trees. We've since used this system across many of our clients' properties, consistently achieving excellent results.",
+            "name_2": "Leslie Lyles",
+            "title_2": "Stewardship Horticultural",
+            "content_2": "I've been doing plant pathology with my sister for decades. Finally, this is something we can actually do for customers beyond pruning and diagnosis.",
+            "name_3": "Matt Hilbert",
+            "title_3": "KTK and Forestry",
+            "content_3": "My equipment broke, and I didn't think I could make money right now until you all called...now I see this as the future of my business. My customers are sold on soil regeneration, and I'm trying to transition all my consultations to focus on soil health."
+          }
+        },
+        "text_with_image_Dpgn6C": {
+          "type": "text-with-image",
+          "settings": {
+            "image_align": "right",
+            "testimonial_author": "Adam Farrell-Wortman",
+            "testimonial_company": "Tucson Botanical Gardens",
+            "testimonial_image": "shopify://shop_images/Img.jpg",
+            "testimonial_text": "I'm consistently hearing: 'The gardens have never been more vibrant, and the grounds have never been greener.'",
+            "button_text": "Meet Adam",
+            "video_url": "https://vimeo.com/1088936151"
+          }
+        },
+        "olny_text_cNT7RF": {
+          "type": "olny-text",
+          "settings": {
+            "name_1": "Zack Shier",
+            "title_1": "Joseph Tree",
+            "content_1": "Tree health and plant health in general starts in the soil. You can't really talk about maintaining or improving tree health without talking about the soil.",
+            "name_2": "Moses Cooper",
+            "title_2": "Momentum Tree Experts",
+            "content_2": "We donated 60 tree systems to the Durango Botanic Gardens, and the results have been excellent! We regularly hear from the Gardens how well the plants and trees are doing. Your product has truly made a noticeable difference, and everyone involved is excited about the improvements we’re seeing.",
+            "name_3": "Lisa Goodson",
+            "title_3": "Certified Arborist",
+            "content_3": "We are very pleased with this product! We took a pretty big hit here from Hurricane Milton. I am sure the treated trees are doing better due to the extra care and nice soil we are creating for them though. All are rebounding and showing new growth, so I am sure by spring we will see happy trees again."
+          }
+        },
+        "text_with_image_LnUVHe": {
+          "type": "text-with-image",
+          "settings": {
+            "image_align": "left",
+            "testimonial_author": "Dennise Vidosh",
+            "testimonial_company": "RE-TREE",
+            "testimonial_image": "shopify://shop_images/Dennise_Vidosh-web.jpg",
+            "testimonial_text": "Every tree has a history, a legacy, and a memory. Because of your product and the revitalization that we did together, I think these trees are going to live very long lives--their legacies were preserved.",
+            "button_text": "Meet Dennise",
+            "video_url": "https://vimeo.com/1100453542"
+          }
+        }
+      },
+      "block_order": [
+        "text_with_image_KFkQMd",
+        "olny_text_eEhTDH",
+        "text_with_image_Dpgn6C",
+        "olny_text_cNT7RF",
+        "text_with_image_LnUVHe"
+      ],
+      "name": "Testimonial with rows",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 148,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 20,
+        "background_color": "#103228",
+        "text_color": "#ffffff"
+      }
+    },
+    "section_lets_talk_6qk4RB": {
+      "type": "section-lets-talk",
+      "name": "Lets Talk",
+      "settings": {
+        "title": "Shop Tree & Garden",
+        "subtitle": "Visit our",
+        "button_text": "",
+        "link_text": "online store.",
+        "link": "https://www.oathsoillife.com/collections/oath-featured-collection",
+        "padding_top": 148,
+        "padding_bottom": 148,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "section_lets_talk_CpiLRG": {
+      "type": "section-lets-talk",
+      "disabled": true,
+      "name": "Lets Talk",
+      "settings": {
+        "title": "Join our Tree & Garden waitlist",
+        "subtitle": "Contact us:",
+        "button_text": "",
+        "link_text": "Care@OathBiome.com",
+        "link": "mailto:Care@OathBiome.com?subject=Inquiry",
+        "padding_top": 148,
+        "padding_bottom": 148,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 100
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_8EcT8T",
+    "section_intro_text_m9G8gC",
+    "section_scroll_accrodion_kkFJdA",
+    "section_image_data_BfLRxp",
+    "section_intro_text_Pf9NUb",
+    "section_testimonial_with_rows_RBgGYP",
+    "section_lets_talk_6qk4RB",
+    "section_lets_talk_CpiLRG"
+  ]
+}

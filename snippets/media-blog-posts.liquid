@@ -1,0 +1,103 @@
+{%- liquid
+  assign articles_per_row = section.settings.grid
+  assign article_limit = section.settings.articles_per_page | default: 8
+  assign show_button = section.settings.show_button
+  assign show_tags = section.settings.show_tags
+  assign aspect_ratio = 1 | divided_by: section.settings.aspect_ratio
+  assign animation_anchor = '#Blog--' | append: section.id
+  assign animation_duration = 800
+  assign animation_order = 0
+  assign title_tag = 'h2'
+
+  unless section.settings.title_tag == 'automatic'
+    assign title_tag = section.settings.title_tag
+  endunless
+
+  assign current_offset = offset | default: 0
+  assign articles_to_load = limit | default: article_limit
+  assign eager_images_limit = articles_per_row
+  if articles_per_row > 3
+    assign eager_images_limit = articles_per_row | times: 2
+  endif
+-%}
+
+<div class="grid-outer">
+  <div class="grid blog-listing" data-offset="{{ current_offset }}" data-limit="{{ articles_to_load }}" data-total="{{ blog_articles.size }}">
+    {%- for article in blog_articles limit: articles_to_load offset: current_offset -%}
+      {%- liquid
+        assign animation_order = animation_order | plus: 1
+
+        if forloop.index > eager_images_limit
+          assign loading = 'lazy'
+        endif
+      -%}
+
+      {%- capture tags -%}
+        {%- if article.tags.size > 0 and show_tags -%}
+          <div class="article__tags h6 caps">
+            {%- for tag in article.tags limit: 3 -%}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" title="{{ blog.title }} tagged {{ tag | escape }}" class="article__tag">{{ tag }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endcapture -%}
+      
+      <article class="article grid-item" data-id="{{ article.id }}">
+        <div
+          class="article__text-wrapper"
+          data-aos="hero"
+          data-aos-anchor="{{ animation_anchor }}"
+          data-aos-order="{{ animation_order }}"
+          data-aos-duration="{{ animation_duration }}"
+        >
+          <div class="article-info">
+            {% if article.metafields.custom.news_source_name != blank %}
+              <p class="source-name">{{ article.metafields.custom.news_source_name }}</p>
+            {% endif %}
+
+            <{{ title_tag }} class="article__title {{ section.settings.title_font_size }}">
+              {% if article.metafields.custom.external_link %}
+                {% assign raw = article.metafields.custom.external_link %}
+                {% assign url_part = raw | split: '"url":"' | last %}
+                {% assign url = url_part | split: '"' | first %}
+
+                <a class="article link" href="{{ url }}" title="{{ article.title | strip_html | escape }}" target="_blank" rel="noopener">
+                  {{ article.title }}
+                </a>
+              {% else %}
+                <a href="{{ article.url }}" class="article link" title="{{ article.title | strip_html | escape }}">
+                  {{ article.title }}
+                </a>
+              {% endif %}
+            </{{ title_tag }}>
+          </div>
+          {%- if show_button -%}
+            <div class="article__link">
+              {% if article.metafields.custom.external_link %}
+                {% assign raw = article.metafields.custom.external_link %}
+                {% assign url_part = raw | split: '"url":"' | last %}
+                {% assign url = url_part | split: '"' | first %}
+
+                <a href="{{ url }}" target="_blank" class="btn btn-icon btn-green" aria-label="{{ 'blogs.article.read_more' | t }}">
+                  <span>{{ 'blogs.article.read_more' | t }}</span>
+                </a>
+              {% else %}
+                <a href="{{ article.url }}" class="btn btn-icon btn-green" aria-label="{{ 'blogs.article.read_more' | t }}">
+                  <span>{{ 'blogs.article.read_more' | t }}</span>
+                </a>
+              {% endif %}
+            </div>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+
+  {%- if blog_articles.size > articles_to_load %}
+    <div class="load-more-container">
+      <button class="btn load-more-btn btn-icon btn-see-more" data-offset="{{ articles_to_load }}" data-limit="{{ articles_to_load }}">
+        <span>{{ 'blogs.sidebar.see_more' | t}}</span>
+      </button>
+    </div>
+  {%- endif %}
+</div>

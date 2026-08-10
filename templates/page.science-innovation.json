@@ -1,0 +1,1038 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_VV8TAx": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1102247826",
+        "video_poster_image": "shopify://shop_images/Science.jpg",
+        "show_video_popup": false,
+        "title": "<p>Replenishing the soil microbiome.</p>",
+        "text": "<p>Oath Soil Life is a fully characterized diverse microbial consortium backed by decades of research and demonstrated efficacy.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "eight-fifty-height-hero--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_animation_slider_gE3gi9": {
+      "type": "section-animation-slider",
+      "blocks": {
+        "block_yhMi9a": {
+          "type": "block",
+          "settings": {
+            "slide_type": "intro",
+            "subheading": "Oath Microbial Discovery Engine",
+            "heading": "Soil microbes evolved 1 billion years ago. Without them, there would be no plants.",
+            "mobile_heading": "Recently, advanced genomic technologies enable us to sequence the soil microbiome to uncover the specific roles these microbes play. Still, humans have characterized fewer than 1% of soil microbes.",
+            "description": "460 million years ago, plants developed roots in the soil and co-evolved functional relationships with the microbes surrounding their roots to enhance each other’s ability to survive storms, droughts, floods, fires, and freezes.\n\nRecently, advanced genomic technologies enable us to sequence the DNA of the soil microbiome to uncover the specific roles these microbes play. Still, humans have characterized fewer than 1% of soil microbes.",
+            "custom_image": "shopify://shop_images/DE_Animation_Mobile_Static_Image.png",
+            "video_url": "shopify://files/videos/DSEN_Animation_Final_Preview.mp4"
+          }
+        },
+        "block_Ug3typ": {
+          "type": "block",
+          "settings": {
+            "slide_type": "regular",
+            "subheading": "This is our science at Oath:",
+            "heading": "We isolate ideal probiotic candidates from nature.",
+            "mobile_heading": "We isolate ideal probiotic candidates from nature.",
+            "description": "",
+            "video_url": "shopify://files/videos/DSEN_Animation_Final_Cut01_Trimmed2.mp4"
+          }
+        },
+        "block_H6dHFp": {
+          "type": "block",
+          "settings": {
+            "slide_type": "regular",
+            "subheading": "This is our science at Oath:",
+            "heading": "Our microbiologists and data scientists sequence the DNA of the soil microbiome, characterizing these microbes to uncover their specific soil functions, such as: ",
+            "mobile_heading": "Our microbiologists and data scientists sequence the DNA of the soil microbiome, characterizing these microbes to uncover their specific functions, such as: Carbon Cycling, Nitrogen Fixation, Water Holding Capacity, Soil Structure.",
+            "description": "Carbon Cycling\nNitrogen Fixation\nWater Holding Capacity\nSoil Structure",
+            "video_url": "shopify://files/videos/DSEN_Animation_Final_Cut02.mp4"
+          }
+        },
+        "block_4HTXjy": {
+          "type": "block",
+          "settings": {
+            "slide_type": "regular",
+            "subheading": "This is our science at Oath:",
+            "heading": "We compose diverse, targeted microbial communities to replenish the soil microbiome for all applications, rigorously testing each consortium in vitro and in planta.",
+            "mobile_heading": "We compose diverse, targeted microbial communities to replenish the soil microbiome for all applications, rigorously testing each consortium in vitro and in planta.",
+            "description": "",
+            "video_url": "shopify://files/videos/DSEN_Animation_Final_Cut03.mp4"
+          }
+        },
+        "block_mJERiL": {
+          "type": "block",
+          "settings": {
+            "slide_type": "regular",
+            "subheading": "This is our science at Oath:",
+            "heading": "Continuously training our Microbial Discovery Engine through an iterative feedback loop. No gene editing or modification ever.",
+            "mobile_heading": "Continuously training our Microbial Discovery Engine through an iterative feedback loop. No gene editing or modification ever.",
+            "description": "",
+            "video_url": "shopify://files/videos/DE Animation Video 4.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "block_yhMi9a",
+        "block_Ug3typ",
+        "block_H6dHFp",
+        "block_4HTXjy",
+        "block_mJERiL"
+      ],
+      "name": "Section Animation Slider",
+      "settings": {
+        "heading": "The Oath Microbial Discovery Engine",
+        "mobile_heading": "Soil microbes evolved 1 billion years ago. Without them, there would be no plants.",
+        "description": "460 million years ago, plants developed roots in the soil and co-evolved functional relationships with the microbes surrounding their roots to enhance each other’s ability to survive storms, droughts, floods, fires, and freezes.",
+        "bg_color": "#301b11",
+        "text_color": "#ffffff",
+        "counter_text_color": "#a39280",
+        "counter_active_text_color": "#ffffff",
+        "counter_hover_text_color": "#a39280",
+        "padding_top": 152,
+        "padding_bottom": 60,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_intro_text_WB9B3d": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Proven by performance",
+        "descriptions": "<p>We have more than 20 years of data from over 220 pilot studies, demonstrating clear efficacy and replicable results.</p>",
+        "button_text": "",
+        "button_url": "shopify://pages/media-research",
+        "padding_top": 90,
+        "padding_bottom": 30,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "chart_stat_section_CRHE8r": {
+      "type": "chart-stat-section",
+      "blocks": {
+        "single_bar_kfD8t4": {
+          "type": "single-bar",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Increased Yield by 160% & Provided an Additional Lift with Fertilizers",
+            "sub_heading": "<p>Average of 2 potato trials – Locations: Nyamagabe and Muzanze; Rwanda, Season A 2024/2025<br/><br/>Organic Fertilizer = animal dung and plant residue compost, NPK (1-0.2-1) 10 t/ha = NPK 100-20-100 <br/><br/>Inorganic Fertilizer = NPK (17/17/17) 300kg/ha = NPK 51-51-51<br/><br/>Fully Fertilized = organic and inorganic fertilizer</p>",
+            "person": "Rwanda Agriculture and Animal Resources Development Board",
+            "description": "t/ha",
+            "min_number": 0,
+            "max_number": 35,
+            "step_value": 5,
+            "number_of_lines": 8,
+            "show_percent_units": false,
+            "number_of_bars": 4,
+            "bar_1_label": "Untreated",
+            "bar_1_color": "#a39280",
+            "bar_1_text_color": "#ffffff",
+            "bar_1_value": "7",
+            "show_bar_1_unit": false,
+            "bar_2_label": "OSL 1kg/ha",
+            "bar_2_text_color": "#fbff36",
+            "bar_2_color": "#301912",
+            "bar_2_value": "19",
+            "show_bar_2_unit": false,
+            "bar_3_label": "Nitrogen 151kg/ha",
+            "bar_3_color": "#a39280",
+            "bar_3_text_color": "#ffffff",
+            "bar_3_value": "27",
+            "show_bar_3_unit": false,
+            "bar_4_label": "OSL 1kg/ha + Nitrogen 151kg/ha",
+            "bar_4_color": "#301912",
+            "bar_4_text_color": "#fbff36",
+            "bar_4_value": "32",
+            "show_bar_4_unit": false,
+            "bar_5_label": "",
+            "bar_5_color": "#f6f2eb",
+            "bar_5_text_color": "#fbff36",
+            "bar_5_value": "0",
+            "show_bar_5_unit": false
+          }
+        },
+        "single_bar_zYrA4Y": {
+          "type": "single-bar",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Increased Root Growth vs. Untreated Control",
+            "sub_heading": "<p>Greenhouse and nursery tests show significant increase in biomass of trees treated with Oath Soil Life vs. untreated controls in Pines, Red Cedar, and Cypress trees.</p>",
+            "person": "North Carolina State University",
+            "description": "",
+            "min_number": 0,
+            "max_number": 100,
+            "step_value": 20,
+            "number_of_lines": 6,
+            "show_percent_units": true,
+            "number_of_bars": 5,
+            "bar_1_label": "Bald Cypress",
+            "bar_1_color": "#301912",
+            "bar_1_text_color": "#fbff36",
+            "bar_1_value": "55",
+            "show_bar_1_unit": true,
+            "bar_2_label": "Longleaf Pine",
+            "bar_2_text_color": "#fbff36",
+            "bar_2_color": "#301912",
+            "bar_2_value": "64",
+            "show_bar_2_unit": true,
+            "bar_3_label": "Eastern White Pine",
+            "bar_3_color": "#301912",
+            "bar_3_text_color": "#fbff36",
+            "bar_3_value": "43",
+            "show_bar_3_unit": true,
+            "bar_4_label": "Eastern Red Cedar",
+            "bar_4_color": "#301912",
+            "bar_4_text_color": "#fbff36",
+            "bar_4_value": "34",
+            "show_bar_4_unit": true,
+            "bar_5_label": "Shortleaf Pine",
+            "bar_5_color": "#301912",
+            "bar_5_text_color": "#fbff36",
+            "bar_5_value": "37",
+            "show_bar_5_unit": true
+          }
+        },
+        "single_bar_mYjWhf": {
+          "type": "single-bar",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Increased Water Conservation vs. Untreated Control",
+            "sub_heading": "<p>Water-deficit trials on turfgrass show two-fold increase in percent water content in treated soils vs. untreated controls.</p>",
+            "person": "City of Tucson, Arizona",
+            "description": "Percent Water Content in Soil",
+            "min_number": 0,
+            "max_number": 40,
+            "step_value": 10,
+            "number_of_lines": 5,
+            "show_percent_units": true,
+            "number_of_bars": 2,
+            "bar_1_label": "Treated",
+            "bar_1_color": "#301912",
+            "bar_1_text_color": "#fbff36",
+            "bar_1_value": "35",
+            "show_bar_1_unit": true,
+            "bar_2_label": "Untreated",
+            "bar_2_text_color": "#ffffff",
+            "bar_2_color": "#a39280",
+            "bar_2_value": "17",
+            "show_bar_2_unit": true,
+            "bar_3_label": "",
+            "bar_3_color": "#f6f2eb",
+            "bar_3_text_color": "#f6f2eb",
+            "bar_3_value": "0",
+            "show_bar_3_unit": true,
+            "bar_4_label": "",
+            "bar_4_color": "#f6f2eb",
+            "bar_4_text_color": "#f6f2eb",
+            "bar_4_value": "0",
+            "show_bar_4_unit": true,
+            "bar_5_label": "",
+            "bar_5_color": "#f6f2eb",
+            "bar_5_text_color": "#f6f2eb",
+            "bar_5_value": "0",
+            "show_bar_5_unit": true
+          }
+        },
+        "double_bar_Fn7i7F": {
+          "type": "double-bar",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Improved Grass Visual Quality vs. Untreated Control",
+            "sub_heading": "<p>Visual test of turfgrass quality by the National Turfgrass Evaluation Program. Quality ranges from 1 (poor or dead) to 9 (perfect).</p>",
+            "person": "Dr. Mohammad Pessarakli, University of Arizona",
+            "description": "NTEP Scale 1 to 9",
+            "item_description": "Treated",
+            "item_description_color": "#301912",
+            "item_description_2": "Untreated",
+            "item_description_2_color": "#a39280",
+            "min_number": 4,
+            "max_number": 9,
+            "step_value": 1,
+            "number_of_lines": 6,
+            "show_percent_units": false,
+            "number_of_bars": 3,
+            "show_special_line": true,
+            "special_line_position": 3,
+            "special_line_text": "Acceptable Quality",
+            "special_line_color": "#301912",
+            "group_1_bar_label": "Test Turf 1",
+            "group_1_first_bar_color": "#301912",
+            "group_1_first_bar_text_color": "#fbff36",
+            "group_1_first_bar_value": "8",
+            "group_1_first_bar_show_unit": false,
+            "group_1_second_bar_color": "#a39280",
+            "group_1_second_bar_text_color": "#ffffff",
+            "group_1_second_bar_value": "6",
+            "group_1_second_bar_show_unit": false,
+            "group_2_bar_label": "Test Turf 2",
+            "group_2_first_bar_color": "#301912",
+            "group_2_first_bar_text_color": "#fbff36",
+            "group_2_first_bar_value": "8",
+            "group_2_first_bar_show_unit": false,
+            "group_2_second_bar_color": "#a39280",
+            "group_2_second_bar_text_color": "#ffffff",
+            "group_2_second_bar_value": "6",
+            "group_2_second_bar_show_unit": false,
+            "group_3_bar_label": "Test Turf 3",
+            "group_3_first_bar_color": "#301912",
+            "group_3_first_bar_text_color": "#fbff36",
+            "group_3_first_bar_value": "7",
+            "group_3_first_bar_show_unit": false,
+            "group_3_second_bar_color": "#a39280",
+            "group_3_second_bar_text_color": "#ffffff",
+            "group_3_second_bar_value": "6",
+            "group_3_second_bar_show_unit": false
+          }
+        },
+        "text_PxBLzh": {
+          "type": "text",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Reduced Soil Bulk Density vs. Untreated Control",
+            "sub_heading": "<p>Average of 3 Studies</p>",
+            "text": "-16%"
+          }
+        },
+        "text_g9BExT": {
+          "type": "text",
+          "settings": {
+            "bg_color": "#f6f2eb",
+            "heading": "Increased Soil Organic Carbon vs. Untreated Control",
+            "sub_heading": "<p>Average of 5 Studies</p>",
+            "text": "+51%"
+          }
+        }
+      },
+      "block_order": [
+        "single_bar_kfD8t4",
+        "single_bar_zYrA4Y",
+        "single_bar_mYjWhf",
+        "double_bar_Fn7i7F",
+        "text_PxBLzh",
+        "text_g9BExT"
+      ],
+      "name": "Chart Stat Section",
+      "settings": {
+        "text_color": "#301912",
+        "text_color_mb": "#301912",
+        "padding_top": 30,
+        "padding_bottom": 75,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "subset_data_section_gNWE4a": {
+      "type": "subset-data-section",
+      "blocks": {
+        "text_McPC66": {
+          "type": "text",
+          "settings": {
+            "content_1": "Catalina Foothills School District",
+            "content_2": "Central State University Ohio",
+            "content_3": "City of Tucson, Arizona",
+            "content_4": "Cornell University",
+            "content_5": "Dole Asia",
+            "content_6": "Dole Food Co"
+          }
+        },
+        "text_rNkaz7": {
+          "type": "text",
+          "settings": {
+            "content_1": "Illinois Sustainable Agriculture",
+            "content_2": "Experimental Station",
+            "content_3": "North Carolina State University",
+            "content_4": "Oregon State University",
+            "content_5": "Pennington Seed Co",
+            "content_6": "Tucson Botanical Gardens"
+          }
+        },
+        "text_4ReYw6": {
+          "type": "text",
+          "settings": {
+            "content_1": "University of Arizona",
+            "content_2": "University of Florida",
+            "content_3": "University of Idaho",
+            "content_4": "University of Rwanda",
+            "content_5": "University of Wyoming",
+            "content_6": "Washington State University"
+          }
+        }
+      },
+      "block_order": [
+        "text_McPC66",
+        "text_rNkaz7",
+        "text_4ReYw6"
+      ],
+      "settings": {
+        "title": "Subset of data gathered from university and field pilot trials from institutions such as:",
+        "title_width": 24,
+        "padding_top": 20,
+        "padding_bottom": 100,
+        "mobile_padding_top": 55,
+        "mobile_padding_bottom": 55
+      }
+    },
+    "section_rich_text_tnPyLT": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_fAtii7": {
+          "type": "heading",
+          "settings": {
+            "title": "The experts at Oath",
+            "heading_font_size": "heading-small",
+            "color": "#301912",
+            "padding_bottom": 30,
+            "heading_tag": "automatic"
+          }
+        },
+        "text_r8eUrL": {
+          "type": "text",
+          "settings": {
+            "text": "Oath works side by side with many of the world’s most accomplished microbiologists, data scientists, climate innovators, and field scientists.",
+            "text_heading": "p",
+            "text_font_size": "body-large",
+            "text_width": 43,
+            "text_color": "#301912",
+            "padding_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_fAtii7",
+        "text_r8eUrL"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "overlay_opacity": 0,
+        "show_overlay_text": false,
+        "padding_top": 146,
+        "padding_bottom": 64,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_expert_gallery_7pdHTa": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_Yarcei": {
+          "type": "expert",
+          "settings": {
+            "title": "Anna Edlund, PhD",
+            "infor": "<p>Founding Scientist<br/><a href=\"https://www.linkedin.com/in/anna-edlund-7ba5646/\" target=\"_blank\" title=\"https://www.linkedin.com/in/anna-edlund-7ba5646/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Anna_Hero_Portrait.jpg"
+          }
+        },
+        "expert_3XGnLW": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Jack Gilbert",
+            "infor": "<p>Chief Scientist<br/><a href=\"https://www.linkedin.com/in/drjackagilbert/\" target=\"_blank\" title=\"https://www.linkedin.com/in/drjackagilbert/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Jack-Gilbert.jpg"
+          }
+        },
+        "expert_KqdWB9": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Thomas Crowther",
+            "infor": "<p>Principal Ecologist<br/><a href=\"https://www.linkedin.com/in/crowther-thomas-ecology/\" target=\"_blank\" title=\"https://www.linkedin.com/in/crowther-thomas-ecology/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Thomas-Crowther.jpg"
+          }
+        },
+        "expert_WHgBtq": {
+          "type": "expert",
+          "settings": {
+            "title": "Maud Ohler, PhD",
+            "infor": "<p>SVP, Production & Supply</p><p><a href=\"https://www.linkedin.com/in/maud-ohler-78352217/\" target=\"_blank\" title=\"https://www.linkedin.com/in/maud-ohler-78352217/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Maud_Ohler.jpg"
+          }
+        },
+        "expert_fXYaBD": {
+          "type": "expert",
+          "settings": {
+            "title": "Abhinav Grama, PhD",
+            "infor": "<p>VP of Data Science and Digital Innovation<br/><a href=\"https://www.linkedin.com/in/abhinav-grama-phd-2a46b9173/\" target=\"_blank\" title=\"https://www.linkedin.com/in/abhinav-grama-phd-2a46b9173/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Abhivav.jpg"
+          }
+        },
+        "expert_LGVfiG": {
+          "type": "expert",
+          "settings": {
+            "title": "Julia Baltezore",
+            "infor": "<p>Director of Operations, Vacaville<br/><a href=\"https://www.linkedin.com/in/julia-baltezore-2b1744174/\" target=\"_blank\" title=\"https://www.linkedin.com/in/julia-baltezore-2b1744174/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Vacaville.jpg"
+          }
+        },
+        "expert_CPfPbB": {
+          "type": "expert",
+          "settings": {
+            "title": "Shib Sankar Basu, PhD",
+            "infor": "<p>Principal Scientist R&D Lead<br/><a href=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\" target=\"_blank\" title=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Shib-shanka.jpg"
+          }
+        },
+        "expert_RiWrVt": {
+          "type": "expert",
+          "settings": {
+            "title": "Josh Espinoza, PhD",
+            "infor": "<p>Computational Scientist</p><p><a href=\"https://www.linkedin.com/in/jolespin/\" target=\"_blank\" title=\"https://www.linkedin.com/in/jolespin/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Josh_Espinoza_PhD___Computational_Scientist.jpg"
+          }
+        },
+        "expert_tYBK76": {
+          "type": "expert",
+          "settings": {
+            "title": "Jamison McCorrison, PhD",
+            "infor": "<p>Sr. Bioinformatics Scientist<br/><a href=\"https://www.linkedin.com/in/jamisonmccorrison/\" target=\"_blank\" title=\"https://www.linkedin.com/in/jamisonmccorrison/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Jaminson.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_Yarcei",
+        "expert_3XGnLW",
+        "expert_KqdWB9",
+        "expert_WHgBtq",
+        "expert_fXYaBD",
+        "expert_LGVfiG",
+        "expert_CPfPbB",
+        "expert_RiWrVt",
+        "expert_tYBK76"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Science & Bioinformatics",
+        "padding_top": 0,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_6zMhPf": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_TitEtj": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Julia Baltezore",
+            "infor": "<p>Director of Operations, Vacaville<br/><a href=\"https://www.linkedin.com/in/julia-baltezore-2b1744174/\" target=\"_blank\" title=\"https://www.linkedin.com/in/julia-baltezore-2b1744174/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Vacaville.jpg"
+          }
+        },
+        "expert_cbCiPW": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Shib Sankar Basu, PhD",
+            "infor": "<p>Principal Scientist R&D Lead<br/><a href=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\" target=\"_blank\" title=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Shib-shanka.jpg"
+          }
+        },
+        "expert_wTwQwG": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Serena Fraraccio",
+            "infor": "<p>Scientist & Lab Manager<br/><a href=\"https://www.linkedin.com/in/serenafraraccio/\" target=\"_blank\" title=\"https://www.linkedin.com/in/serenafraraccio/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Serena.jpg"
+          }
+        },
+        "expert_EJRp8m": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Alisha O’Neil",
+            "infor": "<p>Microbiology Research Technician </p>",
+            "image": "shopify://shop_images/Alisha.jpg"
+          }
+        },
+        "expert_XbxcgX": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Niklas Perslow",
+            "infor": "<p>Microbiology Research Technician<br/><a href=\"https://www.linkedin.com/in/niklasperslow/\" target=\"_blank\" title=\"https://www.linkedin.com/in/niklasperslow/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Niklas.jpg"
+          }
+        },
+        "expert_fDaxFd": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Catrina Sengsourinho",
+            "infor": "<p>Microbiology Research Technician<br/><a href=\"https://www.linkedin.com/in/catrina-sengsourinho-7449a119b/\" target=\"_blank\" title=\"https://www.linkedin.com/in/catrina-sengsourinho-7449a119b/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Catrina.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_TitEtj",
+        "expert_cbCiPW",
+        "expert_wTwQwG",
+        "expert_EJRp8m",
+        "expert_XbxcgX",
+        "expert_fDaxFd"
+      ],
+      "disabled": true,
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "R&D and Production",
+        "padding_top": 16,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_mekLcD": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_9pLYUc": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Abhinav Grama, PhD",
+            "infor": "<p>VP of Data Science and Digital Innovation<br/><a href=\"https://www.linkedin.com/in/abhinav-grama-phd-2a46b9173/\" target=\"_blank\" title=\"https://www.linkedin.com/in/abhinav-grama-phd-2a46b9173/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Abhivav.jpg"
+          }
+        },
+        "expert_4rcXni": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Jamison McCorrison, PhD",
+            "infor": "<p>Sr. Bioinformatics Scientist<br/><a href=\"https://www.linkedin.com/in/jamisonmccorrison/\" target=\"_blank\" title=\"https://www.linkedin.com/in/jamisonmccorrison/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Jaminson.jpg"
+          }
+        },
+        "expert_EtbpbQ": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Josh Espinoza, PhD",
+            "infor": "<p>Computational Scientist</p><p><a href=\"https://www.linkedin.com/in/jolespin/\" target=\"_blank\" title=\"https://www.linkedin.com/in/jolespin/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Josh_Espinoza_PhD___Computational_Scientist.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_9pLYUc",
+        "expert_4rcXni",
+        "expert_EtbpbQ"
+      ],
+      "disabled": true,
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Data Science Bioinformatics",
+        "padding_top": 16,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_pUq7tC": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_nqTjpq": {
+          "type": "expert",
+          "settings": {
+            "title": "Dr. Martin Voss",
+            "infor": "<p>Chief Innovation Officer<br/><a href=\"https://www.linkedin.com/in/martin-voss-agribusiness/\" target=\"_blank\" title=\"https://www.linkedin.com/in/martin-voss-agribusiness/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Martin_Voss_portrait_FINAL.jpg"
+          }
+        },
+        "expert_xJGzfX": {
+          "type": "expert",
+          "settings": {
+            "title": "Dr. Virginie Boreux",
+            "infor": "<p>VP, Business Development, Field Science, Regulatory EU<br/><a href=\"https://www.linkedin.com/in/virginieboreux/\" target=\"_blank\" title=\"https://www.linkedin.com/in/virginieboreux/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Dr-Virginie-Boreux.jpg"
+          }
+        },
+        "expert_839xMa": {
+          "type": "expert",
+          "settings": {
+            "title": "Dr. Rodrigo Saraiva",
+            "infor": "<p>VP, Business Development, Field Science, Regulatory LATAM<br/><a href=\"https://www.linkedin.com/in/rodrigomoreirasaraiva/\" target=\"_blank\" title=\"https://www.linkedin.com/in/rodrigomoreirasaraiva/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Dr-Rodrigo-Saraiva.jpg"
+          }
+        },
+        "expert_h6dJxC": {
+          "type": "expert",
+          "settings": {
+            "title": "Cosette Khawaja",
+            "infor": "<p>Global Project Manager<br/><a href=\"https://www.linkedin.com/in/cosette-khawaja-0502b529/\" target=\"_blank\" title=\"https://www.linkedin.com/in/cosette-khawaja-0502b529/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Cosette_Portrait_Final.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_nqTjpq",
+        "expert_xJGzfX",
+        "expert_839xMa",
+        "expert_h6dJxC"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Field Science & Regulatory",
+        "padding_top": 16,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_Lwdb8r": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_MgdjWB": {
+          "type": "expert",
+          "settings": {
+            "title": "Paul Hawken",
+            "infor": "<p>Project Regeneration, Project Drawdown (advisor)<br/></p>",
+            "image": "shopify://shop_images/Paul-Hawkwn.jpg"
+          }
+        },
+        "expert_E6nFnc": {
+          "type": "expert",
+          "settings": {
+            "title": "Paul Stamets",
+            "infor": "<p>Founder Fungi Perfecti, MycoMedica (advisor)<br/><a href=\"https://www.linkedin.com/in/paul-stamets-14272910/\" target=\"_blank\" title=\"https://www.linkedin.com/in/paul-stamets-14272910/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Paul.jpg"
+          }
+        },
+        "expert_XTqewq": {
+          "type": "expert",
+          "settings": {
+            "title": "Mark Stevenson",
+            "infor": "<p>Founder CUR8 (advisor)<br/><a href=\"https://www.linkedin.com/in/mark-stevenson-448334/\" target=\"_blank\" title=\"https://www.linkedin.com/in/mark-stevenson-448334/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Mark-stevenson.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_MgdjWB",
+        "expert_E6nFnc",
+        "expert_XTqewq"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Climate Innovation",
+        "padding_top": 16,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_hwY8HU": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_xph3DP": {
+          "type": "expert",
+          "settings": {
+            "title": "Robert Bonnie",
+            "infor": "<p>Former US Under Secretary of Agriculture (advisor)<br/><a href=\"https://www.linkedin.com/in/robert-bonnie-894068367/\" target=\"_blank\" title=\"https://www.linkedin.com/in/robert-bonnie-894068367/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Robert.jpg"
+          }
+        },
+        "expert_3AaETw": {
+          "type": "expert",
+          "settings": {
+            "title": "Peter Byck",
+            "infor": "<p>Arizona State University (advisor)<br/><a href=\"https://www.linkedin.com/in/peter-byck-821a482/\" target=\"_blank\" title=\"https://www.linkedin.com/in/peter-byck-821a482/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Peter-Byck.jpg"
+          }
+        },
+        "expert_wtpzh4": {
+          "type": "expert",
+          "settings": {
+            "title": "Phil Hogan",
+            "infor": "<p>Former EU Commissioner for Agriculture (advisor)</p>",
+            "image": "shopify://shop_images/Phuil-hogun_b3bcaede-c444-4ac1-a30d-47b3b1a35cc5.jpg"
+          }
+        },
+        "expert_FnpnAJ": {
+          "type": "expert",
+          "settings": {
+            "title": "Peter Saavedra",
+            "infor": "<p>Co-Founder<br/><a href=\"https://www.linkedin.com/in/peter-saavedra-29ab57285/\" target=\"_blank\" title=\"https://www.linkedin.com/in/peter-saavedra-29ab57285/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Peter-Saavedra.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_xph3DP",
+        "expert_3AaETw",
+        "expert_wtpzh4",
+        "expert_FnpnAJ"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Regenerative Agriculture",
+        "padding_top": 16,
+        "padding_bottom": 68
+      }
+    },
+    "section_expert_gallery_bPCUGk": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_cEkJRp": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Janet Jansson",
+            "infor": "<p>SAB Chair<br/><a href=\"https://www.linkedin.com/in/janet-jansson-05286613/\" target=\"_blank\" title=\"https://www.linkedin.com/in/janet-jansson-05286613/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Janet-Jansson.jpg"
+          }
+        },
+        "expert_gYFRPL": {
+          "type": "expert",
+          "settings": {
+            "title": "Michael Amaranthus, PhD",
+            "infor": "<p>Oregon State University, Mycoanalytics<br/><a href=\"https://www.linkedin.com/in/mike-mike-amaranthus-63556240/\" target=\"_blank\" title=\"https://www.linkedin.com/in/mike-mike-amaranthus-63556240/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Michael-Amaranthus.jpg"
+          }
+        },
+        "expert_PqHR4g": {
+          "type": "expert",
+          "settings": {
+            "title": "Kirsten Benjamin, PhD",
+            "infor": "<p>Amyris, Pivot Bio, </p><p>Oath Biome</p><p><a href=\"https://www.linkedin.com/in/kirsten-benjamin-b6a8004/\" target=\"_blank\" title=\"https://www.linkedin.com/in/kirsten-benjamin-b6a8004/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Kirsten_Benjamin_PhD___EVP_Research_Development.jpg"
+          }
+        },
+        "expert_RcBnmb": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Thomas Crowther",
+            "infor": "<p>KAUST<br/><a href=\"https://www.linkedin.com/in/crowther-thomas-ecology/\" target=\"_blank\" title=\"https://www.linkedin.com/in/crowther-thomas-ecology/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Thomas-Crowther.jpg"
+          }
+        },
+        "expert_Qzw6m6": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor John E. Fernández",
+            "infor": "<p>MIT<br/><a href=\"https://www.linkedin.com/in/johnefernandez/\" target=\"_blank\" title=\"https://www.linkedin.com/in/johnefernandez/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Prof-John-Fernandez.jpg"
+          }
+        },
+        "expert_kENrj6": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Jack Gilbert",
+            "infor": "<p>UC San Diego<br/><a href=\"https://www.linkedin.com/in/drjackagilbert/\" target=\"_blank\" title=\"https://www.linkedin.com/in/drjackagilbert/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Jack-Gilbert.jpg"
+          }
+        },
+        "expert_9wnhrR": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Paul Jensen",
+            "infor": "<p>UC San Diego<br/><a href=\"https://www.linkedin.com/in/paul-jensen-940a256/\" target=\"_blank\" title=\"https://www.linkedin.com/in/paul-jensen-940a256/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Paul-Jensen.jpg"
+          }
+        },
+        "expert_rUyJby": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Jennifer Martiny",
+            "infor": "<p>UC Irvine<br/><a href=\"https://www.linkedin.com/in/jennifer-martiny-324161361/\" target=\"_blank\" title=\"https://www.linkedin.com/in/jennifer-martiny-324161361/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Jennifer-Martiny.jpg"
+          }
+        },
+        "expert_z7gKVx": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Professor Mette Haubjerg Nicolaisen",
+            "infor": "<p>University of Copenhagen<br/><a href=\"https://www.linkedin.com/in/mette-haubjerg-nicolaisen-801ba475/?originalSubdomain=dk\" target=\"_blank\" title=\"https://www.linkedin.com/in/mette-haubjerg-nicolaisen-801ba475/?originalSubdomain=dk\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Mette-Haubjerg-Nicolaisen.jpg"
+          }
+        },
+        "expert_FEbVM6": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Professor Joana Falcão Salles",
+            "infor": "<p>Groningen Institute<br/><a href=\"https://www.linkedin.com/in/joana-falc%C3%A3o-salles-83b27518/?originalSubdomain=nl\" target=\"_blank\" title=\"https://www.linkedin.com/in/joana-falc%C3%A3o-salles-83b27518/?originalSubdomain=nl\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Joana-Falcao-Salles_e8b941df-2dd5-4e4d-a3be-f43eb01572b6.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_cEkJRp",
+        "expert_gYFRPL",
+        "expert_PqHR4g",
+        "expert_RcBnmb",
+        "expert_Qzw6m6",
+        "expert_kENrj6",
+        "expert_9wnhrR",
+        "expert_rUyJby",
+        "expert_z7gKVx",
+        "expert_FEbVM6"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "Scientific Advisory Board",
+        "padding_top": 16,
+        "padding_bottom": 50
+      }
+    },
+    "section_expert_gallery_6EWXFq": {
+      "type": "section-expert-gallery",
+      "blocks": {
+        "expert_LaB8ME": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Mette Haubjerg Nicolaisen",
+            "infor": "<p>University of Copenhagen<br/><a href=\"https://www.linkedin.com/in/mette-haubjerg-nicolaisen-801ba475/?originalSubdomain=dk\" target=\"_blank\" title=\"https://www.linkedin.com/in/mette-haubjerg-nicolaisen-801ba475/?originalSubdomain=dk\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Mette-Haubjerg-Nicolaisen.jpg"
+          }
+        },
+        "expert_JB846P": {
+          "type": "expert",
+          "settings": {
+            "title": "Professor Joana Falcão Salles",
+            "infor": "<p>Groningen Institute<br/><a href=\"https://www.linkedin.com/in/joana-falc%C3%A3o-salles-83b27518/?originalSubdomain=nl\" target=\"_blank\" title=\"https://www.linkedin.com/in/joana-falc%C3%A3o-salles-83b27518/?originalSubdomain=nl\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Joana-Falcao-Salles_e8b941df-2dd5-4e4d-a3be-f43eb01572b6.jpg"
+          }
+        },
+        "expert_MLFNye": {
+          "type": "expert",
+          "settings": {
+            "title": "Shibu Yooseph",
+            "infor": "<p>Claremont McKenna College<br/><a href=\"https://www.linkedin.com/in/shibu-yooseph-ph-d-1524211/\" target=\"_blank\" title=\"https://www.linkedin.com/in/shibu-yooseph-ph-d-1524211/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Shibu-Yooseph.jpg"
+          }
+        },
+        "expert_aDLcWT": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Anna Edlund, PhD",
+            "infor": "<p>Founding Scientist<br/><a href=\"https://www.linkedin.com/in/anna-edlund-7ba5646/\" target=\"_blank\" title=\"https://www.linkedin.com/in/anna-edlund-7ba5646/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Anna_Hero_Portrait.jpg"
+          }
+        },
+        "expert_ncGV8U": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Kirsten Benjamin, PhD",
+            "infor": "<p>Amyris, Pivot Bio, </p><p>Oath Biome</p><p><a href=\"https://www.linkedin.com/in/kirsten-benjamin-b6a8004/\" target=\"_blank\" title=\"https://www.linkedin.com/in/kirsten-benjamin-b6a8004/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Kirsten_Benjamin_PhD___EVP_Research_Development.jpg"
+          }
+        },
+        "expert_x4Gfge": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Professor Jack Gilbert",
+            "infor": "<p>UC San Diego<br/><a href=\"https://www.linkedin.com/in/drjackagilbert/\" target=\"_blank\" title=\"https://www.linkedin.com/in/drjackagilbert/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Jack-Gilbert.jpg"
+          }
+        },
+        "expert_HrHKaf": {
+          "type": "expert",
+          "disabled": true,
+          "settings": {
+            "title": "Professor Thomas Crowther",
+            "infor": "<p>KAUST<br/><a href=\"https://www.linkedin.com/in/crowther-thomas-ecology/\" target=\"_blank\" title=\"https://www.linkedin.com/in/crowther-thomas-ecology/\">LinkedIn</a></p>",
+            "image": "shopify://shop_images/Professor-Thomas-Crowther.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "expert_LaB8ME",
+        "expert_JB846P",
+        "expert_MLFNye",
+        "expert_aDLcWT",
+        "expert_ncGV8U",
+        "expert_x4Gfge",
+        "expert_HrHKaf"
+      ],
+      "name": "Expert gallery",
+      "settings": {
+        "color_scheme": "",
+        "full_width_layout": false,
+        "heading": "",
+        "padding_top": 0,
+        "padding_bottom": 76
+      }
+    },
+    "section_newsletter_ob_GwzYDR": {
+      "type": "section-newsletter-ob",
+      "name": "OB Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/a86792222eed6c74a6457c63810ffbcd2f53ce62.jpg",
+        "title": "Get in touch",
+        "description": "",
+        "button_text": "Submit",
+        "enable_name": true,
+        "enable_email": true,
+        "enable_organization": false,
+        "enable_interests": true,
+        "enable_message": true,
+        "interest_options": "Agriculture, Grasslands, Forests, Parklands & Turfgrass, Tree & Garden, Africa, Media, Partnerships, Other",
+        "interest_label": "Interests*",
+        "success_message": "Thank you for reaching out."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_VV8TAx",
+    "section_animation_slider_gE3gi9",
+    "section_intro_text_WB9B3d",
+    "chart_stat_section_CRHE8r",
+    "subset_data_section_gNWE4a",
+    "section_rich_text_tnPyLT",
+    "section_expert_gallery_7pdHTa",
+    "section_expert_gallery_6zMhPf",
+    "section_expert_gallery_mekLcD",
+    "section_expert_gallery_pUq7tC",
+    "section_expert_gallery_Lwdb8r",
+    "section_expert_gallery_hwY8HU",
+    "section_expert_gallery_bPCUGk",
+    "section_expert_gallery_6EWXFq",
+    "section_newsletter_ob_GwzYDR"
+  ]
+}

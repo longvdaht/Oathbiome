@@ -1,0 +1,438 @@
+<!-- /sections/section-blog.liquid -->
+{%- liquid
+  assign blog = blogs[section.settings.blog_name]
+  assign blog_title = section.settings.title
+  assign color_scheme = 'color-' | append: section.settings.color_scheme
+  assign heading_tag = 'h2'
+  assign articles_per_row = section.settings.grid
+  assign columns_medium = 3
+  if articles_per_row == 2 or articles_per_row == 4
+    assign columns_medium = 2
+  endif
+
+  unless section.settings.heading_tag == 'automatic' or section.settings.heading_tag == blank
+    assign heading_tag = section.settings.heading_tag
+  endunless
+
+  assign current_offset = 0
+  assign limit = section.settings.articles_per_page | default: 8
+  assign total_articles = blog.articles_count
+%}
+
+{{ 'section-media-blog.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-media-blog-loadmore.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #Blog--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+
+    --COLUMNS: {{ articles_per_row }};
+    --COLUMNS-MEDIUM: {{ columns_medium }};
+  }
+
+  @media (max-width: 749px) {
+    #Blog--{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mb }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mb }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  id="Blog--{{ section.id }}"
+  class="{{ section.settings.width }} blog-section media-research section-padding {{ color_scheme }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="blog"
+  data-blog-url="{{ blog.url }}"
+  data-limit="{{ limit }}"
+  data-total="{{ total_articles }}"
+>
+  <div class="wrapper-container pl-50 pr-50">
+    {% if blog_title != blank %}
+      <{{ heading_tag }} class="page__heading blog__title {{ section.settings.heading_font_size }}"
+        ><a href="{{ blog.url | default: '#' }}">{{ blog_title }}</a></{{ heading_tag }}
+      >
+    {% endif %}
+
+    <div class="blog-wrappers">
+      {%- if section.settings.show_tag_nav -%}
+        <ul class="inline-nav capitalize" id="nav-tag">
+          <li
+            {% if current_tags == blank %}
+              class="inline-nav--active"
+            {% endif %}
+          >
+            <a href="/pages/media-research#nav-tag" class="all-blogs">{{ 'blogs.article.all' | t }}
+              <span class="article-count">{{ blog.articles | size }}</span>
+            </a>
+          </li>
+          {% assign seen_tags = '' | split: ',' %}
+          {% for article in blog.articles %}
+            {% for tag in article.tags %}
+              {% unless seen_tags contains tag %}
+                {%- assign seen_tags = seen_tags | join: ',' | append: ',' | append: tag | split: ',' -%}
+                {%- assign tag_count = 0 -%}
+                {% for count_article in blog.articles %}
+                  {% if count_article.tags contains tag %}
+                    {%- assign tag_count = tag_count | plus: 1 -%}
+                  {% endif %}
+                {% endfor %}
+                <li
+                  {% if current_tags contains tag %}
+                    class="inline-nav--active"
+                  {% endif %}
+                >
+                  <a href="{{ blog.url }}/tagged/{{ tag | url_escape }}/#nav-tag">{{ tag }}</a>
+                  <span class="article-count">{{ tag_count }}</span>
+                </li>
+              {% endunless %}
+            {% endfor %}
+          {% endfor %}
+        </ul>
+        
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            const navTag = document.getElementById('nav-tag');
+            const listItems = Array.from(navTag.getElementsByTagName('li'));
+            
+            const allItem = listItems.find(item => item.querySelector('a.all-blogs'));
+            const tagItems = listItems.filter(item => !item.querySelector('a.all-blogs'));
+            
+            tagItems.sort((a, b) => {
+              const tagA = a.querySelector('a').textContent.trim().toLowerCase();
+              const tagB = b.querySelector('a').textContent.trim().toLowerCase();
+              return tagA.localeCompare(tagB);
+            });
+            
+            navTag.innerHTML = '';
+            
+            if (allItem) {
+              navTag.appendChild(allItem);
+            }
+            
+            tagItems.forEach(item => navTag.appendChild(item));
+          });
+        </script>
+      {%- endif -%}
+      
+      {% assign blog = blogs[section.settings.blog_name] %}
+      {%- liquid
+        assign articles_per_row = section.settings.grid
+        assign article_limit = section.settings.articles_per_page | default: 8
+        assign show_button = section.settings.show_button
+        assign show_tags = section.settings.show_tags
+        assign animation_anchor = '#Blog--' | append: section.id
+        assign animation_duration = 800
+        assign animation_order = 0
+        assign title_tag = 'h2'
+
+        unless section.settings.title_tag == 'automatic'
+          assign title_tag = section.settings.title_tag
+        endunless
+
+        assign current_offset = offset | default: 0
+        assign articles_to_load = limit | default: article_limit
+        assign eager_images_limit = articles_per_row
+        if articles_per_row > 3
+          assign eager_images_limit = articles_per_row | times: 2
+        endif
+      -%}
+
+      {% paginate blog.articles by limit %}
+        <div class="grid-outer">
+          <div class="grid blog-listing">
+            {% for article in blog.articles %}
+              {%- liquid
+                assign animation_order = animation_order | plus: 1
+
+                if forloop.index > eager_images_limit
+                  assign loading = 'lazy'
+                endif
+              -%}
+
+              {%- capture tags -%}
+                {%- if article.tags.size > 0 and show_tags -%}
+                  <div class="article__tags h6 caps">
+                    {%- for tag in article.tags limit: 3 -%}
+                      <a href="{{ blog.url }}/tagged/{{ tag | handle }}" title="{{ blog.title }} tagged {{ tag | escape }}" class="article__tag">{{ tag }}</a>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              {%- endcapture -%}
+              
+              <article class="article grid-item" data-id="{{ article.id }}">
+                <div
+                  class="article__text-wrapper"
+                  data-aos="hero"
+                  data-aos-anchor="{{ animation_anchor }}"
+                  data-aos-order="{{ animation_order }}"
+                  data-aos-duration="{{ animation_duration }}"
+                >
+                  <div class="article-info">
+                    {% if article.metafields.custom.news_source_name != blank %}
+                      <p class="source-name">{{ article.metafields.custom.news_source_name }}</p>
+                    {% endif %}
+
+                    <{{ title_tag }} class="article__title {{ section.settings.title_font_size }}">
+                      {% if article.metafields.custom.external_link %}
+                        {% assign raw = article.metafields.custom.external_link %}
+                        {% assign url_part = raw | split: '"url":"' | last %}
+                        {% assign url = url_part | split: '"' | first %}
+
+                        <a class="article link" href="{{ url }}" title="{{ article.title | strip_html | escape }}" target="_blank" rel="noopener">
+                          {{ article.title }}
+                        </a>
+                      {% else %}
+                        <a href="{{ article.url }}" class="article link" title="{{ article.title | strip_html | escape }}">
+                          {{ article.title }}
+                        </a>
+                      {% endif %}
+                    </{{ title_tag }}>
+                  </div>
+                  {%- if show_button -%}
+                    <div class="article__link">
+                      {% if article.metafields.custom.external_link %}
+                        {% assign raw = article.metafields.custom.external_link %}
+                        {% assign url_part = raw | split: '"url":"' | last %}
+                        {% assign url = url_part | split: '"' | first %}
+
+                        <a href="{{ url }}" target="_blank" class="btn btn-icon btn-green" aria-label="{{ 'blogs.article.read_more' | t }}">
+                          <span>{{ 'blogs.article.read_more' | t }}</span>
+                        </a>
+                      {% else %}
+                        <a href="{{ article.url }}" class="btn btn-icon btn-green" aria-label="{{ 'blogs.article.read_more' | t }}">
+                          <span>{{ 'blogs.article.read_more' | t }}</span>
+                        </a>
+                      {% endif %}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+        
+        {%- render 'pagination', paginate: paginate -%}
+
+      {% endpaginate %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Media Blog posts",
+  "class": "section media-blog",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tag_nav",
+      "label": "Show tag navigation",
+      "default": true
+    },
+    {
+      "type": "blog",
+      "id": "blog_name",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "aspect_ratio",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": ":1",
+      "label": "Article image aspect ratio",
+      "info": "Wide to tall",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Blog posts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size",
+      "label": "Heading size",
+      "default": "heading-medium",
+      "options": [
+        {"value": "heading-mini", "label": "Mini"},
+        {"value": "heading-x-small", "label": "Extra small"},
+        {"value": "heading-small", "label": "Small"},
+        {"value": "heading-medium", "label": "Medium"},
+        {"value": "heading-large", "label": "Large"},
+        {"value": "heading-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_font_size",
+      "label": "Title size",
+      "default": "heading-small",
+      "options": [
+        {"value": "heading-mini", "label": "Mini"},
+        {"value": "heading-x-small", "label": "Extra small"},
+        {"value": "heading-small", "label": "Small"},
+        {"value": "heading-medium", "label": "Medium"},
+        {"value": "heading-large", "label": "Large"},
+        {"value": "heading-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Articles"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show 'Read more' button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments",
+      "label": "Show comment count",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "wrapper--full-padded",
+      "options": [
+        {"value": "wrapper--full", "label": "Full width"},
+        {"value": "wrapper--full-padded", "label": "Full width padded"},
+        {"value": "wrapper", "label": "Normal"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "label": "Article per page",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top mobile",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading SEO tag",
+      "default": "automatic",
+      "options": [
+        {"value": "automatic", "label": "Automatic"},
+        {"value": "h1", "label": "H1"},
+        {"value": "h2", "label": "H2"},
+        {"value": "h3", "label": "H3"},
+        {"value": "h4", "label": "H4"},
+        {"value": "h5", "label": "H5"},
+        {"value": "h6", "label": "H6"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title SEO tag",
+      "default": "automatic",
+      "options": [
+        {"value": "automatic", "label": "Automatic"},
+        {"value": "h1", "label": "H1"},
+        {"value": "h2", "label": "H2"},
+        {"value": "h3", "label": "H3"},
+        {"value": "h4", "label": "H4"},
+        {"value": "h5", "label": "H5"},
+        {"value": "h6", "label": "H6"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media Blog posts",
+      "category": "Text"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

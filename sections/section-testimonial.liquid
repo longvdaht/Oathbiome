@@ -1,0 +1,383 @@
+{{ 'section-testimonial.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-testimonial.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  {% for block in section.blocks %}
+    .section-{{ section.id }}.section-testimonial .block-{{ block.id }} {
+      background-color: {{ block.settings.background_color }};
+    }
+
+    .section-{{ section.id }}.section-testimonial .block-{{ block.id }} {
+      color: {{ block.settings.text_color }};
+    }
+
+    .section-{{ section.id }} .block-{{ block.id }} {
+      padding-top: {{ block.settings.mobile_padding_top }}px;
+      padding-bottom: {{ block.settings.mobile_padding_bottom }}px;
+      padding-left: {{ block.settings.mobile_padding_left }}px;
+      padding-right: {{ block.settings.mobile_padding_right }}px;
+    }
+
+    .section-{{ section.id }} .block-{{ block.id }} .testimonial__text {
+      order: {% if block.settings.mobile_switch_content %}-1{% else %}0{% endif %};
+    }
+
+    .section-{{ section.id }} .block-{{ block.id }}.section-testimonial__item {
+        gap: {{ block.settings.mobile_content_gap }}px;
+      }
+
+    @media (min-width: 750px) {
+      .section-{{ section.id }} .block-{{ block.id }} {
+        padding-top: {{ block.settings.padding_top }}px;
+        padding-bottom: {{ block.settings.padding_bottom }}px;
+        padding-left: {{ block.settings.padding_left }}px;
+        padding-right: {{ block.settings.padding_right }}px;
+      }
+      
+      .section-{{ section.id }} .block-{{ block.id }} .testimonial__text {
+        order: {% if block.settings.switch_content %}-1{% else %}0{% endif %};
+      }
+
+      .section-{{ section.id }} .block-{{ block.id }}.section-testimonial__item {
+        gap: {{ block.settings.content_gap }}px;
+      }
+    }
+  {% endfor %}
+
+  @media (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-{{ section.id }} section-testimonial">
+  <div class="section-testimonial__container only-block"
+    data-show-buttons="{{ section.settings.show_carousel_buttons }}"
+    data-autoplay="{{ section.settings.carousel_autoplay }}"
+    data-autoplay-speed="{{ section.settings.carosel_autoplay_speed }}"
+  >
+    {% for block in section.blocks %}
+      <div class="section-testimonial__item block-{{ block.id }}">
+        {% if block.settings.testimonial_text and block.settings.testimonial_text_size %}
+          <{{ block.settings.testimonial_text_size }} class="section-testimonial__title">{{ block.settings.testimonial_text }}</{{ block.settings.testimonial_text_size }}>
+        {% endif %}
+
+        <div class="section-testimonial__information">
+          <div class="section-testimonial__image">
+            {% if block.settings.testimonial_image %}
+              <img src="{{ block.settings.testimonial_image | img_url: '300x300' }}" alt="{{ block.settings.testimonial_image.alt }}">
+            {% endif %}
+          </div>
+          <div class="testimonial__text details-large">
+            {% if block.settings.testimonial_author %}
+              <p>{{ block.settings.testimonial_author }},&nbsp;</p>
+            {% endif %}
+            {% if block.settings.testimonial_company %}
+              <p class="italic">{{ block.settings.testimonial_company }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Testimonial Section",
+    "class": "section-testimonial",
+    "settings": [
+      {
+        "type":"header",
+        "content": "Carousel Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_carousel_buttons",
+        "label": "Prev/Next Buttons",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "carousel_autoplay",
+        "label": "Auto Play",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "carosel_autoplay_speed",
+        "label": "Play Speed",
+        "min": 0,
+        "max": 9000,
+        "step": 100,
+        "default": 2000,
+        "unit": "ms",
+        "info": "You need to set autoplay to use this setting."
+      },
+      {
+        "type": "header",
+        "content": "Section Style"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      }, 
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      }, {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      }, {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile Padding Bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20
+      }
+    ],
+    "blocks": [
+      {
+        "type": "testimonial",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "testimonial_text",
+            "label": "Testimonial Text",
+            "default": "Default testimonial text"
+          },
+          {
+            "type": "select",
+            "id": "testimonial_text_size",
+            "label": "Testimonial Text Size",
+            "options": [
+              {
+                "value": "h1",
+                "label": "Extra large"
+              },
+              {
+                "value": "h2",
+                "label": "Large"
+              },
+              {
+                "value": "h3",
+                "label": "Medium"
+              },
+              {
+                "value": "h4",
+                "label": "Small"
+              },
+              {
+                "value": "h5",
+                "label": "Extra small"
+              },
+              {
+                "value": "h6",
+                "label": "Tiny"
+              },
+              {
+                "value": "p",
+                "label": "Paragraph"
+              }
+            ],
+            "default": "h3"
+          },
+          {
+            "type": "text",
+            "id": "testimonial_author",
+            "label": "Testimonial Author Name",
+            "default": "Andy Freeman"
+          },
+          {
+            "type": "text",
+            "id": "testimonial_company",
+            "label": "Testimonial Company Name",
+            "default": "Ohio Tree MD"
+          },
+          {
+            "type": "image_picker",
+            "id": "testimonial_image",
+            "label": "Testimonial Image"
+          },
+
+          {
+            "type": "checkbox",
+            "id": "switch_content",
+            "label": "Desktop switch content",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "mobile_switch_content",
+            "label": "Mobile switch content",
+            "default": false
+          },
+          {
+            "type": "range",
+            "id": "content_gap",
+            "label": "Content Gap",
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }, 
+          {
+            "type": "range",
+            "id": "mobile_content_gap",
+            "label": "Mobile Content Gap",
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px",
+            "default": 80
+          },
+          {
+            "type": "header",
+            "content": "Testimonial Style"
+          }, 
+          {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background Color",
+            "default": "#F6F2EB"
+          }, 
+          {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text Color",
+            "default": "#301912"
+          },
+          {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding Top",
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px",
+            "default": 180
+          }, 
+          {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding Bottom",
+            "min": 0,
+            "max": 500,
+            "step": 5,
+            "unit": "px",
+            "default": 120
+          },
+          {
+            "type": "range",
+            "id": "padding_left",
+            "label": "Padding Left",
+            "min": 50,
+            "max": 150,
+            "step": 1,
+            "unit": "px",
+            "default": 93
+          }, 
+          {
+            "type": "range",
+            "id": "padding_right",
+            "label": "Padding Right",
+            "min": 50,
+            "max": 150,
+            "step": 1,
+            "unit": "px",
+            "default": 93
+          }, 
+          {
+            "type": "range",
+            "id": "mobile_padding_top",
+            "label": "Mobile Padding Top",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 20
+          }, 
+          {
+            "type": "range",
+            "id": "mobile_padding_bottom",
+            "label": "Mobile Padding Bottom",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 20
+          },
+          {
+            "type": "range",
+            "id": "mobile_padding_left",
+            "label": "Mobile Padding Left",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 20
+          }, 
+          {
+            "type": "range",
+            "id": "mobile_padding_right",
+            "label": "Mobile Padding Right",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 20
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial Section",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "testimonial"
+          }, {
+            "type": "testimonial"
+          }, {
+            "type": "testimonial"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

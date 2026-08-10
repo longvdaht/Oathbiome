@@ -1,0 +1,968 @@
+{{ 'chart-stat-section.css' | asset_url |  stylesheet_tag }}
+<script src="{{ 'chart-stat-section.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  .chart-stat__item, .chart-text__container .chart--heading, .chart-text__heading {
+    color: {{ section.settings.text_color_mb}};
+  }
+
+  @media (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    } 
+  }
+
+  @media (min-width: 990px) {
+    .chart-stat__item, .chart-text__container .chart--heading, .chart-text__heading {
+      color: {{ section.settings.text_color}};
+    }
+  }
+
+  {% for block in section.blocks %}
+    .block-{{ block.id }} {
+      background-color: {{ block.settings.bg_color }};
+    }
+  {% endfor %}
+{% endstyle %}
+
+<div class="section-{{ section.id }} chart-stat pl-50 pr-50">
+  <div class="chart-stat__container">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="chart-stat__item{% if block.settings.heading == blank %} item-end{% endif %} block-{{ block.id }}">
+          {% case block.type %}
+            {% when 'single-bar' %}
+            <div class="chart-stat__heading">
+              {% if block.settings.heading != blank %}
+                <h6 class="chart--heading">{{ block.settings.heading }}</h6>
+                <div class="chart-stat__heading-icon">{% render 'i-yellow-icon' %}</div>
+              {% endif %}
+            </div>
+
+            <div class="chart-stat__hover">
+              <div class="chart-stat__hover-info">
+                <div class="chart-stat__hover-heading">
+                  {% if block.settings.heading != blank %}
+                    <h6 class="chart--heading">{{ block.settings.heading }}</h6>
+                    <div class="chart-stat__heading-icon">{% render 'i-yellow-icon' %}</div>
+                  {% endif %}
+                </div>
+                {% if block.settings.sub_heading %}<div class="chart-stat__hover-text body-x-small">{{ block.settings.sub_heading }}</div>{% endif %}
+              </div>
+              {% if block.settings.person != blank %}<p class="chart-stat__hover-person body-small">{{ block.settings.person }}</p>{% endif %}
+            </div>
+
+            <div class="chart-stat__chart">
+              <div class="chart-wrapper" id="chart-{{ block.id }}">
+                {% if block.settings.description != blank %}
+                  <p class="body-small chart--description">{{ block.settings.description }}</p>
+                {% endif %}
+                <div class="chart-y-axis{% if block.settings.description != blank %} smaller-height{% endif %}">
+                  {% assign max = block.settings.max_number %}
+                  {% assign min = block.settings.min_number %}
+                  {% assign step = block.settings.step_value %}
+                  {% assign ticks = block.settings.number_of_lines %}
+                  {% assign current = min %}
+
+                  {% for i in (1..ticks) %}
+                    {% if current <= max %}
+                      <div class="chart-y-label" data-index="{{ forloop.index }}">
+                        <p class="chart-y-text body-small">{{ current }}{% if block.settings.show_percent_units %}%{% endif %}</p>
+                        <div class="chart-y-line"></div>
+                      </div>
+                      {% assign current = current | plus: step %}
+                    {% endif %}
+                  {% endfor %}
+                  
+                  <div class="chart-bars">
+                    {% assign bar_count = block.settings.number_of_bars %}
+                    {% assign gap = 4 %}
+                    {% if bar_count > 1 %}
+                      {% assign gap_total = gap | times: bar_count | minus: gap %}
+                    {% else %}
+                      {% assign gap_total = 0 %}
+                    {% endif %}
+
+                    {% for index in (1..5) %}
+                      {% capture bar_label_key %}bar_{{ index }}_label{% endcapture %}
+                      {% capture bar_value_key %}bar_{{ index }}_value{% endcapture %}
+                      {% capture bar_color_key %}bar_{{ index }}_color{% endcapture %}
+                      {% capture bar_text_color_key %}bar_{{ index }}_text_color{% endcapture %}
+                      {% capture bar_unit_key %}show_bar_{{ index }}_unit{% endcapture %}
+
+                      {% assign label = block.settings[bar_label_key] %}
+                      {% assign value_raw = block.settings[bar_value_key] %}
+                      {% assign value = value_raw | times: 1.0 %}
+                      {% assign floor_value = value | floor %}
+                      {% if value == floor_value %}
+                        {% assign value_display = floor_value %}
+                      {% else %}
+                        {% assign value_display = value %}
+                      {% endif %}
+                      {% assign color = block.settings[bar_color_key] %}
+                      {% assign text_color = block.settings[bar_text_color_key] %}
+                      {% assign show_unit = block.settings[bar_unit_key] %}
+
+                      {% if label != blank and value != blank and value > 0 %}
+                        {% assign height = value | times: 100 | divided_by: max | at_least: 1 %}
+                        <div class="chart-bar">
+                          <div class="bar-fill-wrapper">
+                            <div class="bar-fill" style="--bar-height: {{ height }}% ; --bg-color: {{ color }}; --gap-total: {{ gap_total }}px; --bar-count: {{ bar_count }};">
+                              <h6 class="bar-value" style="--text-color: {{ text_color }};">
+                                {{ value_display }}{% if show_unit %}%{% endif %}
+                              </h6>
+                            <p class="bar-label body-small">{{ label }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% when 'double-bar' %}
+            <div class="chart-stat__heading">
+              {% if block.settings.heading != blank %}
+                <h6 class="chart--heading">{{ block.settings.heading }}</h6>
+                <div class="chart-stat__heading-icon">{% render 'i-yellow-icon' %}</div>
+              {% endif %}
+            </div>
+
+            <div class="chart-stat__hover">
+              <div class="chart-stat__hover-info">
+                <div class="chart-stat__hover-heading">
+                  {% if block.settings.heading != blank %}
+                    <h6 class="chart--heading">{{ block.settings.heading }}</h6>
+                    <div class="chart-stat__heading-icon">{% render 'i-yellow-icon' %}</div>
+                  {% endif %}
+                </div>
+                {% if block.settings.sub_heading %}<div class="chart-stat__hover-text body-x-small">{{ block.settings.sub_heading }}</div>{% endif %}
+              </div>
+              {% if block.settings.person != blank %}<p class="chart-stat__hover-person body-x-small">{{ block.settings.person }}</p>{% endif %}
+            </div>
+
+            <div class="chart-stat__chart">
+              <div class="chart-wrapper" id="chart-{{ block.id }}">
+                <div class="chart-stat__description">
+                  {% if block.settings.description != blank %}
+                    <p class="body-small chart--description">{{ block.settings.description }}</p>
+                  {% endif %}
+                  {% if block.settings.item_description != blank or block.settings.item_description_2 != blank %}
+                    <div class="chart-stat__item--description">
+                      {% if block.settings.item_description != blank %}
+                        <div class="chart-stat__item--desc">
+                          <div class="chart-stat__item--label" style="--label-bg: {{ block.settings.item_description_color }}"></div>
+                          <p class="body-small chart-stat__item--text">{{ block.settings.item_description }}</p>
+                        </div>
+                      {% endif %}
+                      {% if block.settings.item_description_2 != blank %}
+                        <div class="chart-stat__item--desc">
+                          <div class="chart-stat__item--label" style="--label-bg: {{ block.settings.item_description_2_color }}"></div>
+                          <p class="body-small chart-stat__item--text">{{ block.settings.item_description_2 }}</p>
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="chart-y-axis{% if block.settings.description != blank %} smaller-height{% endif %}">
+                  {% assign max = block.settings.max_number %}
+                  {% assign min = block.settings.min_number %}
+                  {% assign step = block.settings.step_value %}
+                  {% assign ticks = block.settings.number_of_lines %}
+                  {% assign current = min %}
+
+                  {% for i in (1..ticks) %}
+                    {% if current <= max %}
+                      <div class="chart-y-label" data-index="{{ forloop.index }}">
+                      <p class="chart-y-text body-small">{{ current }}{% if block.settings.show_percent_units %}%{% endif %}</p>
+                        {% if block.settings.show_special_line and block.settings.special_line_position != blank %}
+                          {% if forloop.index == block.settings.special_line_position %}
+                            <div class="chart-y-line special-line" style="--line-color: {{ block.settings.special_line_color }};"></div>
+                            <p class="special-line-text body-small">{{ block.settings.special_line_text }}</p>
+                          {% else %}
+                            <div class="chart-y-line remain-line"></div>
+                          {% endif %}
+                        {% else %}
+                          <div class="chart-y-line"></div>
+                        {% endif %}
+                      </div>
+                      {% assign current = current | plus: step %}
+                    {% endif %}
+                  {% endfor %}
+                  
+                  {% assign value_range = max | minus: min %}
+                  <div class="chart-bars chart-bars--double {% if block.settings.show_special_line and block.settings.special_line_position != blank %}special-bar{% endif %}">
+                  {% assign bar_count = block.settings.number_of_bars %}
+                  {% assign gap = 20 %}
+                  {% if bar_count > 1 %}
+                    {% assign gap_total = gap | times: bar_count | minus: gap %}
+                  {% else %}
+                    {% assign gap_total = 0 %}
+                  {% endif %}
+
+
+                  {% for group_index in (1..bar_count) %}
+                    {% assign group_prefix = "group_" | append: group_index %}
+
+                  {% assign label_key = group_prefix | append: "_bar_label" %}
+                  {% assign label = block.settings[label_key] %}
+
+                  {% assign first_value_key = group_prefix | append: "_first_bar_value" %}
+                  {% assign first_value = block.settings[first_value_key] | times: 1.0 %}
+                  {% assign first_floor_value = first_value | floor %}
+                  {% if first_value == first_floor_value %}
+                    {% assign first_value_display = first_floor_value %}
+                  {% else %}
+                    {% assign first_value_display = first_value %}
+                  {% endif %}
+                  {% assign adjusted_value1 = first_value | minus: min %}
+                  {% assign height1 = adjusted_value1 | times: 100 | divided_by: value_range %}
+
+                  {% assign first_color_key = group_prefix | append: "_first_bar_color" %}
+                  {% assign first_color = block.settings[first_color_key] %}
+                  {% assign first_text_color_key = group_prefix | append: "_first_bar_text_color" %}
+                  {% assign first_text_color = block.settings[first_text_color_key] %}
+                  {% assign first_show_unit_key = group_prefix | append: "_first_bar_show_unit" %}
+                  {% assign first_show_unit = block.settings[first_show_unit_key] %}
+
+                  {% assign second_value_key = group_prefix | append: "_second_bar_value" %}
+                  {% assign second_value = block.settings[second_value_key] | times: 1.0 %}
+                  {% assign second_floor_value = second_value | floor %}
+                  {% if second_value == second_floor_value %}
+                    {% assign second_value_display = second_floor_value %}
+                  {% else %}
+                    {% assign second_value_display = second_value %}
+                  {% endif %}
+                  {% assign adjusted_value2 = second_value | minus: min %}
+                  {% assign height2 = adjusted_value2 | times: 100 | divided_by: value_range %}
+
+                  {% assign second_color_key = group_prefix | append: "_second_bar_color" %}
+                  {% assign second_color = block.settings[second_color_key] %}
+                  {% assign second_text_color_key = group_prefix | append: "_second_bar_text_color" %}
+                  {% assign second_text_color = block.settings[second_text_color_key] %}
+                  {% assign second_show_unit_key = group_prefix | append: "_second_bar_show_unit" %}
+                  {% assign second_show_unit = block.settings[second_show_unit_key] %}
+
+                    <div class="chart-bar double-chart-bar">
+                      <div class="bar-fill-wrapper">
+                        <div class="bar-fill double-bar" style="--bar-height: {{ height1 }}%; --bg-color: {{ first_color }}; --gap-total: {{ gap_total }}px; --bar-count: {{ bar_count }};">
+                          <h6 class="bar-value" style="--text-color: {{ first_text_color }};">
+                            {{ first_value_display }}{% if first_show_unit %}%{% endif %}
+                          </h6>
+                        </div>
+                      </div>
+
+                      <div class="bar-fill-wrapper">
+                        <div class="bar-fill double-bar" style="--bar-height: {{ height2 }}%; --bg-color: {{ second_color }}; --gap-total: {{ gap_total }}px; --bar-count: {{ bar_count }};">
+                          <h6 class="bar-value" style="--text-color: {{ second_text_color }};">
+                            {{ second_value_display }}{% if second_show_unit %}%{% endif %}
+                          </h6>
+                        </div>
+                      </div>
+                      {% if label != blank %}
+                        <p class="bar-label body-small">{{ label }}</p>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+                </div>
+              </div>
+            </div>
+
+          {% when 'text' %}
+          <div class="chart-text__container">
+            <div class="chart-text__info">
+              <div class="chart-text__heading">
+                {% if block.settings.heading != blank %}
+                  <h6 class="chart--heading">{{ block.settings.heading }}</h6>
+                {% endif %}
+              </div>
+              {% if block.settings.sub_heading %}<div class="chart-text__heading body-large">{{ block.settings.sub_heading }}</div>{% endif %}
+            </div>
+            {% if block.settings.text != blank %}<h1 class="chart-text__text">{{ block.settings.text }}</h1>{% endif %}
+          </div>
+          
+          {% endcase %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Chart Stat Section",
+  "class": "custom-chart-stat wrapper-container",
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#301912"
+    },
+    {
+      "type": "color",
+      "id": "text_color_mb",
+      "label": "Text Color mobile",
+      "default": "#103228"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "single-bar",
+      "name": "Single Bar Chart",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Chart Background Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "header",
+          "content": "Chart Settings"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "% Increase in Nitrogen Levels vs. Untreated Control"
+        },
+        {
+          "type": "richtext",
+          "id": "sub_heading",
+          "label": "Sub Heading",
+          "default": "<p>Visual test of turfgrass quality by the National Turfgrass Evaluation Program. Quality ranges from 1 (poor or dead) to 9 (perfect).</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "person",
+          "label": "Person",
+          "default": "Dr. Mohammad Pessarakli, University of Arizona"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "number",
+          "id": "min_number",
+          "label": "Minimum Number",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "max_number",
+          "label": "Max Number",
+          "default": 220,
+          "info": "This is the value that will be used to calculate the bar length. This number must be smaller than the max % scale."
+        },
+        {
+          "type": "number",
+          "id": "step_value",
+          "label": "Step",
+          "default": 55,
+          "info": "This is the value that will be used to calculate the number of oasix value. This number must be smaller than the max number"},
+        {
+          "type": "number",
+          "id": "number_of_lines",
+          "label": "Number of Lines",
+          "default": 5,
+          "info": "This is the number of lines that will be displayed in the chart."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_percent_units",
+          "label": "Show Precent Units",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "number_of_bars",
+          "label": "Number of Bars",
+          "default": 5,
+          "info": "This is the number of bars that will be displayed in the chart. The maximum number of bars is 5."
+        },
+        {
+          "type": "header",
+          "content": "Bar 1 Settings"
+        },
+        {
+          "type": "text",
+          "id": "bar_1_label",
+          "label": "Bar 1 Label",
+          "default": "Nitrogen"
+        },
+        {
+          "type": "color",
+          "id": "bar_1_color",
+          "label": "Bar 1 Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "bar_1_text_color",
+          "label": "Bar 1 Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "bar_1_value",
+          "label": "Bar 1 Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bar_1_unit",
+          "label": "Show Bar 1 Precent Units",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Bar 2 Settings"
+        },
+        {
+          "type": "text",
+          "id": "bar_2_label",
+          "label": "Bar 2 Label"
+        },
+        {
+          "type": "color",
+          "id": "bar_2_text_color",
+          "label": "Bar 2 Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "color",
+          "id": "bar_2_color",
+          "label": "Bar 2 Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "text",
+          "id": "bar_2_value",
+          "label": "Bar 2 Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bar_2_unit",
+          "label": "Show Bar 2 Precent Units",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Bar 3 Settings"
+        },
+        {
+          "type": "text",
+          "id": "bar_3_label",
+          "label": "Bar 3 Label"
+        },
+        {
+          "type": "color",
+          "id": "bar_3_color",
+          "label": "Bar 3 Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "bar_3_text_color",
+          "label": "Bar 3 Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "bar_3_value",
+          "label": "Bar 3 Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bar_3_unit",
+          "label": "Show Bar 3 Precent Units",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Bar 4 Settings"
+        },
+        {
+          "type": "text",
+          "id": "bar_4_label",
+          "label": "Bar 4 Label"
+        },
+        {
+          "type": "color",
+          "id": "bar_4_color",
+          "label": "Bar 4 Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "bar_4_text_color",
+          "label": "Bar 4 Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "bar_4_value",
+          "label": "Bar 4 Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bar_4_unit",
+          "label": "Show Bar 4 Precent Units",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Bar 5 Settings"
+        },
+        {
+          "type": "text",
+          "id": "bar_5_label",
+          "label": "Bar 5 Label"
+        },
+        {
+          "type": "color",
+          "id": "bar_5_color",
+          "label": "Bar 5 Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "bar_5_text_color",
+          "label": "Bar 5 Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "bar_5_value",
+          "label": "Bar 5 Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bar_5_unit",
+          "label": "Show Bar 5 Precent Units",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "double-bar",
+      "name": "Double Bar Chart",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Chart Background Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "header",
+          "content": "Chart Settings"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "% Increase in Nitrogen Levels vs. Untreated Control"
+        },
+        {
+          "type": "richtext",
+          "id": "sub_heading",
+          "label": "Sub Heading",
+          "default": "<p>Visual test of turfgrass quality by the National Turfgrass Evaluation Program. Quality ranges from 1 (poor or dead) to 9 (perfect).</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "person",
+          "label": "Person",
+          "default": "Dr. Mohammad Pessarakli, University of Arizona"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "header",
+          "content": "Item description"
+        },
+        {
+          "type": "text",
+          "id": "item_description",
+          "label": "Item Description",
+          "default": "Treated"
+        },
+        {
+          "type": "color",
+          "id": "item_description_color",
+          "label": "Item Description Color",
+          "default": "#301912" 
+        },
+        {
+          "type": "text",
+          "id": "item_description_2",
+          "label": "Item Description 2",
+          "default": "Untreated"
+        },
+        {
+          "type": "color",
+          "id": "item_description_2_color",
+          "label": "Item Description 2 Color",
+          "default": "#A39280" 
+        },
+        {
+          "type": "header",
+          "content": "Chart Settings"
+        },
+        {
+          "type": "number",
+          "id": "min_number",
+          "label": "Minimum Number",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "max_number",
+          "label": "Max Number",
+          "default": 220,
+          "info": "This is the value that will be used to calculate the bar length. This number must be smaller than the max % scale."
+        },
+        {
+          "type": "number",
+          "id": "step_value",
+          "label": "Step",
+          "default": 55,
+          "info": "This is the value that will be used to calculate the number of oasix value. This number must be smaller than the max number"},
+        {
+          "type": "number",
+          "id": "number_of_lines",
+          "label": "Number of Lines",
+          "default": 5,
+          "info": "This is the number of lines that will be displayed in the chart."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_percent_units",
+          "label": "Show Precent Units",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "number_of_bars",
+          "label": "Number of Group Bars",
+          "default": 3,
+          "info": "This is the number of group bars that will be displayed in the chart. The maximum number of group bars is 3."
+        },
+        {
+          "type": "header",
+          "content": "Special Line Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_special_line",
+          "label": "Show Special Line",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "special_line_position",
+          "label": "Special Line Position",
+          "default": 2,
+          "info": "This is the position of the special line on the chart. The value should be between number of line."
+        },
+        {
+          "type": "text",
+          "id": "special_line_text",
+          "label": "Special Line Text",
+          "default": "Acceptable Quality"
+        },
+        {
+          "type": "color",
+          "id": "special_line_color",
+          "label": "Special Line Color",
+          "default": "#301912"
+        },
+        {
+          "type": "header",
+          "content": "First Group Bar Settings"
+        },
+        {
+          "type": "text",
+          "id": "group_1_bar_label",
+          "label": "Group 1 Bar Label",
+          "default": "Test Turf 1"
+        },
+        {
+          "type": "color",
+          "id": "group_1_first_bar_color",
+          "label": "Group 1 First Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_1_first_bar_text_color",
+          "label": "Group 1 First Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_1_first_bar_value",
+          "label": "Group 1 First Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_1_first_bar_show_unit",
+          "label": "Group 1 First Bar Precent Units",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "group_1_second_bar_color",
+          "label": "Group 1 Second Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_1_second_bar_text_color",
+          "label": "Group 1 Second Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_1_second_bar_value",
+          "label": "Group 1 Second Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_1_second_bar_show_unit",
+          "label": "Group 1 Second Bar Precent Units",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Second Group Bar Settings"
+        },
+        {
+          "type": "text",
+          "id": "group_2_bar_label",
+          "label": "Group 2 Bar Label",
+          "default": "Test Turf 2"
+        },
+        {
+          "type": "color",
+          "id": "group_2_first_bar_color",
+          "label": "Group 2 First Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_2_first_bar_text_color",
+          "label": "Group 2 First Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_2_first_bar_value",
+          "label": "Group 2 First Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_2_first_bar_show_unit",
+          "label": "Group 2 First Bar Precent Units",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "group_2_second_bar_color",
+          "label": "Group 2 Second Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_2_second_bar_text_color",
+          "label": "Group 2 Second Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_2_second_bar_value",
+          "label": "Group 2 Second Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_2_second_bar_show_unit",
+          "label": "Group 2 Second Bar Precent Units",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Third Group Bar Settings"
+        },
+        {
+          "type": "text",
+          "id": "group_3_bar_label",
+          "label": "Group 3 Bar Label",
+          "default": "Test Turf 3"
+        },
+        {
+          "type": "color",
+          "id": "group_3_first_bar_color",
+          "label": "Group 3 First Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_3_first_bar_text_color",
+          "label": "Group 3 First Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_3_first_bar_value",
+          "label": "Group 3 First Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_3_first_bar_show_unit",
+          "label": "Group 3 First Bar Precent Units",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "group_3_second_bar_color",
+          "label": "Group 3 Second Bar Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "color",
+          "id": "group_3_second_bar_text_color",
+          "label": "Group 3 Second Bar Text Color",
+          "default": "#FBFF36"
+        },
+        {
+          "type": "text",
+          "id": "group_3_second_bar_value",
+          "label": "Group 3 Second Bar Value",
+          "default": "0"
+        },
+        {
+          "type": "checkbox",
+          "id": "group_3_second_bar_show_unit",
+          "label": "Group 3 Second Bar Precent Units",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#F6F2EB"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Reduced Soil Bulk Density"
+        },
+        {
+          "type": "richtext",
+          "id": "sub_heading",
+          "label": "Sub Heading",
+          "default": "<p>Average of 3 Studies & 5 Tests</p>"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "-15.6%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chart Stat Section"
+    }
+  ]
+}
+{% endschema %}

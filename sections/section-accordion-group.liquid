@@ -1,0 +1,249 @@
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+<!-- /sections/section-accordion-group.liquid -->
+{%- liquid
+  assign animation_anchor = '#AccordionGroup--' | append: section.id
+  assign animation_order = 0
+  assign color_scheme = 'color-' | append: section.settings.color_scheme
+-%}
+
+{%- style -%}
+  #AccordionGroup--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div id="AccordionGroup--{{ section.id }}" class="accordion-group section-padding {{ color_scheme }}">
+  {%- if section.blocks.size > 0 -%}
+    <div class="faq wrapper"
+      data-section-id="{{ section.id }}"
+      data-section-type="faq"
+    >
+      <h4 class="accordion__heading"
+        data-aos="hero"
+        data-aos-anchor="{{ animation_anchor }}"
+        data-aos-order="{{ animation_order }}"
+        {{ block.shopify_attributes }}
+      >
+        {{ section.settings.title }}
+      </h4>
+      <collapsible-elements single="true">
+        <div class="accordion-group__items">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign title = block.settings.title
+              assign content = block.settings.content
+              assign default_open = block.settings.default_open
+            -%}
+
+            {%- if block.type == 'question' and title != blank and content != blank -%}
+              {%- if title != blank -%}
+                {%- assign animation_order = animation_order | plus: 1 -%}
+                <details class="accordion"
+                  data-collapsible
+                  {% if default_open %}
+                    open="true"
+                  {% endif %}
+                  data-aos="hero"
+                  data-aos-anchor="{{ animation_anchor }}"
+                  data-aos-order="{{ animation_order }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <summary class="accordion__title font-heading" data-collapsible-trigger>
+                    {{ title }}
+
+                    {%- render 'icon-plus' -%}
+                    {%- render 'icon-minus' -%}
+                  </summary>
+
+                  <div class="accordion__body rte"{% if default_open != blank %} style="height: auto;"{% endif %} data-collapsible-body>
+                    <div class="accordion__content body-large" data-collapsible-content>
+                      {{ content }}
+                    </div>
+                  </div>
+                </details>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="accordion-group__items">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign title_2 = block.settings.title_2
+              assign content_2 = block.settings.content_2
+              assign default_open_2 = block.settings.default_open_2
+            -%}
+
+            {%- if block.type == 'question2' and title_2 != blank and content_2 != blank -%}
+              {%- if title_2 != blank -%}
+                {%- assign animation_order = animation_order | plus: 1 -%}
+                <details class="accordion"
+                  data-collapsible
+                  {% if default_open_2 %}
+                    open="true"
+                  {% endif %}
+                  data-aos="hero"
+                  data-aos-anchor="{{ animation_anchor }}"
+                  data-aos-order="{{ animation_order }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <summary class="accordion__title font-heading" data-collapsible-trigger>
+                    {{ title_2 }}
+
+                    {%- render 'icon-plus' -%}
+                    {%- render 'icon-minus' -%}
+                  </summary>
+
+                  <div class="accordion__body rte"{% if default_open_2 != blank %} style="height: auto;"{% endif %} data-collapsible-body>
+                    <div class="accordion__content body-large" data-collapsible-content>
+                      {{ content_2 }}
+                    </div>
+                  </div>
+                </details>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </collapsible-elements>
+      <div class="faq-bottom">
+        {%- if section.settings.text_bottom != blank -%}
+          {{ section.settings.text_bottom  }}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Accordion group",
+    "class": "accordion-group",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "scheme_1",
+        "label": "Color scheme"
+      },
+      {
+        "type": "richtext",
+        "id": "text_bottom",
+        "label": "Text bottom"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "FAQ"
+      },
+      {
+        "type": "header",
+        "content": "Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Top",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 50
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Question colunm 1",
+        "type": "question",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "default_open",
+            "label": "Open by default",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "Typography"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "info": "Block will not be visible if left empty.",
+            "default": "Frequently asked question"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Answer",
+            "default": "<p>Share details about your shipping policies, item returns, or customer service.<\/p>"
+          }
+        ]
+      },
+      {
+        "name": "Question colunm 2",
+        "type": "question2",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "default_open_2",
+            "label": "Open by default",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "Typography"
+          },
+          {
+            "type": "text",
+            "id": "title_2",
+            "label": "Question",
+            "info": "Block will not be visible if left empty.",
+            "default": "Frequently asked question"
+          },
+          {
+            "type": "richtext",
+            "id": "content_2",
+            "label": "Answer",
+            "default": "<p>Share details about your shipping policies, item returns, or customer service.<\/p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Accordion group",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "question"
+          },
+          {
+            "type": "question"
+          },
+          {
+            "type": "question"
+          }
+        ]
+      }
+    ],
+    "disabled_on": {
+      "groups": ["header", "aside", "custom.pre_footer", "footer"]
+    }
+  }
+{% endschema %}

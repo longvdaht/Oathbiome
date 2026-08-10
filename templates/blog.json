@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_hero_banner_LPMtVg": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1103554639?share=copy",
+        "video_poster_image": "shopify://shop_images/Media_Research.jpg",
+        "show_video_popup": false,
+        "title": "<p>Media & Research</p>",
+        "text": "",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured": {
+      "type": "section-featured-posts",
+      "settings": {
+        "show_author": false,
+        "show_date": false,
+        "show_button": true,
+        "heading_font_size": "heading-large",
+        "width": "wrapper--full",
+        "height": "five-fifty-height-hero",
+        "mobile_height": "screen-height-one-half--mobile",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "main": {
+      "type": "blog",
+      "settings": {
+        "show_title": false,
+        "show_rss": false,
+        "show_tag_nav": true,
+        "aspect_ratio": 1,
+        "title_font_size": "heading-small",
+        "show_tags": false,
+        "show_author": false,
+        "show_date": false,
+        "show_button": true,
+        "show_comments": false,
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mb": 50,
+        "padding_bottom_mb": 0,
+        "title_tag": "automatic"
+      }
+    },
+    "section_newsletter_ob_Ex3BEV": {
+      "type": "section-newsletter-ob",
+      "name": "OB Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/a86792222eed6c74a6457c63810ffbcd2f53ce62.jpg",
+        "title": "Get in touch",
+        "description": "",
+        "button_text": "Submit",
+        "enable_name": true,
+        "enable_email": true,
+        "enable_organization": false,
+        "enable_interests": true,
+        "enable_message": true,
+        "interest_options": "Agriculture, Grasslands, Forests, Parkland & Turfgrass, Tree & Garden, Africa, Media, Partnerships, Other",
+        "interest_label": "Interests*",
+        "success_message": "Thank you for reaching out."
+      }
+    }
+  },
+  "order": [
+    "section_hero_banner_LPMtVg",
+    "featured",
+    "main",
+    "section_newsletter_ob_Ex3BEV"
+  ]
+}
+

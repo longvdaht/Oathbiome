@@ -1,0 +1,115 @@
+<script src="{{ 'section-card-grid.js' | asset_url }}" defer="defer"></script>
+{{ 'section-card-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="feature-card-grid wrapper-container">
+  {% if section.settings.sub_title != blank %}
+    <p class="sub-title">{{ section.settings.sub_title }}</p>
+  {% endif %}
+  <div class="items-card" data-goal-card>
+    {% for block in section.blocks %}
+      <div class="item-card" data-goal-card>
+        {% if block.settings.background_image %}
+          <div
+            class="background"
+            style="background-image: url('{{ block.settings.background_image | image_url: width: 800 }}');filter: brightness({{ block.settings.brightness_level}});"
+          ></div>
+        {% endif %}
+
+        <button class="toggle-button" aria-label="Toggle info" data-toggle>
+          <span class="img-icon icon-plus">
+            {% render 'icon-plus' %}
+          </span>
+          <span class="img-icon icon-close">
+            {% render 'close-icon' %}
+          </span>
+        </button>
+
+        <div class="item-content">
+          <h3 class="title-default">{{ block.settings.title }}</h3>
+          {% if block.settings.caption != blank %}
+            <p class="caption">{{ block.settings.caption }}</p>
+          {% endif %}
+          <div class="description">
+            {% if block.settings.title_expand != blank %}
+              <h3 class="title-expand">{{ block.settings.title_expand }}</h3>
+            {% endif %}
+            <p>{{ block.settings.description }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Feature Cards Grid",
+  "tag": "section",
+  "class": "section-feature-card-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "text",
+          "id": "title_expand",
+          "label": "Title (shows on expand)"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (shows on expand)"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background image"
+        },
+        {
+          "type": "select",
+          "id": "brightness_level",
+          "label": "Background brightness",
+          "default": "0.9",
+          "options": [
+            { "label": "100% (no dim)", "value": "1" },
+            { "label": "90%", "value": "0.9" },
+            { "label": "80%", "value": "0.8" },
+            { "label": "70%", "value": "0.7" },
+            { "label": "60%", "value": "0.6" },
+            { "label": "50%", "value": "0.5" },
+            { "label": "40%", "value": "0.4" },
+            { "label": "30%", "value": "0.3" },
+            { "label": "20%", "value": "0.2" },
+            { "label": "10%", "value": "0.1" }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Feature Cards Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

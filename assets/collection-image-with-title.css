@@ -1,0 +1,27 @@
+.template-collection.template- .main-content>*:not(.shopify-policy__container) {
+    margin-top: 0;
+}
+
+.collection-image-with-title .hero__description {
+    max-width: 877px;
+}
+
+.collection-image-with-title  .collection__title {
+    padding: 88px 0 118px;
+}
+
+.collection-image-with-title .hero__description h3 {
+    line-height: 104%;
+}
+
+.collection.collection__products {
+    border: solid 1px #CBBEAF;
+}
+
+.collection-image-with-title .hero__content {
+    padding: 20px 60px;
+}
+
+body.has-header-transparent .section-overlay-header:first-of-type .collection-image-with-title .hero__content__wrapper {
+    padding-top: 0;
+}

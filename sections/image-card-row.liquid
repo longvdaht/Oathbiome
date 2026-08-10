@@ -1,0 +1,228 @@
+{{ 'image-card-row.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'image-card-row.js' | asset_url }}" defer></script>
+
+<div
+  class="image-card-row-section"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;"
+>
+  <div class="wrapper-container">
+    <div class="icr__section--wrapper">
+      {%- if section.settings.title != blank or section.settings.description != blank -%}
+        <div class="icr__section--content">
+          {%- if section.settings.title != blank -%}
+            <h6 class="icr__section--title subhead-lg">{{ section.settings.title }}</h6>
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            <div class="icr__section--description">{{ section.settings.description }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div
+        class="image-card-row-slider swiper"
+        data-swiper='{"slidesPerView": "auto", "spaceBetween": 18, "navigation": {{ section.settings.show_arrows }}, "pagination": {{ section.settings.show_dots }}}'
+        data-cards-per-row="{{ section.settings.cards_per_row }}"
+        data-cards-per-row-tablet="{{ section.settings.cards_per_row | at_most: 2 }}"
+        style="--cards-per-row: {{ section.settings.cards_per_row }}; --cards-per-row-tablet: {{ section.settings.cards_per_row | at_most: 2 }};"
+      >
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="image-card swiper-slide" {{ block.shopify_attributes }}>
+              <div class="image-card__image">
+                <a
+                  {% if block.settings.button_url == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_url }}"
+                  {% endif %}
+                >
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 1138 }}"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      width="1138"
+                      height="1138"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </a>
+              </div>
+
+              <div class="image-card__content">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="image-card__title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.description != blank -%}
+                  <div class="image-card__description">{{ block.settings.description }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.button_text != blank -%}
+                  <a
+                    {% if block.settings.button_url == blank %}
+                      role="link" aria-disabled="true"
+                    {% else %}
+                      href="{{ block.settings.button_url }}"
+                    {% endif %}
+                    class="image-card__button btn btn-icon btn-gray-blur"
+                  >
+                    <span>{{ block.settings.button_text }}</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_arrows -%}
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        {%- endif -%}
+
+        {%- if section.settings.show_dots -%}
+          <div class="swiper-pagination"></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Card Row",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Image Cards"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section Description"
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Cards per row",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding for mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding for mobile",
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_card",
+      "name": "Image Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Card Row",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image_card"
+        },
+        {
+          "type": "image_card"
+        },
+        {
+          "type": "image_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

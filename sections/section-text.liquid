@@ -1,0 +1,29 @@
+{{ 'section-text.css' | asset_url | stylesheet_tag }}
+
+<div class="section-text-collection wrapper">
+    <h5>{{ section.settings.sub_heading }}</h5>
+    <p class="body-x-large">{{ section.settings.content }}</p>
+</div>
+
+{% schema %}
+{
+  "name": "Section Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub heding"
+    },
+    {
+      "type": "text",
+      "id": "content",
+      "label": "content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section text"
+    }
+  ]
+}
+{% endschema %}

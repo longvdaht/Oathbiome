@@ -1,0 +1,12 @@
+{% comment %} Text block for product {% endcomment %}
+{%- if block.settings.text != blank -%}
+  <div
+    class="product__block product__text {{ block.settings.align_text }} block-padding"
+    {{ block.shopify_attributes }}
+    {{ block_style }}
+  >
+    <div class="product__subheading">
+      {{- block.settings.text -}}
+    </div>
+  </div>
+{%- endif -%}

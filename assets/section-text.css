@@ -1,0 +1,27 @@
+.section-text-collection h5 {
+    border-top: solid 1px var( --color-medium-gray);
+    padding-top: 16px;
+    margin-bottom: 0;
+}
+
+.section-text-collection p {
+    margin-top: -3px;
+}
+
+.section-text-collection {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 749px) {
+    .section-text-collection h5 {
+        padding-top: 14px;
+    }
+
+    .section-text-collection p {
+        margin-top: 0px;
+    }
+
+    .section-text-collection {
+        margin-bottom: 16px;
+    }
+}

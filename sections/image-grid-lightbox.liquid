@@ -1,0 +1,79 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
+{{ 'image-grid-lightbox.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'image-grid-lightbox.js' | asset_url }}" defer="defer"></script>
+
+<div class="image-grid-lightbox wrapper-container">
+  <div class="carousel-main">
+    {% for block in section.blocks %}
+      <div class="carousel-cell block-{{ block.id }}">
+        {% if block.settings.image != blank %}
+        <img 
+          class="img" 
+          src="{{ block.settings.image | image_url: width: 1600 }}" 
+          alt="Slide Image" 
+          loading="lazy"
+          data-index="{{ forloop.index0 }}"
+        >
+        {% endif %}
+        {% if block.settings.small_text != blank %}
+          <div class="small-text"><p>{{ block.settings.small_text }}</p></div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Lightbox Overlay -->
+  <div class="lightbox-overlay">
+    <button class="lightbox-close">{% render 'close' %}</button>
+    <div class="lightbox-carousel">
+      {% for block in section.blocks %}
+        <div class="carousel-cell">
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="Lightbox Image">
+          {% endif %}
+          {% if block.settings.small_text != blank %}
+            <div class="small-text"><p>{{ block.settings.small_text }}</p></div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+ 
+
+{% schema %}
+{
+  "name": "Image Grid Lightbox",
+  "tag": "section",
+  "class": "image-grid-lightbox-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Media Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "small_text",
+          "label": "Small text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Grid Lightbox",
+      "category": "Image",
+      "blocks": [
+        { "type": "media" }
+      ]
+    }
+  ]
+}
+{% endschema %}

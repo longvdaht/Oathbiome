@@ -1,0 +1,204 @@
+{{ 'section-custom-text-image.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-custom-text-image.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .section-{{ section.id }} .section-description, .section-{{ section.id }} .custom-text-image__button {
+      max-width: {{ section.settings.description_size }}%;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 1280px) {
+    .section-{{ section.id }} .section-description, .section-{{ section.id }} .custom-text-image__button {
+      max-width: 95%;
+      width: 100%;
+    }
+  }
+
+{% endstyle %}
+
+<div class="custom-text-image-section wrapper section-{{ section.id }}">
+  <div class="custom-text-image-section__container">
+    <div class="custom-text-image__content">
+      {% if section.settings.heading  %}<h4>{{ section.settings.heading }}</h4>{% endif %}
+      {% if section.settings.description %}<p class="body-large section-description">{{ section.settings.description }}</p>{% endif %}
+      {% if section.blocks.size > 0 %}
+        <div class="custom-text-image-group">
+          {% for block in section.blocks %}
+            {% if block.settings.custom_image or block.settings.video_url %}
+            <div class="custom-text-image__button block-{{ block.id }}" data-index="{{ forloop.index0 }}">
+              <div class="custom-heading">
+                {% if block.settings.button_text %}<h6 class="button-text">{{ block.settings.button_text }}</h6>{% endif %}
+                <div class="vector-button">{%  render 'vector-button' %}</div>
+              </div>
+              {% if block.settings.button_description %}<p class="body-large button-description">{{ block.settings.button_description }}</p>{% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="custom-image__container">
+      {% for block in section.blocks %}
+        <div class="custom-text-image__item block-{{ block.id }}">
+          {% if block.settings.video_url %}
+            <video 
+              class="custom-text-image__video" 
+              muted 
+              loop 
+              playsinline 
+              autoplay
+              preload="auto" 
+              {% if block.settings.custom_image %}poster="{{ block.settings.custom_image | image_url: width: 800 }}"{% endif %}
+            >
+              <source src="{{ block.settings.video_url }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {% elsif block.settings.custom_image %}
+            <img src="{{ block.settings.custom_image | image_url: width: 800 }}" alt="{{ block.settings.button_text }}">
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Section Custom Text Image",
+  "class": "custom-text-image-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading ",
+      "default": "Application made easy."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Oath Soil Life doesn’t require any special equipment or certification. It’s an easy to use powder that can be mixed into a variety of application formats."
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Desktop description Size",
+      "default": 100,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "info": "This setting controls the size of the description text on desktop"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "MP4 Video URL (Takes Priority Over Image)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Inject"
+        },
+        { 
+          "type": "text",
+          "id": "button_description",
+          "label": "Button Description",
+          "default": "Best for treating trees in compacted soil."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Custom Text and Image",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "image_block"
+        },
+        {
+          "type": "image_block"
+        },
+        {
+          "type": "image_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

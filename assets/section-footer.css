@@ -1,0 +1,237 @@
+.footer-wrapper {
+    padding: 0 20px;
+}
+
+.footer-wrapper .footer-container {
+    border-left: 1px solid rgba(48, 25, 18, .3);
+    position: relative;
+    padding: 42px 20px 0;
+}
+
+.footer-wrapper .footer__logo a {
+    display: block;
+}
+
+.footer-wrapper ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-wrapper ul li {
+    padding: 0;
+    margin: 0;
+}
+
+.footer__block .footer-text-medium {
+    color: var(--color-brown);
+    margin-bottom: 9px;
+}
+
+.footer__block ul li {
+    margin: 0 0 8px;
+}
+
+.footer__block ul li:last-child {
+    margin: 0;
+}
+
+.footer__block ul li a {
+    display: block;
+}
+
+.footer__block {
+    position: relative;
+    margin: 0 0 33px;
+}
+
+.footer__blocks .footer__block:last-child {
+    margin: 0 0 41px;
+}
+
+.footer__block:before {
+    content: '';
+    width: 12px;
+    height: 1px;
+    display: block;
+    background: var(--color-medium-gray);
+    position: absolute;
+    left: -20px;
+    top: 13px;
+}
+
+.footer__block--customer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-wrapper .socials {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer-wrapper .socials li {
+    width: 100%;
+}
+
+.footer-wrapper .socials li a {
+    font-family: var(--font-abc-diatype);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 200%;
+    letter-spacing: .02em;
+    position: relative;
+}
+
+.footer-wrapper .socials li a:before {
+    content: '';
+    display: inline-block;
+    width: 9px;
+    height: 10px;
+    background: url(../assets/social-arrow.svg) no-repeat center center;
+    margin-right: 8px;
+}
+
+.footer-wrapper .socials li a svg {
+    display: none;
+}
+
+.footer-wrapper .socials li a span {
+    position: initial !important;
+    margin: 0;
+    clip-path: initial;
+}
+
+.footer__text {
+    position: relative;
+    padding-top: 27px;
+    margin-bottom: 225px;
+}
+
+.footer__text:before {
+    content: '';
+    width: calc(100% + 60px);
+    height: 1px;
+    display: block;
+    background: var(--color-medium-gray);
+    position: absolute;
+    top: 0;
+    left: -20px;
+    right: -20px;
+}
+
+.footer__text h3 {
+    margin: 0;
+}
+
+.footer__block--customer {
+    padding-bottom: 3px;
+    margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+    .footer-left {
+        position: absolute;
+        right: 10px;
+        top: 31px;
+    }
+
+    .footer__logo {
+        max-width: 80px;
+        width: 100%;
+    }
+
+    .footer__blocks {
+        padding-right: 70px;
+    }
+
+    .footer-wrapper .socials li a span {
+        letter-spacing: 0;
+    }
+
+    .footer__text h3 {
+        font-size: 40px;
+    }
+}
+
+@media screen and (min-width: 901px) {
+    .footer-wrapper {
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-wrapper ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer__block {
+        margin: 0 0 24px;
+    }
+
+    .footer__block ul li {
+        margin: 0;
+    }
+
+    .footer-wrapper .footer-container {
+        display: flex;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-left {
+        width: 8.1vw;
+        padding: 25px 10px 10px;
+    }
+
+    .footer-wrapper .footer__logo a {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .footer-midle {
+        border-top: 1px solid rgba(48, 25, 18, .3);
+        border-left: 1px solid rgba(48, 25, 18, .3);
+        border-right: 1px solid rgba(48, 25, 18, .3);
+        padding: 30px 50px 0;
+        width: 32.64vw;
+    }
+
+    .footer__block .footer-text-medium {
+        margin: 0;
+    }
+
+    .footer__block:before {
+        left: -50px;
+        width: 30px;
+    }
+
+    .footer__blocks .footer__block:last-child {
+        margin: 0 0 135px;
+    }
+
+    .footer__block--customer ul {
+        gap: 0 26px;
+    }
+
+    .footer__block--customer {
+        margin: 0 0 18px;
+    }
+
+    .footer-right {
+        border-top: 1px solid rgba(48, 25, 18, .3);
+        width: calc(100% - 8.1vw - 32.64vw);
+        padding: 25px 30px 0;
+    }
+
+    .footer__text {
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer__text:before {
+        content: none;
+    }
+}

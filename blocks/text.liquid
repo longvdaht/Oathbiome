@@ -1,0 +1,60 @@
+<div
+  class="hero__description {{ block.settings.text_font_size }}"
+  style="--block-padding-bottom: {{ block.settings.padding_bottom }}px;"
+  data-aos="hero"
+  data-aos-order="auto"
+  data-aos-anchor="{{ section.id }}"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.text }}
+</div>
+
+{% schema %}
+{
+  "name": "Text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Tell your brand's story through images.<\/p>"
+    },
+    {
+      "type": "select",
+      "id": "text_font_size",
+      "label": "Text size",
+      "default": "body-large",
+      "options": [
+        {"value": "body-x-small", "label": "Extra small"},
+        {"value": "body-small", "label": "Small"},
+        {"value": "body-medium", "label": "Medium"},
+        {"value": "body-large", "label": "Large"},
+        {"value": "body-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text",
+      "settings": {
+        "text": "<p>Tell your brand's story through images.<\/p>"
+      }
+    }
+  ]
+}
+{% endschema %}

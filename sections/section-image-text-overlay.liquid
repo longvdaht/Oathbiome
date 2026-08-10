@@ -1,0 +1,117 @@
+{{ 'section-image-overlay.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mb }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mb }}px;
+  }
+
+  @media (min-width: 901px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-{{ section.id }} wrapper-container image-info section-image-overlay">
+  <div class="image__container">
+    <div class="image-item">
+      {% if section.settings.image != blank %}
+        <div class="image-overlay-parent hidden-mobile">
+          <img src="{{ section.settings.image | image_url: width: 2646 }}" loading="lazy" alt="">
+          {%- if section.settings.image_description != blank -%}
+            <div class="image-overlay-content">
+              <div class="subhead-s">{{ section.settings.image_description }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      {% endif %}
+      {% if section.settings.image_mobile != blank %}
+        <div class="image-overlay-parent hidden-desktop">
+          <img src="{{ section.settings.image_mobile | image_url: width: 1150 }}" loading="lazy" alt="">
+          {%- if section.settings.image_description != blank -%}
+            <div class="image-overlay-content">
+              <div class="subhead-s">{{ section.settings.image_description }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with Text Overlay",
+  "class": "section-image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image Mobile"
+    },
+    {
+      "type": "text",
+      "id": "image_description",
+      "label": "Image Description",
+      "default": "Study Citing Information"
+    },
+    {
+      "type": "header",
+      "content": "Section Style Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Text Overlay",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

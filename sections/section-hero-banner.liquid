@@ -1,0 +1,267 @@
+{% comment %}
+  Updated Hero Section:
+  - Supports image or video toggle
+  - Scroll animation added to heading
+  - Font scales responsively
+  - Full schema cleanup
+{% endcomment %}
+
+{{ 'section-hero-banner.css' | asset_url | stylesheet_tag }}
+
+{%- capture style -%}
+  --PT: {{ section.settings.padding_top }}px;
+  --PB: {{ section.settings.padding_bottom }}px;
+{%- endcapture -%}
+
+{%- if section.settings.media_type == 'video' and section.settings.video != null -%}
+  <script src="{{ 'video-background.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{%- if section.settings.show_video_popup -%}
+  <script src="{{ 'load-photoswipe.js' | asset_url }}" defer></script>
+  <script src="{{ 'video-popup.js' | asset_url }}" defer></script>
+{%- endif -%}
+{%- liquid
+  assign image_1 = section.settings.image
+  assign desktop_height = section.settings.height
+  assign mobile_image = section.settings.mobile_image
+  assign mobile_height = section.settings.mobile_height
+  assign section_width = section.settings.width
+  capture sizes
+    if section_width == 'wrapper--full'
+      echo '100vw'
+    else
+      echo '(min-width: 990px) calc(100vw - 100px), (min-width: 750px) calc(100vw - 60px), calc(100vw - 32px)'
+    endif
+  endcapture
+
+  capture sizes_mobile
+    if section_width == 'wrapper--full'
+      echo '100vw'
+    else
+      echo 'calc(100vw - 32px)'
+    endif
+  endcapture
+-%}
+<div
+  class="section-index-hero index-hero section-hero-banner wrapper-parent no-scroll section-padding color-{{ section.settings.color_scheme }} {{ desktop_height }} {{ mobile_height }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-media"
+  data-overlay-header
+  style="{{ style }}"
+>
+  <div class="frame {{ section.settings.width }}">
+    {% if section.settings.media_type == 'video' %}
+      {% render 'video', video: section.settings.video %}
+    {% elsif section.settings.media_type == 'image' %}
+      <div class="hero__split-image{% if image_1 == blank %} hero__split-image--blank{% endif %}">
+        {%- render 'image-hero',
+          image_desktop: image_1,
+          image_mobile: mobile_image,
+          sizes: sizes,
+          desktop_height: desktop_height,
+          mobile_height: mobile_height
+        -%}
+      </div>
+      <div style="opacity: 0;" class="hero__content__wrapper wrapper frame__item text-banner-image-box">
+          <div class="hero__content wrapper-container">
+            <h3 class="hero-title hero__title scroll-animate text-white fade-toggle show leading-tight split" id="hero-title">
+              {{ section.settings.title }}
+            </h3>
+
+            {% if section.settings.text != blank %}
+              <div
+                class="hero__description hero__title second-line-text scroll-animate text-white hide fade-toggle"
+                data-aos="hero"
+              >
+                <h3 class="text-white split" id="second-title">
+                  {{ section.settings.text }}
+                </h3>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const wrapper = document.querySelector('.wrapper-parent');
+  const heroSection = document.querySelector('.section-index-hero');
+  const heroDescription = heroSection?.querySelector('.hero__description.hero__title');
+  const heroTitle = document.querySelector('.hero-title.scroll-animate');
+  const secondLine = document.querySelector('.second-line-text.scroll-animate');
+  const contentWrapper = document.querySelector('.section-index-hero .hero__content__wrapper');
+
+  window.addEventListener('load', function () {
+    if (contentWrapper) contentWrapper.style.opacity = 1;
+  });
+
+  if (heroDescription){
+    ScrollTrigger.create({
+      trigger: ".section-index-hero",
+      start: "top top",
+      end: "bottom+=50 top",
+      pin: true,
+    });
+  }
+  function onScroll() {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > 150) {
+      wrapper.classList.remove('no-scroll');
+
+      if (heroTitle && secondLine) {
+        heroTitle.classList.remove('show');
+        heroTitle.classList.add('hide');
+        secondLine.classList.remove('hide');
+        secondLine.classList.add('show');
+      }
+    } else {
+      wrapper.classList.add('no-scroll');
+      if (heroTitle && secondLine) {
+        heroTitle.classList.remove('hide');
+        heroTitle.classList.add('show');
+        secondLine.classList.remove('show');
+        secondLine.classList.add('hide');
+      }
+    }
+  }
+
+    // Initial state
+    if (wrapper && heroDescription) {
+      wrapper.classList.add('no-scroll');
+      window.addEventListener('scroll', onScroll);
+    }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "class": "section-overlay-header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "default": "video",
+      "options": [
+        { "value": "video", "label": "Video" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "wrapper--full",
+      "options": [
+        {"value": "wrapper--full", "label": "Full width"},
+        {"value": "wrapper--full-padded", "label": "Full width padded"}
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_social_link",
+      "label": "Vimeo link",
+      "default": "https://vimeo.com/1101552614",
+      "accept": ["vimeo"]
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_image",
+      "label": "Video Poster Image",
+      "info": "Image to show before video loads"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image desktop",
+      "info": "Displayed if selected as media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_popup",
+      "label": "Enable popup",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "info": "This line will show when user scroll",
+      "label": "Second line heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Image mobile"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "default": "screen-height-three-quarters",
+      "options": [
+        {"value": "screen-height-full", "label": "Full screen height"},
+        {"value": "screen-height-three-quarters", "label": "3/4 of screen"},
+        {"value": "eight-fifty-height-hero", "label": "850px"},
+        {"value": "seven-fifty-height-hero", "label": "750px"},
+        {"value": "sixty-fifty-height-hero", "label": "650px"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_height",
+      "label": "Mobile Height",
+      "default": "screen-height-three-quarters--mobile",
+      "options": [
+        {"value": "screen-height-full--mobile", "label": "Full screen height"},
+        {"value": "screen-height-three-quarters--mobile", "label": "3/4 of screen"},
+        {"value": "eight-fifty-height-hero--mobile", "label": "850px"},
+        {"value": "seven-fifty-height-hero--mobile", "label": "750px"},
+        {"value": "sixty-fifty-height-hero--mobile", "label": "650px"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}

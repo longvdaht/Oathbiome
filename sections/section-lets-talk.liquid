@@ -1,0 +1,128 @@
+{{ 'section-lets-talk.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-lets-talk wrapper-container section-{{ section.id }}-padding">
+  <div class="pl-50 pr-50">
+    <h4>
+      {{ section.settings.title }}
+      {% if section.settings.subtitle != blank %}
+        <br>
+      {% endif %}
+      {{ section.settings.subtitle }}
+      <span>
+        {% if section.settings.button_text != blank %}
+          <a href="mailto:{{ section.settings.button_text | strip }}" target="_blank">
+            {{ section.settings.button_text }}
+          </a>
+        {% else %}
+          {% if section.settings.link_text != blank %}
+            <a href="{{ section.settings.link }}" target="_blank">
+              {{ section.settings.link_text }}
+            </a>
+          {% endif %}
+        {% endif %}
+      </span>
+    </h4>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "section-lets-talk",
+    "class": "custom",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Let's talk"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "Reach out to"
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Email Address",
+        "default": "ag@oathbiome.com",
+        "info": "If email configuration will not show link. If you want to use a link, leave this field empty and fill in the Link Text and Link fields below."
+      },
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "Link Text"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Top Mobile",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Bottom Mobile",
+        "default": 30
+      }
+    ],
+    "presets": [
+      {
+        "name": "Lets Talk",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

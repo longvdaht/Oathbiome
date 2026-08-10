@@ -1,0 +1,219 @@
+{{ 'ob-newsletter.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'newsletter.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ob-newsletter.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign unique = section.id
+  assign form_class = 'ob-newsletter__form'
+  assign form_id = 'Newsletter--' | append: unique
+-%}
+<div
+  id="OB-Newsletter--{{ section.id }}"
+  class="ob-newsletter"
+  data-section-id="{{ section.id }}"
+  data-section-type="newsletter"
+>
+  <div class="ob-newsletter__wrapper">
+    <div class="ob-newsletter__box">
+      <div class="ob-newsletter__image">
+        {% if section.settings.background_image %}
+          <img
+            src="{{ section.settings.background_image | image_url }}"
+            alt="Newsletter Image"
+            width="auto"
+            height="auto"
+          >
+        {% endif %}
+      </div>
+      <div class="ob-newsletter__content">
+        <div class="ob-newsletter__content-wrapper">
+          <div class="ob-newsletter__text">
+            <h4 class="ob-newsletter__title text-s">{{ section.settings.title }}</h4>
+            {% if section.settings.description %}
+              <p class="ob-newsletter__description">{{ section.settings.description }}</p>
+            {% endif %}
+          </div>
+          <div class="ob-newsletter__form-wrapper">
+            <newsletter-component>
+              {%- form 'customer', class: form_class, id: form_id, data-newsletter-form: '' -%}
+                {%- liquid
+                  assign success_message = 'general.newsletter_form.thank_you_ob' | t
+                -%}
+
+                {%- if form.posted_successfully? -%}
+                  <p
+                    class="newsletter__message newsletter__message--success text-s{% if form.posted_successfully? %} show{% endif %}"
+                    id="Newsletter-success--{{ unique }}"
+                    tabindex="-1"
+                    autofocus
+                  >
+                    {{ section.settings.success_message | default: success_message }}
+                  </p>
+                {%- endif -%}
+
+                <div class="newsletter__message newsletter__message--error errors" id="Newsletter-error--{{ unique }}">
+                  {%- if form.errors -%}
+                    {{ form.errors.translated_fields.email | capitalize }}
+                    {{ form.errors.messages.email }}
+                  {%- else -%}
+                    <em>{{ 'general.newsletter_form.error_message' | t }}</em>
+                  {%- endif -%}
+                </div>
+
+                <div class="ob-newsletter__form-fields-wrapper{% if form.posted_successfully? %} hidden{% endif %}">
+                  <div class="ob-newsletter__form-fields">
+                    {% if section.settings.enable_name %}
+                      <div class="ob-newsletter__input-field ob-newsletter__name">
+                        <input type="text" name="contact[name]" placeholder="Name*" required>
+                      </div>
+                    {% endif %}
+                    {% if section.settings.enable_email %}
+                      <div class="ob-newsletter__input-field ob-newsletter__email">
+                        <input type="email" name="contact[email]" placeholder="Email*" required>
+                      </div>
+                    {% endif %}
+                    {% if section.settings.enable_organization %}
+                      <div class="ob-newsletter__input-field ob-newsletter__organization">
+                        <input type="text" name="contact[organization]" placeholder="Organization Name">
+                      </div>
+                    {% endif %}
+                    {% if section.settings.enable_interests and section.settings.interest_options %}
+                      <div class="ob-newsletter__input-field ob-newsletter__interest-options">
+                        <div class="ob-newsletter__interest-label">
+                          {{ section.settings.interest_label }}
+                          {% render 'icon-arrow-down' %}
+                        </div>
+                        {% assign interest_options = section.settings.interest_options | split: ',' %}
+            <div class="ob-newsletter__interest-options-wrapper">
+  <div class="ob-newsletter__interest-options-list">
+    {% for interest in interest_options %}
+      <div class="ob-newsletter__interest-option">
+        <input
+          type="checkbox"
+          name="contact[interests][]"
+          value="{{ interest | strip }}"
+          id="interest-{{ forloop.index }}"
+        >
+        <label for="interest-{{ forloop.index }}">{{ interest | strip }}</label>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+                      </div>
+                    {% endif %}
+                    {% if section.settings.enable_message %}
+                      <div class="ob-newsletter__input-field ob-newsletter__message">
+                        <textarea name="contact[message]" placeholder="Message"></textarea>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="ob-newsletter__form-submit">
+                    <button type="submit" class="ob-newsletter__button" disabled>
+                      {{ section.settings.button_text }}
+                      <span>{% render 'arrow-right-icon' %}</span>
+                    </button>
+                  </div>
+                </div>
+              {%- endform -%}
+            </newsletter-component>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "OB Newsletter",
+  "class": "ob-newsletter",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Join Our Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Stay updated with our latest news and offers."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Join"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_name",
+      "label": "Enable Name Field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_email",
+      "label": "Enable Email Field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_organization",
+      "label": "Enable Organization Name Field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_interests",
+      "label": "Enable Interests Field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_message",
+      "label": "Enable Message Field",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "interest_options",
+      "label": "Interest Options"
+    },
+    {
+      "type": "text",
+      "id": "interest_label",
+      "label": "Interest Label",
+      "default": "Interests*"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for reaching out."
+    }
+  ],
+  "presets": [
+    {
+      "name": "OB Newsletter",
+      "category": "Newsletter"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

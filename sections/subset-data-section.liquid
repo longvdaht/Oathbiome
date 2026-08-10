@@ -1,0 +1,195 @@
+{{ 'subset-data.css' |  asset_url | stylesheet_tag }}
+
+{% style %}
+  #Section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media (min-width: 750px) { 
+    #Section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    #Section-{{ section.id }} .subset-data__title {
+      max-width: {{ section.settings.title_width }}%;
+    }
+  }
+{% endstyle %}
+
+<section id="Section-{{ section.id }}">
+  <div class="subset-data__container wrappers pl-50 pr-50">
+    {% if section.settings.title %}
+      <div class="subset-data__title details-large">{{ section.settings.title }}</div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="subset-data__grid">
+        {% for block in section.blocks %}
+          <div class="subset-data__item">
+            {% for i in (1..6) %}
+              {% assign key = "content_" | append: i %}
+              {% assign content = block.settings[key] %}
+              {% if content != blank %}
+                <p class="body-small">{{ content }}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+        
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  if (window.innerWidth <= 749) {
+    const items = document.querySelectorAll('.subset-data__item');
+    if (items.length < 3) return;
+
+    const secondItem = items[1];
+    const firstItem = items[0];
+    const thirdItem = items[2];
+
+    const children = Array.from(secondItem.children);
+
+    children.slice(0, 3).forEach(child => {
+      firstItem.appendChild(child);
+    });
+
+    children.slice(3).reverse().forEach(child => {
+      thirdItem.prepend(child);
+    });
+  }
+
+  // Hide empty items
+  document.querySelectorAll(".subset-data__item").forEach(function (item) {
+    if (item.children.length === 0 && item.textContent.trim() === "") {
+      item.style.display = "none";
+    }
+  });
+});
+
+</script>
+{% schema %}
+  {
+    "name": "Subset Data",
+    "class": "subset data wrapper-container",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Subset of data gathered from university and field trials from institutions such as:"
+      },
+      {
+        "type": "range",
+        "id": "title_width",
+        "label": "Title Width",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Spacing Settings"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      },   
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      }       
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "content_1",
+            "label": "Content 1"
+          },
+          {
+            "type": "text",
+            "id": "content_2",
+            "label": "Content 2"
+          },
+          {
+            "type": "text",
+            "id": "content_3",
+            "label": "Content 3"
+          },
+          {
+            "type": "text",
+            "id": "content_4",
+            "label": "Content 4"
+          },
+          {
+            "type": "text",
+            "id": "content_5",
+            "label": "Content 5"
+          },
+          {
+            "type": "text",
+            "id": "content_6",
+            "label": "Content 6"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 6,
+    "presets": [
+      {
+        "name": "Subset Data",
+        "blocks": [
+          { "type": "text" },
+          { "type": "text" },
+          { "type": "text" },
+          { "type": "text" },
+          { "type": "text" },
+          { "type": "text" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

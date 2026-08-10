@@ -1,0 +1,416 @@
+announcement-bar {
+  --padding: var(--padding-scrolling, var(--outer));
+  display: block;
+}
+
+.announcement__wrapper {
+  --icon-offset: 0.2;
+  --icon-size: max(var(--text-size) * 0.8, 18px);
+  --btn-size: var(--icon-size);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  line-height: var(--line-height-normal);
+  transition: opacity 0.5s ease;
+}
+.announcement__wrapper .free-shipping__graph svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.announcement__wrapper--top {
+  z-index: 5500;
+}
+
+.announcement__wrapper--top.announcement__wrapper--borders {
+  border-top: 0;
+}
+
+.announcement__wrapper--borders {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.js .announcement__bar-holder--slider div:not(.flickity-enabled) .announcement__slide + .announcement__slide {
+  opacity: 0;
+}
+
+@keyframes ticker-rtl {
+  0% {
+    transform: none;
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes ticker-ltr {
+  0% {
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  100% {
+    transform: none;
+  }
+}
+.announcement__bar .flickity-slider {
+  display: flex;
+  align-items: center;
+}
+
+.announcement__slide {
+  padding: 0 var(--padding);
+  width: 100%;
+  color: var(--text);
+}
+
+.announcement__slide.announcement__bar {
+  padding: 0 var(--outer);
+}
+
+.announcement__slide > div {
+  display: flex;
+  min-height: var(--announcement-height);
+  align-items: center;
+  justify-content: var(--justify-content, center);
+}
+
+.announcement__content {
+  font-family: var(--scrolling-font-family, inherit);
+  font-size: var(--scrolling-font-size, inherit);
+  font-style: var(--scrolling-font-style, inherit);
+  font-weight: var(--scrolling-font-weight, inherit);
+  letter-spacing: var(--scrolling-letter-spacing, normal);
+}
+
+.announcement__content strong {
+  font-weight: var(--scrolling-font-weight-bold, var(--FONT-WEIGHT-BODY-BOLD));
+}
+
+.announcement__bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.announcement__slide:not(.announcement__bar) {
+  white-space: nowrap;
+}
+
+.announcement__slide:not(.announcement__bar) > * {
+  width: 100%;
+}
+
+.announcement__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.announcement__bar:not(.desktop):not(.mobile) {
+  width: 100%;
+}
+
+.announcement__bar.desktop {
+  width: 100%;
+}
+@media only screen and (max-width: 749px) {
+  .announcement__bar.desktop {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .announcement__bar.mobile {
+    display: none;
+    width: 0;
+  }
+}
+@media only screen and (max-width: 749px) {
+  .announcement__bar.mobile {
+    width: 100%;
+  }
+}
+
+.announcement__bar .block__icon {
+  align-self: auto;
+}
+
+.announcement__bar--error {
+  display: none;
+}
+
+.announcement__main {
+  font-family: var(--FONT-STACK-BODY);
+  font-weight: var(--FONT-WEIGHT-BODY-BOLD);
+  font-style: var(--FONT-STYLE-BODY);
+  letter-spacing: var(--LETTER-SPACING-BODY);
+}
+
+.announcement__text {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  white-space: nowrap;
+  min-height: var(--announcement-height);
+}
+.announcement__text p,
+.announcement__text h1,
+.announcement__text h2,
+.announcement__text h3,
+.announcement__text h4,
+.announcement__text h5,
+.announcement__text h6 {
+  font-family: inherit;
+  margin: 0;
+}
+
+.announcement__text.ticker--animated {
+  padding: 0 var(--padding);
+}
+
+.announcement__text.ticker--animated > .announcement__slide:first-child {
+  padding-left: 0;
+}
+
+.announcement__text.ticker--animated > .announcement__slide:last-child {
+  padding-right: 0;
+}
+
+.announcement__bar-holder--marquee .announcement__text {
+  min-height: 0;
+}
+
+.announcement__bar-holder--marquee .announcement__slide {
+  min-height: var(--announcement-height);
+}
+
+.announcement__text > div {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media only screen and (min-width: 750px) {
+  .announcement__text > .mobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  .announcement__text > .desktop {
+    display: none;
+  }
+}
+
+.announcement__text a {
+  position: relative;
+}
+
+.announcement__text .free-shipping {
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.announcement__text .free-shipping circle + circle {
+  stroke: currentcolor;
+}
+
+.announcement__divider {
+  margin-left: 10px;
+  padding-right: 10px;
+  width: 0;
+  height: 10%;
+  border-left: 1px solid currentcolor;
+}
+
+.announcement__message {
+  width: 100%;
+  text-align: var(--text-align, center);
+  font-size: 0;
+}
+
+.announcement__scale {
+  display: inline-flex;
+  transition: opacity 0.5s linear;
+}
+
+.announcement__scale.ticker--unloaded {
+  width: max-content;
+}
+
+.announcement__bar-holder--slider > div {
+  justify-content: var(--justify-content, center);
+}
+
+.announcement__bar-holder--slider.flickity-enabled .announcement__scale.ticker--unloaded {
+  position: static;
+}
+
+.announcement__image {
+  display: block;
+  margin: 0 auto;
+}
+.announcement__image.svg-placeholder {
+  background-color: transparent;
+}
+
+html:not(.js) .announcement__scale.ticker--unloaded {
+  opacity: 1;
+  position: static;
+  width: auto;
+}
+
+.ticker--animated {
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: var(--ticker-direction);
+  animation-duration: var(--animation-time);
+  animation-play-state: paused;
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+}
+.ticker--animated:hover {
+  animation-play-state: paused;
+}
+
+.announcement__slide:not(:only-child):not(.is-selected) .ticker--animated {
+  animation-play-state: paused;
+}
+
+.announcement__bar-holder {
+  position: relative;
+}
+.announcement__bar-holder .flickity-slider {
+  display: flex;
+  align-items: center;
+}
+
+.announcement__slider:not(.flickity-enabled) {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.announcement__slider:not(.flickity-enabled)::-webkit-scrollbar {
+  display: none;
+}
+.announcement__slider:not(.flickity-enabled) .announcement__slide {
+  flex: 1 0 100%;
+}
+
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) {
+  --arrow-space: var(--icon-size);
+  --arrow-space-offset: calc(var(--arrow-space) * -1);
+  margin-left: calc(var(--outer) + var(--icon-size));
+  margin-right: calc(var(--outer) + var(--icon-size));
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .announcement__slide.announcement__bar {
+  padding: 0 20px;
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-viewport::before, .announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-viewport::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--arrow-space) + 20px);
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-viewport::before {
+  left: var(--arrow-space-offset);
+  background: linear-gradient(90deg, var(--COLOR-BG) 80%, var(--COLOR-BG-TRANSPARENT, rgba(255, 255, 255, 0)) 100%);
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-viewport::after {
+  right: var(--arrow-space-offset);
+  background: linear-gradient(-90deg, var(--COLOR-BG) 80%, var(--COLOR-BG-TRANSPARENT, rgba(255, 255, 255, 0)) 100%);
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-prev-next-button {
+  --icon-size: inherit;
+  --btn-size: inherit;
+  display: block;
+  background-color: transparent;
+  overflow: unset;
+  box-shadow: none;
+  z-index: 2;
+  opacity: 1;
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-prev-next-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  background: transparent;
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-prev-next-button::before {
+  background-color: var(--text);
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-prev-next-button.previous {
+  transform: none;
+  left: var(--arrow-space-offset);
+}
+.announcement__bar-holder--arrows .announcement__slider:not(.single-slide) .flickity-prev-next-button.next {
+  transform: none;
+  right: var(--arrow-space-offset);
+}
+
+.no-js .announcement__bar-holder--slider .announcement__bar {
+  top: 0;
+  transform: none;
+}
+
+.announcement__bar-outer {
+  width: 100%;
+}
+
+@media only screen and (max-width: 749px) {
+  .announcement__bar-outer--desktop {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .announcement__bar-outer--mobile {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.announcement__bar-outer:not(:hover) .is-selected ticker-bar:not([paused]) .ticker--animated,
+.announcement__bar-outer:not(:hover) ticker-bar[autoplay]:not([paused]) .ticker--animated,
+.announcement__bar-outer:not(:hover) ticker-bar[data-slide]:not([paused]) .ticker--animated {
+  animation-play-state: running;
+}
+
+html.supports-touch .is-selected ticker-bar:not([paused]) .ticker--animated,
+html.supports-touch ticker-bar[autoplay]:not([paused]) .ticker--animated,
+html.supports-touch ticker-bar[data-slide]:not([paused]) .ticker--animated {
+  animation-play-state: running;
+}
+
+.ticker__comparitor {
+  position: absolute;
+  transform: translateY(-5000px);
+  visibility: hidden;
+}
+
+.ie .announcement__bar--error {
+  display: block;
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}

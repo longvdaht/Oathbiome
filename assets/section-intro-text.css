@@ -1,0 +1,88 @@
+.section-intro-text .heading-content .body-large p {
+    margin: 1.5rem 0;
+    line-height: 145%;
+    color: var(--color-brown);
+}
+
+.section-intro-text .heading-content::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: var(--color-medium-gray);
+  position: absolute;
+  left: -20px;
+  top: 10px;
+}
+
+.section-intro-text .heading-content .text-mini {
+  margin-top: 26px;
+}
+
+.template-science-innovation .section-intro-text .heading-content::before {
+  top: 10px;
+}
+
+.button-wrapper {
+  margin-top: 30px;
+}
+
+.button-wrapper a {
+  width: fit-content;
+}
+
+.section-intro-text .heading-content {
+  max-width: 44.5%;
+  position: relative;
+}
+
+.section-intro-text h4 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 22px;
+  margin: 0;
+}
+
+@media (min-width: 750px) {
+  .button-wrapper {
+    margin-top: 45px;
+  }
+
+  .template-science-innovation .section-intro-text .heading-content:before {
+    top: 13px;
+  }
+
+  .template-science-innovation .section-intro-text .heading-content .text-mini {
+    margin-top: 29px;
+  }
+}
+
+@media (min-width: 901px) {
+  .section-intro-text h4 {
+    margin: -1px 0 0;
+  }
+}
+
+@media (max-width: 989px) {
+  .section-intro-text .heading-content {
+    max-width: 100%;
+  }
+
+  .section-intro-text .item .details-large {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .section-intro-text .heading-content h6::before {
+    width: 12px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .section-intro-text .heading-content::before {
+      left: -50px;
+      width: 30px;
+  }
+}

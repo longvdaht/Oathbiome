@@ -1,0 +1,584 @@
+{{ 'header.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+
+{% render 'header', header_style: 'logo_beside' %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const intervalHeader = setInterval(() => {
+      const header = document.querySelector('header');
+      const getInTouchSection = document.querySelector('.shopify-section.ob-newsletter');
+      const footerSection = document.querySelector('.group-footer');
+      const banner = document.querySelector('.section-hero-banner .frame');
+      const parentBanner = banner ? banner.closest('.section-hero-banner') : null;
+
+      if (header && footerSection) {
+        const headerWrapper = header.closest('.header__wrapper');
+        const bannerBottom = banner ? banner.getBoundingClientRect().bottom + window.scrollY : 0;
+
+        // Debounce utility to limit scroll event frequency
+        const debounce = (func, wait = 100) => {
+          let timeout;
+          return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+          };
+        }
+
+        // Throttle utility
+        const throttle = (func, limit = 50) => {
+          let inThrottle;
+          return function(...args) {
+            if (!inThrottle) {
+              func.apply(this, args);
+              inThrottle = true;
+              setTimeout(() => inThrottle = false, limit);
+            }
+          };
+        };
+
+        const bannerSection = document.querySelector('.section-hero-banner');
+        const bannerShopifySection = bannerSection ? bannerSection.closest('.shopify-section') : null;
+        let nextSection = null;
+        if (bannerShopifySection) {
+          nextSection = bannerShopifySection.nextElementSibling;
+          while (nextSection && !nextSection.classList.contains('shopify-section')) {
+            nextSection = nextSection.nextElementSibling;
+          }
+        }
+
+        const handleScroll = throttle(() => {
+          const scrollPosition = window.scrollY || window.pageYOffset;
+          const headerHeight = header.offsetHeight || 113;
+
+          if (nextSection) {
+            const nextSectionTop = nextSection.getBoundingClientRect().top + window.scrollY;
+            if (scrollPosition >= nextSectionTop - headerHeight) {
+              headerWrapper.classList.add('over-past-banner');
+              headerWrapper.classList.remove('scroll-past-banner');
+            } else {
+              headerWrapper.classList.remove('over-past-banner');
+              headerWrapper.classList.add('scroll-past-banner');
+            }
+          }
+
+          // Footer and Get In Touch visibility
+          const isFooterVisible = footerSection.getBoundingClientRect().top <= window.innerHeight * 0.25 &&
+                                  footerSection.getBoundingClientRect().bottom >= window.innerHeight * 0.25;
+
+          const isGetInTouchVisible = getInTouchSection &&
+                                      getInTouchSection.getBoundingClientRect().top <= window.innerHeight * 0.25 &&
+                                      getInTouchSection.getBoundingClientRect().bottom >= window.innerHeight * 0.25;
+
+          if (isFooterVisible || isGetInTouchVisible) {
+            headerWrapper.classList.add('hidden-header');
+          } else {
+            headerWrapper.classList.remove('hidden-header');
+          }
+        }, 50);
+
+        window.addEventListener('scroll', handleScroll);
+
+        clearInterval(intervalHeader);
+      }
+    }, 100);
+  });
+</script>
+{% schema %}
+{
+  "name": "Header - Logo beside menu",
+  "class": "page-header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "header_sticky",
+      "label": "Enable sticky header",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator_line",
+      "label": "Show border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "separator_opacity",
+      "label": "Border opacity",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icons",
+      "label": "Show icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_as_circle",
+      "label": "Show cart icon as circle",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "cart_icon_family",
+      "label": "Cart icon",
+      "default": "bag",
+      "options": [
+        {"value": "bag", "label": "Bag"},
+        {"value": "cart", "label": "Cart"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Image Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_without_banner",
+      "label": "Image logo with page without banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_sticky",
+      "label": "Image Logo sticky"
+    },
+    {
+      "type": "header",
+      "content": "Logo width"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_limit",
+      "min": 30,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "logo_max_limit_sticky",
+      "min": 30,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Sticky width",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "logo_max_limit_mobile",
+      "min": 30,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile width",
+      "default": 66
+    },
+    {
+      "type": "range",
+      "id": "logo_max_limit_sticky_mobile",
+      "min": 30,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile sticky width",
+      "default": 66
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "label": "Main menu",
+      "id": "main_menu_linklist"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "default": true,
+      "label": "Show search"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "default": true,
+      "label": "Show social icons"
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Country/Region selector",
+      "info": "To add a country/region, go to your [markets settings](/admin/settings/markets)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show country/region selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_name",
+      "label": "Show country name",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_flag",
+      "label": "Show country flag",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Highlight link"
+    },
+    {
+      "type": "text",
+      "id": "highlight_item",
+      "label": "Menu item",
+      "default": "Sale"
+    },
+    {
+      "type": "color",
+      "id": "highlight_item_color",
+      "label": "Color",
+      "default": "#D02E2E"
+    },
+    {
+      "type": "header",
+      "content": "Transparent header"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_home",
+      "label": "Enable on Home page",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_collection",
+      "label": "Enable on Collection pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_article",
+      "label": "Enable on Article pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_page",
+      "label": "Enable on Pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_product_page",
+      "label": "Enable on Product pages",
+      "info": "Stretch image size recommended. Desktop only",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_blog_page",
+      "label": "Enable on Blog pages",
+      "info": "Stretch image size recommended. Desktop only",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo_pdp",
+      "label": "Product pages logo"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Top",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Link position in main menu",
+          "default": "1",
+          "options": [
+            {"value": "1", "label": "Item 1"},
+            {"value": "2", "label": "Item 2"},
+            {"value": "3", "label": "Item 3"},
+            {"value": "4", "label": "Item 4"},
+            {"value": "5", "label": "Item 5"},
+            {"value": "6", "label": "Item 6"},
+            {"value": "7", "label": "Item 7"},
+            {"value": "8", "label": "Item 8"},
+            {"value": "9", "label": "Item 9"},
+            {"value": "10", "label": "Item 10"}
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "aspect_ratio",
+          "min": 0.5,
+          "max": 1.5,
+          "step": 0.1,
+          "unit": ":1",
+          "label": "Image scaling ratio",
+          "info": "Wide to tall",
+          "default": 0.5
+        },
+        {
+          "type": "checkbox",
+          "id": "wide_image",
+          "label": "Wide image",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "info": "Increase contrast for legible text.",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay color",
+          "default": "#000"
+        },
+        {
+          "type": "header",
+          "content": "Typography"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Color"
+        },
+        {
+          "type": "paragraph",
+          "content": "Overrides color scheme. Set to Transparent to revert back to using color schemes."
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "name": "Toolbar",
+      "type": "toolbar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Toolbar</p>"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "These menus won't show dropdown items."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_border",
+          "label": "Show border",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "border_opacity",
+          "label": "Border opacity",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Social media icons"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_links",
+          "label": "Show social icons",
+          "info": "Edit your social settings and accounts in [Theme settings](/admin/themes/current/editor?context=theme)",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Gift card"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_gift_card",
+          "label": "Show gift card",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Language selector",
+          "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_locale_selector",
+          "label": "Show language selector",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Country/Region selector",
+          "info": "To add a country/region, go to your [markets settings](/admin/settings/markets)."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_country_selector",
+          "label": "Show country/region selector",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_country_name",
+          "label": "Show country name",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_country_flag",
+          "label": "Show country flag",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "default": "scheme_1",
+          "label": "Color scheme"
+        },
+        {
+          "type": "header",
+          "content": "Padding"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 15,
+          "step": 1,
+          "unit": "px",
+          "label": "Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 15,
+          "step": 1,
+          "unit": "px",
+          "label": "Bottom",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

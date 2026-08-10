@@ -1,0 +1,194 @@
+{% comment %} Product Image Slider section {% endcomment %}
+{{ 'section-product-image-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-image-slider.js' | asset_url }}" defer="defer"></script>
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+<div class="section-{{ section.id }} soil-slider">
+  <div class="slider-header">
+    {% if section.settings.title != blank %}
+      <h2 class="slider-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p class="slider-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+    {% if section.settings.button_link and section.settings.button_text %}
+      <a class="slider-button btn btn--secondary btn--content" href="{{ section.settings.button_link }}">{{ section.settings.button_text }} {%- render 'icon-arrow-right' -%}</a>
+    {% endif %}
+  </div>
+
+  <div class="soil-slider__container flickity-section">
+    {% for block in section.blocks %}
+      <div class="slide-item flickity-cell-slider">
+        {% for i in (1..2) %}
+        {% assign key = 'image_' | append: i %}
+        {% assign label_key = 'label_' | append: i %}
+        {% assign thriving_key = 'is_thriving_' | append: i %}
+        
+        {% assign image = block.settings[key] %}
+        {% assign label = block.settings[label_key] %}
+        {% assign ticked = block.settings[thriving_key] %}
+        
+          {% if image != blank %}
+            <div class="image-wrapper-slider">
+              <img src="{{ image | image_url: width: 800 }}" alt="">
+              <div class="label {% if ticked %}label-tick{% endif %}">
+                {% if ticked %}
+                {%- render 'icon-tick-badges' -%}
+                {% else %}
+                {%- render 'icon-x-slider' -%}
+                {% endif %}
+
+                {{ label }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Image Slider",
+  "class": "product-image-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Better inputs, beautiful outputs."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Oath Soil Life is backed by decades of research..."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Label for Image 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_thriving_1",
+          "label": "Using tick icon for Image 1",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Label for Image 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_thriving_2",
+          "label": "Using tick icon for Image 2",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Image Slider",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "image_slide"
+        },
+        {
+          "type": "image_slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

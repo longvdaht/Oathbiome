@@ -1,0 +1,42 @@
+<style>
+#section-{{ section.id }} .show_divider {
+  width: calc(100vw - 2 * var(--outer));
+  margin: 0 auto;
+  height: 1px;
+  background-color: {{ section.settings.color  }};
+}
+
+@media (min-width: 1680px) {
+  #section-{{ section.id }} .show_divider {
+    width: calc(var(--WIDTH-NORMAL) - 2 * var(--outer));
+  }
+}
+</style>
+
+<section id="section-{{ section.id }}">
+  <div class="show_divider"></div>
+</section>
+
+{%  schema  %}
+  {
+  "name": "Section Divider",
+  "class": "divider-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text",
+      "default": "#CBBEAF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section Divider",
+      "category": "Divider"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,94 @@
+<div
+  class="hero__reviews{% if block.settings.stars_text_inline %} hero__reviews--inline{% endif %}"
+  style="--block-padding-bottom: {{ block.settings.padding_bottom }}px;"
+  data-aos="hero"
+  data-aos-order="auto"
+  data-aos-anchor="{{ section.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="hero__stars">
+    {%- liquid
+      assign full_star = true
+
+      for idx in (1..5)
+        if full_star
+          render 'icon-star-full'
+        else
+          render 'icon-star'
+        endif
+
+        if idx == block.settings.stars
+          assign full_star = false
+        endif
+      endfor
+    -%}
+  </div>
+
+  {%- if block.settings.text != blank -%}
+    <div class="hero__reviews__text {{ block.settings.text_font_size }}">
+      {{ block.settings.text }}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Tell your brand's story through images.<\/p>"
+    },
+    {
+      "type": "select",
+      "id": "text_font_size",
+      "label": "Text size",
+      "default": "body-small",
+      "options": [
+        {"value": "body-x-small", "label": "Extra small"},
+        {"value": "body-small", "label": "Small"},
+        {"value": "body-medium", "label": "Medium"},
+        {"value": "body-large", "label": "Large"},
+        {"value": "body-x-large", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "stars",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Stars",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "stars_text_inline",
+      "label": "Stars and text go side by side",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews"
+    }
+  ]
+}
+{% endschema %}

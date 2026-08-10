@@ -1,0 +1,600 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-image-with-title",
+      "disabled": true,
+      "settings": {
+        "show_title": true,
+        "show_description": false,
+        "background_color": "#ffffff",
+        "text_color": "#ffffff",
+        "show_image": false,
+        "banner_layout": "overlay",
+        "height": "five-fifty-height-hero",
+        "mobile_height": "five-fifty-height-hero--mobile",
+        "overlay_opacity": 0,
+        "show_overlay_text": false,
+        "padding_top": 55,
+        "padding_bottom": 0
+      }
+    },
+    "section_rich_text_3JXBjG": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_FkgcDp": {
+          "type": "heading",
+          "settings": {
+            "title": "Shop Soil Health Care",
+            "heading_font_size": "heading-large",
+            "color": "#301912",
+            "padding_bottom": 16,
+            "heading_tag": "automatic"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FkgcDp"
+      ],
+      "settings": {
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "overlay_opacity": 0,
+        "show_overlay_text": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_text_pUqRFW": {
+      "type": "section-text",
+      "settings": {
+        "sub_heading": "Tree Systems",
+        "content": "How many trees are you treating?"
+      }
+    },
+    "main": {
+      "type": "collection",
+      "custom_css": [
+        "product-item-siblings.product-item__siblings.product-item__swatches__holder.product-item__swatches__holder--circle.product-item__swatches__holder--limited {display: none;}",
+        "p.product-treats.body-large {display: none;}"
+      ],
+      "settings": {
+        "enable_sort": false,
+        "enable_filters": false,
+        "filter_layout": "inline-open",
+        "default_open": true,
+        "collection_linklist": "",
+        "grid": 4,
+        "grid_mobile": "2",
+        "products_per_page": 24,
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_image_info_r6DQkL": {
+      "type": "section-image-info",
+      "blocks": {
+        "image_iiWfM8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HalfTree.svg",
+            "title": "1/2 Tree",
+            "description": "< 5”",
+            "image_divider": true,
+            "divider_width": 63,
+            "mobile_divider_width": 89
+          }
+        },
+        "image_hCbj7X": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/OneTree.svg",
+            "title": "1 Tree",
+            "description": "5” - 15”",
+            "image_divider": true,
+            "divider_width": 87,
+            "mobile_divider_width": 98
+          }
+        },
+        "image_3WJVmD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/TwoTrees.svg",
+            "title": "2 Trees",
+            "description": "15” - 25”",
+            "image_divider": true,
+            "divider_width": 108,
+            "mobile_divider_width": 109
+          }
+        },
+        "text_y7bYVi": {
+          "type": "text",
+          "settings": {
+            "heading": "How to count your trees.",
+            "desktop_heading_size": "body-small",
+            "mobile_heading_size": "body-large",
+            "description": "Consider the size of your trees as you select your system. Diameter is measured at breast height, 4.5 ft from the ground.",
+            "desktop_description_size": "body-x-small",
+            "mobile_description_size": "details-large",
+            "email_url": ""
+          }
+        },
+        "text_JzVzqV": {
+          "type": "text",
+          "settings": {
+            "heading": "Questions?",
+            "desktop_heading_size": "body-small",
+            "mobile_heading_size": "body-small",
+            "description": "Ask an arborist or send us photos of your trees",
+            "desktop_description_size": "body-x-small",
+            "mobile_description_size": "body-x-small",
+            "email_url": "Care@OathSoilLife.com"
+          }
+        }
+      },
+      "block_order": [
+        "image_iiWfM8",
+        "image_hCbj7X",
+        "image_3WJVmD",
+        "text_y7bYVi",
+        "text_JzVzqV"
+      ],
+      "settings": {
+        "mobile_image_position": "horizontal",
+        "content_padding_top": 40,
+        "content_padding_bottom": 40,
+        "content_padding_left": 50,
+        "content_padding_right": 50,
+        "mobile_content_padding_top": 50,
+        "mobile_content_padding_bottom": 20,
+        "mobile_content_padding_left": 15,
+        "mobile_content_padding_right": 15,
+        "background_color": "#f6f2eb",
+        "padding_top": 20,
+        "padding_bottom": 160,
+        "mobile_padding_top": 5,
+        "mobile_padding_bottom": 70
+      }
+    },
+    "section_text_krGiEH": {
+      "type": "section-text",
+      "settings": {
+        "sub_heading": "Lawn & Garden System",
+        "content": "How much soil are you replenishing?"
+      }
+    },
+    "section_collection_RWaD8V": {
+      "type": "section-collection",
+      "settings": {
+        "featured_collection": "oath-soil-life-lawn-garden-systems",
+        "use_data_metafields": false,
+        "heading": "",
+        "heading_font_size": "heading-medium",
+        "description": "",
+        "text_font_size": "body-medium",
+        "layout": "center",
+        "link_text": "",
+        "link_url": "",
+        "button_type": "btn--primary",
+        "button_size": "",
+        "button_style": "btn--solid",
+        "show_arrow": false,
+        "layout_desktop": "grid",
+        "grid": 4,
+        "rows": 2,
+        "width": "wrapper",
+        "layout_mobile": "2",
+        "color_scheme": "",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mb": 17,
+        "padding_bottom_mb": 0,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_image_info_FAjaGH": {
+      "type": "section-image-info",
+      "blocks": {
+        "image_ahKNhC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/OSL_PLP_BaksetballeCourt.svg",
+            "title": "Basketball Court = Single System",
+            "description": "",
+            "image_divider": false,
+            "divider_width": 150,
+            "mobile_divider_width": 150
+          }
+        },
+        "image_aLTXx8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/OSL_PLP_Baseball.svg",
+            "title": "Baseball Infield = 1/4-Acre System",
+            "description": "",
+            "image_divider": false,
+            "divider_width": 150,
+            "mobile_divider_width": 150
+          }
+        },
+        "image_6enPen": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/OSL_PLP_AmericanFootball.svg",
+            "title": "American Football Field = 1-Acre System",
+            "description": "",
+            "image_divider": false,
+            "divider_width": 150,
+            "mobile_divider_width": 150
+          }
+        },
+        "text_Xm6EbJ": {
+          "type": "text",
+          "settings": {
+            "heading": "How to size your lawn or garden.",
+            "desktop_heading_size": "body-small",
+            "mobile_heading_size": "body-large",
+            "description": "A single system will treat a space up to the size of a basketball court. A 1/4 acre is approximately double that size. An acre is closer to a football field.",
+            "desktop_description_size": "body-x-small",
+            "mobile_description_size": "details-large",
+            "email_url": ""
+          }
+        },
+        "text_jh4JLd": {
+          "type": "text",
+          "settings": {
+            "heading": "Questions?",
+            "desktop_heading_size": "body-small",
+            "mobile_heading_size": "body-small",
+            "description": "Ask an agronomist or send us photos of your plants",
+            "desktop_description_size": "body-x-small",
+            "mobile_description_size": "body-x-small",
+            "email_url": "Care@OathSoilLife.com"
+          }
+        }
+      },
+      "block_order": [
+        "image_ahKNhC",
+        "image_aLTXx8",
+        "image_6enPen",
+        "text_Xm6EbJ",
+        "text_jh4JLd"
+      ],
+      "settings": {
+        "mobile_image_position": "vertical",
+        "content_padding_top": 40,
+        "content_padding_bottom": 40,
+        "content_padding_left": 40,
+        "content_padding_right": 50,
+        "mobile_content_padding_top": 50,
+        "mobile_content_padding_bottom": 20,
+        "mobile_content_padding_left": 15,
+        "mobile_content_padding_right": 15,
+        "background_color": "#f6f2eb",
+        "padding_top": 10,
+        "padding_bottom": 135,
+        "mobile_padding_top": 5,
+        "mobile_padding_bottom": 75
+      }
+    },
+    "section_video_slider_6A9JEG": {
+      "type": "section-video-slider",
+      "blocks": {
+        "video_TQDUmx": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "thumbnail": "shopify://shop_images/Testimonial_Gabriel_006b11e8-06cd-4244-ba24-1a24a5abf17f.jpg",
+            "title": "Gabriel Tideo",
+            "description": "ISA Certified Arborist"
+          }
+        },
+        "video_VkmbbG": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "thumbnail": "shopify://shop_images/Testimonial_SteveCoyne_bae6b680-fa93-4df2-b3bf-6e95ff91a0ea.jpg",
+            "title": "Steve Coyne",
+            "description": "Operations Manager, EnviroCare Tree Solutions"
+          }
+        },
+        "video_A6GRJP": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "thumbnail": "shopify://shop_images/Testimonial_Adam_efa8061d-3c53-41a9-b25b-20ba7ab51d0d.jpg",
+            "title": "Adam Farrell-Wortman",
+            "description": "Tucson Botanical Gardens Director of Horticulture"
+          }
+        }
+      },
+      "block_order": [
+        "video_TQDUmx",
+        "video_VkmbbG",
+        "video_A6GRJP"
+      ],
+      "name": "Video Slider updated 05.29",
+      "settings": {
+        "title": "Oath Soil Life in the field.",
+        "description": "Hear how professionals are adopting Oath Soil Life and how Soil Health Care is changing their business.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 100
+      }
+    },
+    "section_video_slider_GmfH3U": {
+      "type": "section-video-slider",
+      "blocks": {
+        "video_hhL6UM": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "thumbnail": "shopify://shop_images/Testimonial_Gabriel_2a3a4974-7127-4902-8e04-28990b007aae.jpg",
+            "title": "Gabriel Tideo",
+            "description": "ISA Certified Arborist"
+          }
+        },
+        "video_QqewYq": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "thumbnail": "shopify://shop_images/Testimonial_SteveCoyne_c0fd429c-ce24-4e61-b14a-cc14123c59c1.jpg",
+            "title": "Steve Coyne",
+            "description": "CEO Envirocare Tree Services"
+          }
+        },
+        "video_mN4GLe": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "thumbnail": "shopify://shop_images/Testimonial_Adam.jpg",
+            "title": "Adam Farrell-Wortman",
+            "description": "Tucson Botanical Gardens Director of Horticulture"
+          }
+        },
+        "video_gQi6Kb": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "thumbnail": "shopify://shop_images/Testimonial_Adam.jpg",
+            "title": "Adam Farrell-Wortman",
+            "description": "Tucson Botanical Gardens Director of Horticulture"
+          }
+        }
+      },
+      "block_order": [
+        "video_hhL6UM",
+        "video_QqewYq",
+        "video_mN4GLe",
+        "video_gQi6Kb"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Oath Soil Life in the field.",
+        "description": "Hear how professionals are adopting Oath Soil Life and how Soil Health Care is changing their business.",
+        "padding_top": 50,
+        "padding_bottom": 170,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 100
+      }
+    },
+    "section_how_to_use_4JrNKM": {
+      "type": "section-how-to-use",
+      "blocks": {
+        "video_FVaUXJ": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "title": "How to apply",
+            "description": "1:06"
+          }
+        },
+        "video_ThMLFt": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "title": "How to apply",
+            "description": "1:06"
+          }
+        },
+        "video_DABDh4": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "title": "How to apply",
+            "description": "1:06"
+          }
+        }
+      },
+      "block_order": [
+        "video_FVaUXJ",
+        "video_ThMLFt",
+        "video_DABDh4"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "How to use Oath Soil Life.",
+        "description": "",
+        "show_arrow": false,
+        "padding_top": 0,
+        "padding_bottom": 46,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 78
+      }
+    },
+    "section_accordion_group_qDNHhm": {
+      "type": "section-accordion-group",
+      "blocks": {
+        "question_cxD6eP": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Who can apply Oath Soil Life?",
+            "content": "<p>Oath Soil Life can be applied by anyone: including arborists, landscapers, homeowners, farmers, and foresters.</p>"
+          }
+        },
+        "question_qiaDRn": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "What is in Oath Soil Life?",
+            "content": "<p>Oath Soil Life is a microbial consortium of naturally occurring, non-GMO, beneficial soil microbes. We provide these rhizobacterial and mycorrhizal microbes with an optional broad spectrum of organic minerals and humates.</p>"
+          }
+        },
+        "question_k73DPT": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Are the microbes organic or genetically modified?",
+            "content": "<p>Oath Soil Life is OMRI-listed for organic use and is non-GMO (neither genetically modified nor gene-edited).</p>"
+          }
+        },
+        "question_wVDrKf": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Is there efficacy data?",
+            "content": "<p>Yes, we encourage you to review our efficacy <a href=\"https://www.oathsoillife.com/media-research/www-oathsoillife-com-media-research-oaths-trial-data\"><span style=\"text-decoration:underline\">data</span></a> from decades of research trials and learn more <a href=\"https://www.oathsoillife.com/about\"><span style=\"text-decoration:underline\">about</span></a> our R&D efforts to sequence the DNA of the soil microbiome.</p>"
+          }
+        },
+        "question_Qw7RmV": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "Is it safe? Do I need a license to apply?",
+            "content": "<p>Oath Soil Life is non-toxic, and application does not require any certifications or special personal protective equipment. As with the handling of any powder, you may wish to wear safety glasses and/or a mask. The ideal application method depends on your crop type, soil condition, and growing scale (e.g., drench, inject, broadcast spray). </p>"
+          }
+        },
+        "question_inkX9r": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "How do you treat trees?",
+            "content": "<p>We recommend treating trees with a simple <span style=\"text-decoration:underline\">basal drench</span> or <span style=\"text-decoration:underline\">soil injection</span>, for professionals. Reapply Day 30 and Day 60. Repeat this three-month protocol annually.</p>"
+          }
+        },
+        "question_UYz6GV": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "How do you treat trees of various sizes?",
+            "content": "<p>Our Tree Systems are designed to deliver 10g of microbes per tree to any tree between 5-15 inches in diameter. When sizing your Tree Systems, we recommend counting smaller trees (&lt;5 in.) as “½ trees” and larger trees as multiples: “2 trees” (16-25in DBH), “3 trees” (26-35 in DBH), etc.</p>"
+          }
+        },
+        "question_RpF8KP": {
+          "type": "question",
+          "settings": {
+            "default_open": false,
+            "title": "What have certified arborists observed after applying?",
+            "content": "<p>After using Oath Soil Life, certified arborists have observed new epicormic growth, shoot elongation, increase in canopy density, leaf size increase, increase in resin production, reduction in soil compaction, an increase in soil water-holding capacity. Most signs of improved health are visible within 120 days, but benefits compound with ongoing annual treatments.</p>"
+          }
+        },
+        "question2_LAHzNg": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "How do you treat lawns & gardens?",
+            "content_2": "<p>We recommend broadcast spraying across lawn and garden soil, aiming downward to drive the mix past the surface down into the roots. Reapply monthly or bi-monthly throughout the growing season. Reach out to our agronomists for more information on application instructions and sizing your treatment plot: Care@OathSoilLife.com</p>"
+          }
+        },
+        "question2_c79Tef": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Do I need to reapply?",
+            "content_2": "<p>Yes, the probiotic benefits of Oath Soil Life compound with each application, especially as stressors in our environment like drought, extreme temperatures, storms and salinity persist.</p>"
+          }
+        },
+        "question2_naUgaU": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Does Oath work with Botanical Gardens?",
+            "content_2": "<p>Oath proudly partners with public and private gardens on soil health care. Please email <a href=\"mailto:Care@OathSoilLife.com\"><span style=\"text-decoration:underline\">Care@OathSoilLife.com</span></a> to learn more about our work with the gardens and APGA partner programs. You can also <a href=\"https://www.youtube.com/watch?v=iMdWJTdnFWg\"><span style=\"text-decoration:underline\">watch</span></a> our case study with the Tucson Botanical Gardens. </p>"
+          }
+        },
+        "question2_qbiNUN": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Can Oath Soil Life be applied with biochar?",
+            "content_2": "<p>Yes, Oath Soil Life can be applied with biochar, and in fact, there are synergistic benefits for your soil and plant health to applying Oath Soil Life microbes and biochar together. However, like microbes, not all biochars are created equal or sustainably; it’s important to know the particle size, source, and sustainability of your supplier.</p>"
+          }
+        },
+        "question2_mGBx7y": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "What else can you apply with Oath Soil Life?",
+            "content_2": "<p><strong>Compatible with: </strong>Biochar, compost, organic fertilizers, kelp-based amendments, humic acids, fulvic acids, and sea minerals. </p><p><strong>Do not apply together:</strong> Systemic chemical fungicides and pesticides, or synthetic fertilizers.</p>"
+          }
+        },
+        "question2_twdqVh": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "Can you apply in the winter / freezing temps?",
+            "content_2": "<p>Oath Soil Life cannot be applied in freezing temperatures. If the soil experiences a hard freeze, the microbes need to be reapplied once thawed.</p>"
+          }
+        },
+        "question2_VzjFqi": {
+          "type": "question2",
+          "settings": {
+            "default_open_2": false,
+            "title_2": "How does Oath Soil Life contribute to increasing water-holding capacity?",
+            "content_2": "<p>Soil is heterogeneous. This means soil varies inch by inch and ecosystem by ecosystem. Oath Soil Life microbes produce natural, hydrophilic polymers. These sticky polymers help hold loose soils together and provide pore space in compacted soils, building stable aggregates, improving filtration, and increasing overall water-holding capacity, regardless of soil type.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_cxD6eP",
+        "question_qiaDRn",
+        "question_k73DPT",
+        "question_wVDrKf",
+        "question_Qw7RmV",
+        "question_inkX9r",
+        "question_UYz6GV",
+        "question_RpF8KP",
+        "question2_LAHzNg",
+        "question2_c79Tef",
+        "question2_naUgaU",
+        "question2_qbiNUN",
+        "question2_mGBx7y",
+        "question2_twdqVh",
+        "question2_VzjFqi"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "text_bottom": "<h6>More Questions?</h6><p>Ask us! <a href=\"mailto:Care@oathsoillife.com\" title=\"mailto:Care@oathsoillife.com\">Care@OathSoilLife.com</a></p>",
+        "title": "Frequently asked questions.",
+        "padding_top": 100,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "section_rich_text_3JXBjG",
+    "section_text_pUqRFW",
+    "main",
+    "section_image_info_r6DQkL",
+    "section_text_krGiEH",
+    "section_collection_RWaD8V",
+    "section_image_info_FAjaGH",
+    "section_video_slider_6A9JEG",
+    "section_video_slider_GmfH3U",
+    "section_how_to_use_4JrNKM",
+    "section_accordion_group_qDNHhm"
+  ]
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js no-touch supports-no-cookies" lang="{{ request.locale.iso_code }}">
+  <head>
+    {%- render 'head' -%}
+    
+    {{ content_for_header }}
+
+
+    
+  </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" defer="defer"></script>
+  <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  reload","isExtensionInstalled","setReporter","clearReporter","setCustomData","on","off"].forEach(function(e){n[e]=function(){var r=Array.prototype.slice.call(arguments);r.unshift(e),t.push(r)}}),e.Marker=n;var s=r.createElement("script");s.async=1,s.src="https://edge.marker.io/latest/shim.js";var i=r.getElementsByTagName("script")[0];i.parentNode.insertBefore(s,i)}}(window,document);
+</script>
+
+
+  <body
+    id="{{ page_title | handle }}"
+    class="template-{{ template.name | handle }} template-{{ page.template_suffix }} page-{{ page_title | handle }}{% if customer %} customer-logged-in{% endif %}{% if settings.animations_enable %} aos-initialized{% endif %} banner-page"
+    data-animations="{{ settings.animations_enable }}"
+  >
+    <a class="in-page-link visually-hidden skip-link" data-skip-content href="#MainContent">
+      {{- 'general.accessibility.skip_to_content' | t -}}
+    </a>
+
+    <div class="group-header">
+      {% sections 'group-header' %}
+    </div>
+
+    <div class="group-overlay">
+      {% sections 'group-overlay' %}
+    </div>
+
+    <main role="main" id="MainContent" class="main-content">
+      {{ content_for_layout }}
+    </main>
+
+    <div class="group-pre-footer">
+      {% sections 'group-pre-footer' %}
+    </div>
+
+    <footer class="group-footer">
+      {% sections 'group-footer' %}
+    </footer>
+
+    {%- if settings.enable_color_swatches -%}
+      {% render 'template-swatch' %}
+    {%- endif -%}
+
+    {% render 'zoom-pswp' %}
+
+    {% render 'video-popup' %}
+
+    <!-- Paste third party scripts or marketing code below this comment line ============== -->
+
+    <!-- And above this comment line ====================================================== -->
+
+     {% render 'klaviyo-popup' %}
+     <script src="https://player.vimeo.com/api/player.js"></script>
+
+  </body>
+</html>

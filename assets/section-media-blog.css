@@ -1,0 +1,284 @@
+.grid-outer .blog-listing {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.section.media-blog .inline-nav {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 34px;
+  row-gap: 16px;
+}
+
+.inline-nav li {
+  margin: 0;
+  padding: 0;
+}
+
+.inline-nav li a {
+  font-family: var(--font-abc-diatype);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 120%;
+  letter-spacing: 0;
+  vertical-align: middle;
+  color: var(--color-brown);
+  text-transform: capitalize;
+  cursor: pointer; 
+}
+
+.inline-nav li .article-count {
+  vertical-align: top;
+  font-size: 12px;
+  display: none;
+}
+
+.article.grid-item {
+  background-color: var(--color-green);
+  backdrop-filter: blur(175px);
+  border-radius: 20px;
+  color: var(--color-white);
+  aspect-ratio: 1/1;
+}
+
+.article.grid-item .article__text-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.article .source-name {
+  font-family: var(--font-abc-diatype);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 260%;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.article__title a {
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 115%;
+  letter-spacing: -.05rem;
+  color: var(--color-white);
+}
+
+.article__title {
+  margin-bottom: 0;
+}
+
+.article__link {
+  margin-top: 0;
+}
+
+.article__link .btn {
+  width: fit-content;
+}
+
+.article__link .btn.btn-icon.btn-green span {
+  background-color: #FFFFFF1A;
+  padding: 0 0 0 18px;
+  width: 128px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.article__link .btn.btn-icon.btn-green::after {
+  background: url('icon-arrow-media.svg') no-repeat center center;
+  right: -2px;
+}
+
+.article__link .btn.btn-icon.btn-green::before {
+  background: url('icon-arrow-media.svg') no-repeat center center;
+}
+
+.load-more-container {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.blog-wrappers {
+  padding-bottom: 100px;
+}
+
+.load-more-container .btn.btn-icon span {
+  width: 120px;
+  padding: 0 0 0 18px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.article .article__image__outer,
+.article .article__excerpt {
+  display: none;
+}
+
+.template-.template-blog .main-content>*:not(.shopify-policy__container) {
+  margin-top: 0;
+}
+
+@media (max-width: 749px) {
+  .blog-section .wrapper-container {
+    padding: 0;
+    width: 100%;
+    border: 0;
+  }
+
+  .blog-wrappers .pagination-custom {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .all-blogs::before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 1px;
+    background: var(--color-medium-gray);
+    position: absolute;
+    left: -20px;
+    top: 10px;
+  }
+  
+  .article.grid-item:first-child {
+    background: url('Blur-mobile.jpg') no-repeat center center;
+    background-size: cover;
+  }
+
+  .article.grid-item:first-child .article__title a {
+    font-size: 40px;
+    line-height: 100%;
+    letter-spacing: -.08rem;
+  }
+
+  .load-more-container .btn.btn-icon.btn-see-more:before {
+    display: none;
+  }
+
+  .load-more-container .btn.btn-icon.btn-see-more:hover {
+    transform: none;
+  }
+
+  .load-more-container .btn.btn-icon.btn-see-more:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .article__link .btn.btn-icon.btn-green:before {
+    display: none;
+  }
+
+  .article.grid-item {
+    border-radius: 10px;
+  }
+
+  .section.media-blog {
+    position: relative;
+  }
+
+  .section.media-blog:before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: var(--color-medium-gray);
+    position: absolute;
+    left: 20px;
+    top: 0;
+    z-index: 1;
+  }
+
+  .section.media-blog .inline-nav {
+    margin-left: 41px;
+    margin-bottom: 60px;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .blog-wrappers .grid-outer {
+    padding: 0 3px;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 750px) {
+  .grid-outer .blog-listing {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .template-media-research .mri__section--wrapper {
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .article.grid-item:first-child{
+    background: url('Blur.jpg') no-repeat center center;
+    background-size: cover;
+    grid-column: span 2;
+    aspect-ratio: auto;
+  }
+
+  .article.grid-item:first-child .article__title a {
+    font-size: 38px;
+    line-height: 105%;
+    letter-spacing: -.08rem;
+  }
+
+  .section.media-blog .inline-nav {
+    margin-bottom: 100px;
+    justify-content: left;
+    padding-top: 34px;
+  }
+
+  .article .source-name {
+    font-size: 15px;
+    line-height: 120%;
+    margin-bottom: 30px;
+  }
+
+  .article__title a {
+    font-size: 21px;
+    line-height: 145%;
+  }
+
+  .section.media-blog .wrapper-container {
+    border-left: 0;
+  }
+
+  .section.media-blog .wrapper-container:before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: var(--color-medium-gray);
+    position: absolute;
+    left: 20px;
+    top: 0;
+    z-index: 1;
+  }
+}
+
+@media (min-width: 901px) {
+  .blog-wrappers {
+    margin: 0 -20px;;
+  }
+
+  .article.grid-item .article__text-wrapper {
+    padding: 30px;
+  }
+
+  .load-more-container {
+    margin-top: 100px;
+  }
+
+  .section.media-blog .wrapper-container:before {
+    left: 8.1vw;
+  }
+}

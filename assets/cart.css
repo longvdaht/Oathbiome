@@ -1,0 +1,226 @@
+.cart .free-shipping__progress-bar {
+  --progress-bg: transparent;
+  --progress-value-bg: var(--color-medium-gray);
+  background: var(--color-light-gray);
+}
+
+.cart .cart__item__title-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart .cart__quantity-counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 22px;
+}
+
+.cart .cart__items .cart__item__content {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  width: calc(100% - 175px);
+}
+
+.cart .cart__items .cart__item__content-inner {
+  width: 100%;
+}
+
+.cart .cart__items .cart__price {
+  text-align: right;
+  margin-top: 0;
+  padding: 0;
+}
+
+.cart__items .cart__item__remove {
+  position: relative;
+  top: 0;
+  margin: 0;
+}
+
+.cart .cart__item__image a {
+  width: 175px;
+  height: 175px;
+}
+
+.cart .cart__item__remove {
+  margin-right: 15px;
+}
+
+.cart .cart__item__title a {
+  background: none;
+  padding: 0;
+}
+
+.cart .cart__items {
+  border-color: var(--color-medium-gray);
+}
+
+.cart .cart__items .cart__item {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.cart .cart__quantity {
+  width: 100px;
+  height: 35px;
+}
+
+.cart .cart__quantity .cart__quantity-field {
+  padding: 5px 30px;
+  height: 35px;
+}
+
+.cart .cart__quantity .icon {
+  --icon-size: 8px;
+  stroke: var(--color-brown);
+}
+
+.cart quantity-counter {
+  border: 0px solid var(--color-medium-gray);
+}
+
+.cart .cart__quantity .cart__quantity-field {
+  border: 1px solid var(--color-medium-gray);
+}
+
+.cart .free-shipping {
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.cart .cart__total__label {
+  text-transform: capitalize;
+  font-size: var(--font-body-large);
+  line-height: 150%;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.cart .cart__total__price {
+  font-size: var(--font-body-large);
+  line-height: 140%;
+  font-weight: 700;
+}
+
+.cart .cart__aside {
+  top: 0;
+}
+
+.cart {
+  padding-left: var(--outer);
+  padding-right: var(--outer);
+}
+
+.cart .cart__foot__inner {
+  padding: 0 10px 10px;
+}
+
+.cart .cart__checkout {
+  color: var(--color-white);
+  --btn-bg-hover: var(--color-brown);
+  --btn-border: var(--color-brown);
+  --btn-bg: var(--color-brown);
+  --btn-border-hover: var(--color-brown);
+  justify-content: space-between;
+}
+
+.cart .cart__item__image img {
+  border-radius: 10px;
+}
+
+.template-cart .cart__items .cart__discount {
+  margin-left: 205px;
+}
+
+.template-cart .mr-cd-total-price {
+  display: none;
+}
+
+@media (min-width: 750px) and (max-width: 989px) {
+  .template-cart .shopify-section {
+    margin-top: 0 !important;
+  }
+
+  .template-cart .cart__inner {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .template-cart .cart__content {
+    margin-right: 0;
+  }
+
+  .template-cart .cart__items .cart__discount {
+    margin-left: 190px;
+  }
+}
+
+@media (max-width: 749px) {
+  .template-cart .cart {
+    padding-top: 0;
+  }
+  
+  .template-cart .shopify-section {
+    margin-top: 20px !important;
+  }
+
+  .cart .cart__content {
+    margin-bottom: 0;
+  }
+
+  .cart .cart__items .cart__item__content {
+    padding-left: 10px;
+    width: calc(100% - 100px);
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cart .cart__item__remove {
+    margin-right: 2px;
+  }
+
+  .cart .cart__item__image a {
+    width: 100px;
+    height: 100px;
+  }
+
+  .cart .cart__items .cart__item {
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+
+  .cart .cart__items .cart__price {
+    margin: 0;
+    max-width: 85px;
+  }
+
+  .cart .cart__item__title-price {
+    align-items: flex-start;
+  }
+
+  .cart .cart__item__title {
+    margin-bottom: 0;
+  }
+
+  .cart .cart__quantity-counter {
+    margin-top: 0px;
+  }
+
+  .template-cart .cart__items .cart__discount {
+    margin-left: 0;
+  }
+
+  .template-cart .cart__price ins {
+    margin-right: 5px;
+  }
+}
+
+@media (min-width: 990px) and (max-width: 1050px) {
+  .template-cart .cart__content {
+    margin-right: 20px;
+  }
+}

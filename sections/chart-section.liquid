@@ -1,0 +1,260 @@
+{{ 'chart-section.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  {% for block in section.blocks %}
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      color: {{ section.settings.text_color }};
+      background-color: {{ section.settings.background_color }};
+    }
+
+    {% if block.settings.percent > section.settings.max_percent %}
+    .block-{{ block.id }} {
+      display: none;
+    }
+    {% endif %}
+
+    .block-{{ block.id }} .chart-section__bar {
+      width: 0%;
+      opacity: 0;
+      margin-right: 10px;
+    }
+
+    .block-{{ block.id }} .chart-section__label,
+    .block-{{ block.id }} .chart-section__subtitle {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    .animate-on-scroll.animated .block-{{ block.id }} .chart-section__bar {
+      animation-name: grow-bar-mobile-{{ block.id }};
+      animation-duration: 2s;
+      animation-delay: 1s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+    }
+
+    .animate-on-scroll.animated .block-{{ block.id }} .chart-section__label,
+    .animate-on-scroll.animated .block-{{ block.id }} .chart-section__subtitle {
+      animation: fade-in-text-{{ block.id }} 1s ease-out forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes grow-bar-mobile-{{ block.id }} {
+      0% {
+        width: 0%;
+        opacity: 0;
+      }
+      100% {
+        width: calc({{ block.settings.percent | times: 1.0 | divided_by: section.settings.max_percent | times: 100 }}% - 10px);
+        opacity: 1;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .animate-on-scroll.animated .block-{{ block.id }} .chart-section__bar {
+        margin-right: 10px;
+        animation-name: grow-bar-desktop-{{ block.id }};
+      }
+
+      @keyframes grow-bar-desktop-{{ block.id }} {
+        0% {
+          width: 0%;
+          opacity: 0;
+        }
+        100% {
+          width: calc({{ block.settings.percent | times: 1.0 | divided_by: section.settings.max_percent | times: 100 }}% + 30px);
+          opacity: 1;
+        }
+      }
+
+      .section-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+
+    @keyframes fade-in-text-{{ block.id }} {
+      0% {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  {% endfor %}
+{% endstyle %}
+
+<div class="section-{{ section.id }} animate-on-scroll">
+  <div class="chart-section__container wrapper">
+    {% if section.settings.title %}<h5 class="chart-section__title">{{ section.settings.title }}</h5>{% endif %}
+    {% if section.blocks.size > 0 %}
+      <div class="chart-section__content">
+      {% for block in section.blocks %}
+        <div class="chart-section__row block-{{ block.id }}">
+          <div class="chart-section__bar">
+            {% if block.settings.title %}<div class="chart-section__label body-small">{{ block.settings.title }}</div>{% endif %}
+            {% if block.settings.subtitle %}<div class="chart-section__subtitle body-small">{{ block.settings.subtitle }}</div>{% endif %}
+          </div>
+
+          <div class="chart-section__info">
+            <h2 class="chart-section__percent">{{ block.settings.percent }}%</h2>
+            <div class="chart-section__mobile-info body-small">{% if block.settings.title %}{{ block.settings.title }}{% endif %} {% if block.settings.subtitle %}{{ block.settings.subtitle }}{% endif %}</div>
+            <div class="chart-section__note body-small">{{ block.settings.note }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.querySelector('.section-{{ section.id }}');
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.add('animated');
+            observer.unobserve(section);
+          }
+        });
+      },
+      {
+        threshold: 0.1
+      }
+    );
+
+    observer.observe(section);
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Data Chart Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "% Change Post Soil Treatment"
+      },
+      {
+        "type": "range",
+        "id": "max_percent",
+        "label": "Max % Scale",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "%",
+        "default": 150
+      },
+      {
+        "type": "header",
+        "content": "Color Settings"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#301912"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Spacing Settings"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 20
+      }
+    ],
+    "blocks": [
+      {
+        "type": "bar",
+        "name": "Data Row",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Main Label",
+            "default": "Yield"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Sub Label",
+            "default": "(fruit/flower/tuber)"
+          },
+          {
+            "type": "number",
+            "id": "percent",
+            "label": "Percentage",
+            "default": 105,
+            "info": "This is the value that will be used to calculate the bar length. This number must be smaller than the max % scale."
+          },
+          {
+            "type": "text",
+            "id": "note",
+            "label": "Note",
+            "default": "Avg of 35 Studies"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Data Chart Section"
+      }
+    ]
+  }
+  {% endschema %}
+  

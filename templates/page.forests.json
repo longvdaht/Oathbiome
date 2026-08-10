@@ -1,0 +1,169 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "show_title": true,
+        "heading_font_size": "heading-large",
+        "show_content": true,
+        "text_font_size": "body-medium",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "heading_tag": "automatic"
+      }
+    },
+    "section_hero_banner_JcKGed": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1101552314",
+        "video_poster_image": "shopify://shop_images/Forests.jpg",
+        "show_video_popup": false,
+        "title": "<p>Forests</p>",
+        "text": "<p>Restore the forests’ hidden network.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_intro_text_ycPraw": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Replenish the soil microbiome to stimulate growth  and draw down more carbon.",
+        "descriptions": "<p>Beneath the forest floor lies an intricate web of microbial life essential to tree growth and forest vitality. By replenishing these microbes, we boost nutrient sharing, enhance carbon capture, accelerate reforestation, promote new growth (we call upforestation), improve immunity and the ability to fight stresses such as fires and droughts. <br/><br/><em>A resilient future depends on resilient forests.</em></p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 150,
+        "padding_top_mobile": 98,
+        "padding_bottom_mobile": 90
+      }
+    },
+    "section_scroll_accrodion_Lq3tEC": {
+      "type": "section-scroll-accrodion",
+      "blocks": {
+        "accordion_JAXApg": {
+          "type": "accordion",
+          "settings": {
+            "title": "Carbon Drawdown",
+            "text": "Healthier soil captures more carbon, enhancing fertility and generating economic opportunities through natural carbon removal credits and insets.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/CarbonDrawdown.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_qkRbMG": {
+          "type": "accordion",
+          "settings": {
+            "title": "Increased Growth and Vitality",
+            "text": "Increases transplant success rate of reforestation efforts while also stimulating growth of mature forests, which we call \"Upforestation.\"",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Increased_Vitality.mp4",
+            "video_url": ""
+          }
+        },
+        "accordion_jCttV4": {
+          "type": "accordion",
+          "settings": {
+            "title": "Enhanced Resiliency",
+            "text": "Rebuilds soil structure, which bolsters natural defenses against stresses such as droughts, fires, and storms.",
+            "use_video": true,
+            "normal_video": "shopify://files/videos/Resiliency.mp4",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "accordion_JAXApg",
+        "accordion_qkRbMG",
+        "accordion_jCttV4"
+      ],
+      "name": "Scroll Section",
+      "settings": {}
+    },
+    "section_image_data_pbAFxf": {
+      "type": "section-image-data",
+      "blocks": {
+        "image_9ebRPN": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Forests_Desktop_4.jpg",
+            "image_mobile": "shopify://shop_images/Forests_Mobile_1_HR.jpg"
+          }
+        },
+        "image_ihjPMi": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Forests_Mobile_2_HR.jpg"
+          }
+        },
+        "image_TQeVLJ": {
+          "type": "image",
+          "name": "Image",
+          "settings": {
+            "image_mobile": "shopify://shop_images/Forests_Mobile_3_HR.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_9ebRPN",
+        "image_ihjPMi",
+        "image_TQeVLJ"
+      ],
+      "name": "Section Image Data",
+      "settings": {
+        "heading": "Spotlight: Soil Carbon Capture",
+        "descriptions": "Oath Soil Life significantly increases soil root biomass across tree types.",
+        "image_description_desktop": "Trials conducted at North Carolina State University",
+        "image_description": "Trials conducted at North Carolina State University",
+        "padding_top": 200,
+        "padding_bottom": 0,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 0
+      }
+    },
+    "section_lets_talk_aDT6LK": {
+      "type": "section-lets-talk",
+      "name": "Lets Talk",
+      "settings": {
+        "title": "Let's talk.",
+        "subtitle": "Reach out to",
+        "button_text": "forests@oathbiome.com",
+        "link_text": "",
+        "link": "",
+        "padding_top": 152,
+        "padding_bottom": 148,
+        "padding_top_mobile": 84,
+        "padding_bottom_mobile": 86
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_hero_banner_JcKGed",
+    "section_intro_text_ycPraw",
+    "section_scroll_accrodion_Lq3tEC",
+    "section_image_data_pbAFxf",
+    "section_lets_talk_aDT6LK"
+  ]
+}

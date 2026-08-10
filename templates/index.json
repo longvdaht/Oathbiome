@@ -1,0 +1,275 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_hero_banner_VV8TAx": {
+      "type": "section-hero-banner",
+      "name": "Hero banner",
+      "settings": {
+        "media_type": "video",
+        "width": "wrapper--full",
+        "video_social_link": "https://vimeo.com/1104922172?share=copy",
+        "video_poster_image": "shopify://shop_images/Homepage.jpg",
+        "show_video_popup": false,
+        "title": "<p>Life depends on soil.</p>",
+        "text": "<p>Yet our soils are depleted of what sustains us. Oath brings life back to the soil with billions of living microorganisms in every spoonful.</p>",
+        "height": "screen-height-full",
+        "mobile_height": "screen-height-full--mobile",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_intro_text_XbeQHV": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Replenishing the soil microbiome.",
+        "descriptions": "<p>Oath Soil Life is a diverse consortium of naturally occurring, non-GMO, living microorganisms that revitalize the microbial communities in degraded soil.</p><p>The recovery of healthy soil restores agricultural yields, nourishes families, rejuvenates our shared spaces, and protects life-critical biodiversity.</p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 150,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "section_dark_callout_pQrU3z": {
+      "type": "section-dark-callout",
+      "name": "Dark Callout Hero",
+      "settings": {
+        "heading": "Experience the journey to healthy soil.",
+        "background_image": "shopify://shop_images/oath_f1_frame_1065.jpg",
+        "video_social_link": "https://vimeo.com/1103189367",
+        "section-position": "left",
+        "button_text": "Take the Journey",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "section_intro_text_9bPk4L": {
+      "type": "section-intro-text",
+      "name": "Section Intro Text",
+      "settings": {
+        "heading": "Microorganisms with major impact.",
+        "descriptions": "<p>Depleted global soils have disrupted vital, natural cycles — reducing crop yields, weakening plant immunity, and threatening ecosystems. Replenishing the soil microbiome with beneficial microbes restores essential soil functions, returning fertility, resiliency, and abundance.</p>",
+        "button_text": "Learn more",
+        "button_url": "",
+        "padding_top": 150,
+        "padding_bottom": 130,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "feature_card_grid_RYDTnN": {
+      "type": "feature-card-grid",
+      "blocks": {
+        "item_BaV73r": {
+          "type": "item",
+          "settings": {
+            "title": "Nourish our families and communities",
+            "caption": "",
+            "title_expand": "Increase food nutrients by 30%",
+            "description": "Rebuilding soil health restores nutrient cycling in depleted soils, enhancing yield and nutritional value of food.",
+            "background_image": "shopify://shop_images/74db0dbafa6bfe592d4d84398c9165f989075911.jpg",
+            "brightness_level": "0.9"
+          }
+        },
+        "item_c7z7Vc": {
+          "type": "item",
+          "settings": {
+            "title": "Reduce our reliance on chemicals",
+            "caption": "",
+            "title_expand": "Avoid 20 billion pounds of nitrogen fertilizer",
+            "description": "Nitrous oxide emissions from fertilizers are almost 300 times more harmful than CO₂, and the runoff pollutes our waterways and damages ecosystems.",
+            "background_image": "shopify://shop_images/929d156541f41867475e2e0f8179aa50705f1a35.jpg",
+            "brightness_level": "0.9"
+          }
+        },
+        "item_Mj6jUf": {
+          "type": "item",
+          "settings": {
+            "title": "Preserve our most precious resources",
+            "caption": "",
+            "title_expand": "Save 100 billion gallons of water",
+            "description": "The Oath Soil Life microbial consortium contributes to water conservation by promoting the formation of soil aggregates through secretion of gel-like compounds like Extracellular Polymeric Substances (EPS).",
+            "background_image": "shopify://shop_images/8ac0201ea4393f526f67eb953b8b24b367d8f14e.jpg",
+            "brightness_level": "0.9"
+          }
+        },
+        "item_CaEG64": {
+          "type": "item",
+          "settings": {
+            "title": "Protect our planet from uncertain futures",
+            "caption": "",
+            "title_expand": "Drawdown at least 1 billion tonnes of CO₂",
+            "description": "Replenishing the soil microbiome represents a scalable opportunity to rapidly transform CO₂ from a greenhouse gas in the atmosphere to carbon in the soil, a building block of life.",
+            "background_image": "shopify://shop_images/baab47dd112090a0cf7dd734006487f7b5cddb28.jpg",
+            "brightness_level": "0.9"
+          }
+        }
+      },
+      "block_order": [
+        "item_BaV73r",
+        "item_c7z7Vc",
+        "item_Mj6jUf",
+        "item_CaEG64"
+      ],
+      "name": "Feature Cards Grid",
+      "settings": {
+        "sub_title": "Oath 10-Year Goals"
+      }
+    },
+    "image_card_row_CxTWmi": {
+      "type": "image-card-row",
+      "blocks": {
+        "image_card_dPKjN7": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/02-Environments-Carousel-2.jpg",
+            "title": "",
+            "description": "",
+            "button_text": "Agriculture",
+            "button_url": "shopify://pages/agriculture"
+          }
+        },
+        "image_card_MwwF89": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/OathBiome_Enviroments_Grasslands_2.jpg",
+            "title": "",
+            "description": "",
+            "button_text": "Grasslands",
+            "button_url": "shopify://pages/grasslands"
+          }
+        },
+        "image_card_3znHTR": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/OathBiome_Enviroments_Forest_2.jpg",
+            "title": "",
+            "description": "",
+            "button_text": "Forests",
+            "button_url": "shopify://pages/forests"
+          }
+        },
+        "image_card_dCt6Bn": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/OathBiome_Enviroments_TurfgrassAndParklands.jpg",
+            "title": "",
+            "description": "",
+            "button_text": "Parklands & Turfgrass",
+            "button_url": "shopify://pages/parklands-turfgrass"
+          }
+        },
+        "image_card_mDNiwg": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/OathBiome_Enviroments_TreeAndGarden.jpg",
+            "title": "",
+            "description": "",
+            "button_text": "Tree & Garden",
+            "button_url": "shopify://pages/tree-garden"
+          }
+        }
+      },
+      "block_order": [
+        "image_card_dPKjN7",
+        "image_card_MwwF89",
+        "image_card_3znHTR",
+        "image_card_dCt6Bn",
+        "image_card_mDNiwg"
+      ],
+      "name": "Image Card Row",
+      "settings": {
+        "title": "Fueling ecosystems and economies.",
+        "description": "<p>Oath Soil Life is a low-cost, wettable powder soil amendment that is OMRI-listed for organic use. A scalable agronomic and climate solution, Oath Soil Life can be used across diverse applications and soil types.</p>",
+        "cards_per_row": 3,
+        "show_dots": true,
+        "show_arrows": true,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_top_mobile": 100,
+        "padding_bottom_mobile": 100
+      }
+    },
+    "text_cta_grid_NrNiTN": {
+      "type": "text-cta-grid",
+      "blocks": {
+        "text_cta_7e3epz": {
+          "type": "text_cta",
+          "settings": {
+            "cta_title": "Rigor, results, world-class team.",
+            "button_text": "Oath Science & Innovation",
+            "button_url": "shopify://pages/science-innovation"
+          }
+        },
+        "text_cta_LePhgt": {
+          "type": "text_cta",
+          "settings": {
+            "cta_title": "Soil resilience on a global scale.",
+            "button_text": "Oath Africa",
+            "button_url": "shopify://pages/africa"
+          }
+        },
+        "text_cta_XcimHK": {
+          "type": "text_cta",
+          "settings": {
+            "cta_title": "Soil is making headlines.",
+            "button_text": "Media & Research",
+            "button_url": "shopify://pages/media-research"
+          }
+        }
+      },
+      "block_order": [
+        "text_cta_7e3epz",
+        "text_cta_LePhgt",
+        "text_cta_XcimHK"
+      ],
+      "name": "Text CTA Grid",
+      "settings": {
+        "padding_top": 86,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "section_newsletter_ob_GwzYDR": {
+      "type": "section-newsletter-ob",
+      "name": "OB Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/a86792222eed6c74a6457c63810ffbcd2f53ce62.jpg",
+        "title": "Get in touch",
+        "description": "",
+        "button_text": "Submit",
+        "enable_name": true,
+        "enable_email": true,
+        "enable_organization": false,
+        "enable_interests": true,
+        "enable_message": true,
+        "interest_options": "Agriculture, Grasslands, Forests, Parklands & Turfgrass, Tree & Garden, Africa, Media, Partnerships, Other",
+        "interest_label": "Interests*",
+        "success_message": "Thank you for reaching out."
+      }
+    }
+  },
+  "order": [
+    "section_hero_banner_VV8TAx",
+    "section_intro_text_XbeQHV",
+    "section_dark_callout_pQrU3z",
+    "section_intro_text_9bPk4L",
+    "feature_card_grid_RYDTnN",
+    "image_card_row_CxTWmi",
+    "text_cta_grid_NrNiTN",
+    "section_newsletter_ob_GwzYDR"
+  ]
+}

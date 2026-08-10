@@ -1,0 +1,273 @@
+.icr__section--wrapper {
+  --padding-top: var(--section-padding-top-mobile);
+  --padding-bottom: var(--section-padding-bottom-mobile);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+
+.icr__section--content {
+  margin-bottom: 49px;
+  padding-left: 19px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.icr__section--title {
+  position: relative;
+  margin: 0;
+  color: var(--color-brown);
+}
+
+.icr__section--title::before {
+  content: "";
+  display: block;
+  width: 12px;
+  background-color: var(--color-medium-gray);
+  height: 1px;
+  left: -19px;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.icr__section--description {
+  font-weight: 300;
+}
+
+.icr__section--description p {
+  margin: 0 0 10px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.image-card-row-slider {
+  position: relative;
+  overflow: hidden;
+  margin-left: -18px;
+}
+
+.image-card-row-slider:not(.swiper-initialized) {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+  }
+}
+
+/* Fallback styles when Swiper fails to load */
+.image-card-row-slider.swiper-fallback {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.image-card-row-slider.swiper-fallback::-webkit-scrollbar {
+  display: none;
+}
+
+.image-card-row-slider.swiper-fallback .swiper-wrapper {
+  display: flex;
+  width: auto;
+}
+
+.image-card-row-slider.swiper-fallback .swiper-slide {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* Ensure proper slide sizing */
+.image-card-row-slider .swiper-slide {
+  width: 90%;
+  margin-right: 2px;
+  flex-shrink: 0;
+  min-height: 1px;
+  min-width: 350px;
+}
+
+/* Swiper wrapper improvements */
+.image-card-row-slider .swiper-wrapper {
+  display: flex;
+}
+
+.image-card {
+  outline: none;
+  position: relative;
+}
+
+.image-card__image {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+  position: relative;
+}
+
+.image-card__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* Ensure image covers the container */
+  object-position: center; /* Center the image */
+  max-width: 100%;
+}
+
+.image-card__content {
+  text-align: center;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+
+.image-card__title {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.image-card__description {
+  margin-bottom: 1rem;
+  color: var(--text-muted, #666);
+}
+
+.image-card__button {
+  display: inline-block;
+}
+
+/* Swiper arrow customization for image card row */
+.image-card-row-slider .swiper-button-next,
+.image-card-row-slider .swiper-button-prev {
+  --btn-size: 40px;
+  --icon-size: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: 50%;
+  color: var(--color-white);
+  margin-top: calc(var(--btn-size) / -2);
+  display: none;
+}
+
+/* Hide default Swiper arrow */
+.image-card-row-slider .swiper-button-next:after,
+.image-card-row-slider .swiper-button-prev:after {
+  display: none;
+}
+
+/* Custom arrow icons using SVG */
+.image-card-row-slider .swiper-button-next::before,
+.image-card-row-slider .swiper-button-prev::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+}
+
+/* Previous arrow - you can replace this with your custom SVG */
+.image-card-row-slider .swiper-button-prev::before {
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>');
+}
+
+/* Next arrow - you can replace this with your custom SVG */
+.image-card-row-slider .swiper-button-next::before {
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"></polyline></svg>');
+}
+
+/* Custom pagination styles for image card row */
+.image-card-row-slider .swiper-pagination {
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  position: static;
+  gap: 6px; /* Space between dots */
+  margin-left: 38px;
+  margin-top: 20px;
+}
+
+.image-card-row-slider .swiper-pagination .swiper-pagination-bullet {
+  width: 14px;
+  height: 1px;
+  background-color: rgba(48, 25, 18, 0.3);
+  border: none;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  opacity: 1;
+}
+
+.image-card-row-slider .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: rgba(48, 25, 18, 1);
+}
+
+/* Mobile adjustments */
+@media screen and (min-width: 750px) {
+  .icr__section--wrapper {
+    --padding-top: var(--section-padding-top);
+    --padding-bottom: var(--section-padding-bottom);
+  }
+  .image-card-row-slider .swiper-slide {
+    width: calc(100% / var(--cards-per-row, 3) - 6px);
+  }
+  .image-card-row-slider .swiper-pagination {
+    display: none;
+  }
+  .image-card__content {
+    top: 20px;
+    left: 20px;
+  }
+  .icr__section--content {
+    padding-left: 50px;
+    max-width: 40.8vw;
+  }
+  .icr__section--title::before {
+    width: 30px;
+    left: -50px;
+  }
+  .image-card-row-slider .swiper-button-next {
+    right: calc(8.1vw + 9px);
+  }
+  .image-card-row-slider .swiper-button-prev {
+    left: calc(8.1vw + 9px);
+  }
+  .image-card__image {
+    border-radius: 20px;
+  }
+}
+@media screen and (min-width: 901px) {
+  .image-card-row-slider {
+    margin-left: -8.1vw;
+  }
+  .image-card-row-slider:hover .swiper-button-next,
+  .image-card-row-slider:hover .swiper-button-prev {
+    display: block;
+  }
+}
+@media screen and (max-width: 749px) {
+  .image-card-row-slider .swiper-button-next,
+  .image-card-row-slider .swiper-button-prev {
+    display: none;
+  }
+  .image-card-row-slider {
+    margin-left: -18px;
+  }
+}

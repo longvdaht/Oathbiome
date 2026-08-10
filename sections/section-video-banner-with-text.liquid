@@ -1,0 +1,367 @@
+{{ 'section-video-banner-with-text.css' | asset_url | stylesheet_tag }}
+<!-- /sections/section-hero.liquid -->
+
+{%- liquid
+  assign video = section.settings.video
+  assign image_desktop = section.settings.image | default: video.preview_image
+  assign image_mobile = section.settings.mobile_image
+
+  assign title1 = section.settings.title
+  assign title2 = section.settings.title_2
+  assign text = section.settings.description
+  assign link_text = section.settings.link_text
+  assign link = section.settings.link
+-%}
+
+{%- if section.settings.video != null -%}
+  <script src="{{ 'video-background.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  .section-{{ section.id }} .section-video__content--text {
+    background-color: {{ section.settings.typo_background }};
+    padding: {{ section.settings.typo_mobile_padding_top }}px {{ section.settings.typo_mobile_padding_right }}px {{ section.settings.typo_mobile_padding_bottom }}px {{ section.settings.typo_mobile_padding_left }}px;
+  }
+  
+  @media (min-width: 990px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .section-{{ section.id }} .section-video__content--text {
+      padding: {{ section.settings.typo_padding_top }}px {{ section.settings.typo_padding_right }}px {{ section.settings.typo_padding_bottom }}px {{ section.settings.typo_padding_left }}px;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="section-video-banner wrapper section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-video"
+  data-overlay-header
+>
+  <div class="section-video__container">
+    {%- liquid
+      capture video_poster
+        render 'image-hero', image_desktop: image_desktop, image_mobile: image_mobile, desktop_height: 1000, mobile_height: 500, aspect_ratio: video.aspect_ratio, aspect_ratio_mobile: video.aspect_ratio
+      endcapture
+    -%}
+
+    {%- if video != null -%}
+      <div
+        class="section-video__banner video-background"
+        style="--aspect-ratio: {{ video.aspect_ratio | default: 1 }};"
+      >
+        <div class="video__poster">
+          {{ video_poster }}
+        </div>
+        <video-background
+          class="video__player is-loading"
+          data-video-player
+          data-video-id="{{ section.id }}-video-background"
+        >
+          <template data-video-template>
+            {{ video | video_tag: autoplay: true, image_size: '1085x', loop: true, muted: true, controls: false }}
+          </template>
+        </video-background>
+      </div>
+    {%- else -%}
+      {{ video_poster }}
+    {%- endif -%}
+    {% if video or video_poster %}
+      <div class="section-video__content--wrapper {{ section.settings.content_position }}">
+        <div class="section-video__content--text">
+          <div class="section-video__content--title">
+            {% if title1 %}<h4>{{ title1 }}</h4>{% endif %}
+            {% if title2 %}<h4>{{ title2 }}</h4>{% endif %}
+          </div>
+          <div class="section-video__content--button">
+            {% if text %}<p class="body-large section-video__description">{{ text }}</p>{% endif %}
+            {%- if link_text and link -%}
+              <a href="{{ link }}" class="btn btn--secondary btn--content">
+                {{ link_text }} 
+                {%- render 'icon-arrow-right' -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Video",
+  "class": "section-video-banner-with-text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video",
+      "info": "Only one option can be used"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "video_url",
+      "id": "video_popup_social",
+      "label": "Youtube link",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "accept": ["youtube"]
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        },
+        {
+          "value": "center-center",
+          "label": "Center"
+        },
+        {
+          "value": "center-left",
+          "label": "Center Left"
+        },
+        {
+          "value": "center-right",
+          "label": "Center Right"
+        },
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading 1",
+      "default": "Rooted in Science. Proven by performance."
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Heading 2",
+      "default": "Proven by performance."
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "We have more than 20 years of data from over 220 studies, demonstrating astounding efficacy and remarkable results."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Text",
+      "default": "See More Details"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Typography Style"
+    },
+    {
+      "type": "color",
+      "id": "typo_background",
+      "label": "Typography Background Color",
+      "default": "#FBFF36"
+    }, 
+    {
+      "type": "header",
+      "content": "Typography Spacing"
+    },
+    {
+      "type": "range",
+      "id": "typo_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Padding Left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Padding Right",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_mobile_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Mobile Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_mobile_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Mobile Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_mobile_padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Mobile Padding Left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "typo_mobile_padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Typography Mobile Padding Right",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Displayed if the video isn't loaded"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Image",
+      "info": "Displayed if the video isn't loaded"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Padding Bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video banner with text",
+      "category": "Video Banner"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

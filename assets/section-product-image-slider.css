@@ -1,0 +1,125 @@
+/* product-image-slider.css */
+
+.product-image-slider .slider-header {
+  padding-left: var(--outer);
+  padding-right: var(--outer);
+  margin-bottom: 70px;
+}
+
+
+.product-image-slider .slider-title {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 110%;
+  color: var(--color-brown);
+  letter-spacing: -0.36px;
+  margin-bottom: 26px;
+  margin-top: 0;
+}
+
+.product-image-slider .slider-subtitle {
+  font-size: 18px;
+  color: var(--color-brown);
+  line-height: 150%;
+  letter-spacing: 0;
+  margin-bottom: 25px;
+  max-width: 545px;
+}
+
+.product-image-slider .slider-button {
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: 0;
+}
+
+.product-image-slider .slider-button .icon-arrow-right {
+  margin-left: 11px;
+}
+
+.product-image-slider__carousel {
+  width: 100%;
+}
+
+.product-image-slider .slide-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  width: 92%;
+  counter-increment: carousel-cell;
+}
+
+.product-image-slider .image-wrapper-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-wrapper-slider img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.product-image-slider .label {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: var(--color-brown);
+  color: #fff;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0;
+  padding: 4px 14px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  min-height: 45px;
+}
+
+.product-image-slider .label.label-tick {
+  background: #fff;
+  color: var(--color-brown);
+}
+
+@media only screen and (min-width: 1500px) {
+  .product-image-slider .slide-item {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .product-image-slider .slide-item {
+    flex-direction: column;
+  }
+
+  .product-image-slider .slider-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .product-image-slider .slider-subtitle {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  .product-image-slider .slider-button .icon-arrow-right {
+    margin-left: 16px;
+  }
+
+  .product-image-slider .slider-header {
+    margin-bottom: 58px;
+  }
+
+  .product-image-slider .label {
+    top: 15px;
+    left: 15px;
+    font-size: 15px;
+  }
+}
