@@ -1,0 +1,765 @@
+/* Double hero video section */
+
+.dhv-section {
+  /* isolate: the panels' z-index:2 elements (heading, pause toggle, CTA)
+     otherwise escape into the root stacking context and paint over the
+     header's mega-menu dropdown (which has no z-index of its own).
+     A local stacking context keeps them contained below the header. */
+  isolation: isolate;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.dhv-section__heading {
+  margin: 0 0 24px;
+}
+
+.dhv__grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Split the row by flex-grow ratio (basis 0) rather than percentage
+   widths. Percentages summed to 100% and then the 12px gap pushed the
+   total past the grid, overflowing on the right (clipped by the section's
+   overflow: hidden, so it looked flush to the edge). With basis 0 the gap
+   is subtracted first, then the remaining space is split 66:34 — no
+   overflow, and the padding is respected on both sides. */
+.dhv__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 66 1 0;
+  min-width: 0;
+  transition: flex-grow 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dhv__panel--teaser {
+  flex-grow: 34;
+}
+
+.dhv[data-hover="teaser"] .dhv__panel--ambient {
+  flex-grow: 34;
+}
+
+.dhv[data-hover="teaser"] .dhv__panel--teaser {
+  flex-grow: 66;
+}
+
+.dhv__media {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(420px, 47.85vw, 720px);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #111;
+  cursor: pointer;
+}
+
+.dhv__poster,
+.dhv__video-mount {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dhv__poster .image-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dhv__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.dhv__video-mount {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.dhv__video-mount video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+.dhv__video-mount iframe {
+  /* object-fit does nothing on <iframe> in Chrome/Safari — sizing here is
+     computed in JS (applyIframeCover) based on the video's real aspect
+     ratio, this just sets up the centering. */
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+
+.dhv__panel.is-playing .dhv__video-mount {
+  opacity: 1;
+}
+
+/* Ambient video: once it has played at least once, keep showing its
+   current frame when paused (e.g. while hovering the teaser panel)
+   instead of falling back to the poster/background. The teaser panel
+   intentionally keeps reverting to its poster on mouseleave, so this is
+   scoped to the ambient panel only. */
+.dhv__panel--ambient.is-revealed .dhv__video-mount {
+  opacity: 1;
+}
+
+/* Separate desktop/mobile assets: show only the active breakpoint's poster +
+   video mount. Assets with an empty data-breakpoint (single asset, no mobile
+   override) match neither selector and show on every breakpoint. */
+@media screen and (min-width: 750px) {
+  .dhv__media [data-breakpoint="mobile"] {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .dhv__media [data-breakpoint="desktop"] {
+    display: none;
+  }
+}
+
+/* Overlay heading — per Figma: FK Roman Standard (theme heading font),
+   Light 300, 65px, line-height 100%, letter-spacing -4%, hanging
+   punctuation. Positioned middle-left, wrapping to ~3 lines. */
+.dhv__overlay-heading {
+  position: absolute;
+  left: 82px;
+  top: calc(50% - 43px);
+  transform: translateY(-50%);
+  z-index: 2;
+  max-width: 261px;
+  margin: 0;
+  color: #fff;
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: 300;
+  font-size: 65px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  hanging-punctuation: first last;
+  transition: opacity 0.4s ease;
+}
+
+/* Hide the overlay text once the video is playing or has been revealed
+   (it belongs to the poster/first-frame state). */
+.dhv__panel.is-playing .dhv__overlay-heading,
+.dhv__panel.is-revealed .dhv__overlay-heading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dhv__pause-toggle {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.dhv__pause-toggle .icon {
+  width: 14px;
+  height: 14px;
+  stroke: #fff;
+}
+
+.dhv__pause-toggle .icon path {
+  stroke: #fff;
+  fill: #fff;
+}
+
+.dhv__play-icon {
+  display: none;
+}
+
+.dhv__pause-toggle[data-state="paused"] .dhv__pause-icon {
+  display: none;
+}
+
+.dhv__pause-toggle[data-state="paused"] .dhv__play-icon {
+  display: block;
+}
+
+.dhv__footer {
+  padding-top: 16px;
+  text-align: center;
+}
+
+/* Caption — per Figma (same on desktop + mobile): FK Roman Standard,
+   Light 300, line-height 130%, letter-spacing -4%, centered, hanging
+   punctuation. Title 27px, duration 17px. */
+.dhv__caption-title {
+  margin: 0;
+  font-family: var(--FONT-STACK-HEADING);
+  font-style: var(--FONT-STYLE-HEADING);
+  font-weight: 300;
+  font-size: 27px;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  hanging-punctuation: first last;
+  color: #000;
+}
+
+.dhv__caption-duration {
+  margin: 4px 0 0;
+  font-family: var(--FONT-STACK-HEADING);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  hanging-punctuation: first last;
+  color: rgba(var(--color-foreground), 0.6);
+  color: #000;
+}
+
+/* Positioning only — visual style (blur pill + arrow icon + hover slide)
+   comes from the shared `.btn.btn-icon.btn-gray-blur` system in
+   custom-variable.css. The selector matches all three classes so this
+   `position: absolute` beats `.btn.btn-icon { position: relative }`
+   (specificity 0,2,0) from that shared file. `align-items: center`
+   vertically centers the arrow-circle pseudo-element, which is absolutely
+   positioned with no `top` and otherwise falls back to the flex
+   container's default `stretch` (→ top-aligned). */
+.dhv__cta.btn.btn-icon {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 2;
+  align-items: center;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+.dhv__cta.btn.btn-icon span {
+  font-size: 15px;
+}
+
+/* The teaser CTA nests a roll structure inside the pill, but the shared
+   `.btn.btn-icon span` (and `.btn-gray-blur span`) descendant selectors
+   style EVERY nested <span> as its own padded/blurred pill. Only the
+   outer wrapping <span> should be the pill — reset the inner roll/label
+   spans here at a specificity (0,4,0) that beats those rules (max 0,3,1). */
+/* Grid stacks both labels in the same cell so the pill sizes to the
+   WIDER label — otherwise the absolutely-positioned hover label ("Watch
+   fullscreen") overflows the width set by the default label ("Play with
+   sound") and gets clipped by overflow: hidden. */
+.dhv__cta.btn.btn-icon .dhv__cta-roll {
+  display: grid;
+  overflow: hidden;
+  height: 1.2em;
+  padding: 0;
+  margin: 0;
+  background: none;
+  backdrop-filter: none;
+  border-radius: 0;
+}
+
+.dhv__cta.btn.btn-icon .dhv__cta-label {
+  grid-area: 1 / 1;
+  padding: 0;
+  margin: 0;
+  background: none;
+  backdrop-filter: none;
+  border-radius: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: transform 0.35s ease;
+}
+
+/* Default sits in view; hover starts one line below. On panel hover the
+   default rolls up and out, the hover rolls up into view. */
+.dhv__cta.btn.btn-icon .dhv__cta-label--hover {
+  transform: translateY(100%);
+}
+
+.dhv__panel.is-hover .dhv__cta.btn.btn-icon .dhv__cta-label--default {
+  transform: translateY(-100%);
+}
+
+.dhv__panel.is-hover .dhv__cta.btn.btn-icon .dhv__cta-label--hover {
+  transform: translateY(0);
+}
+
+/* Layout rule — lets the two videos be split across separate section
+   instances so a foreign section (e.g. text) can sit between them on mobile.
+   "First": both videos on desktop, only the ambient (left) video on mobile.
+   "Second": hidden on desktop, only the teaser (right) video on mobile. */
+@media screen and (min-width: 750px) {
+  .dhv-section--layout-second {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .dhv-section--layout-first .dhv__panel--teaser {
+    display: none;
+  }
+
+  .dhv-section--layout-second .dhv__panel--ambient {
+    display: none;
+  }
+
+  /* "Second" sits inline with foreign sections (e.g. text), so on mobile it
+     must join the site's bordered content column instead of bleeding full
+     width — otherwise its media overlaps the neighbouring sections' left
+     border line. Mirror .wrapper-container: drop the section gutter, offset
+     20px on the left with a matching border, and keep the media flush right. */
+  .dhv-section--layout-second.dhv-section {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .dhv-section--layout-second .dhv__grid {
+    width: calc(100% - 20px);
+    margin-left: auto;
+    border-left: 1px solid var(--color-medium-gray);
+  }
+
+  /* Media bleeds full-width, overlapping the column's left border like the
+     site's other media sections; the border stays visible beside the caption
+     below. (Section overflow:hidden clips any sub-pixel overshoot.) */
+  .dhv-section--layout-second .dhv__media {
+    width: calc(100vw - 14px);
+    margin-left: -14px;
+  }
+
+  .dhv-section--layout-second .dhv__footer {
+    padding-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .dhv__grid {
+    flex-direction: column;
+    /* Column layout: the cross axis is horizontal, so stretch makes each
+       stacked panel span the full width. (Desktop uses flex-start on the
+       row axis to avoid stretching panels vertically.) */
+    align-items: stretch;
+    height: auto;
+    gap: 24px;
+  }
+
+  .dhv__overlay-heading {
+    top: 175px;
+    left: 38px;
+    transform: none;
+  }
+
+  .dhv__panel,
+  .dhv__panel--teaser,
+  .dhv[data-hover="teaser"] .dhv__panel--ambient,
+  .dhv[data-hover="teaser"] .dhv__panel--teaser {
+    flex-basis: auto;
+    transition: none;
+  }
+
+  .dhv__media {
+    height: auto;
+    aspect-ratio: 9 / 16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dhv__panel,
+  .dhv__video-mount,
+  .dhv__cta-label {
+    transition: none !important;
+  }
+}
+
+/* Theater mode */
+
+.dhv__theater,
+.dhv__theater:fullscreen,
+.dhv__theater:-webkit-full-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9000;
+  background: #000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dhv__theater[hidden] {
+  display: none;
+}
+
+.dhv__theater.is-open {
+  opacity: 1;
+}
+
+.dhv__theater-stage {
+  position: absolute;
+  inset: 0;
+  /* Clip the cover'd (oversized + transformed) video/iframe to the stage.
+     Rectangular clip on mobile; the desktop block adds rounded corners. */
+  overflow: hidden;
+}
+
+/* Desktop: inset the video 12px on top/left/right (rounded, on black) to
+   match the design; the bottom is left clear for the "Watching" bar. On
+   mobile it stays edge-to-edge (inset: 0 above). */
+@media screen and (min-width: 750px) {
+  .dhv__theater-stage {
+    inset: 12px 12px 44px 12px;
+    border-radius: 20px;
+    /* The cover'd Vimeo <iframe> is oversized + transformed, and
+       `overflow: hidden` + border-radius can't clip rounded corners on a
+       transformed descendant (→ warped edges). clip-path clips the whole
+       subtree, transformed children included, so the corners stay clean. */
+    clip-path: inset(0 round 20px);
+  }
+}
+
+.dhv__theater-video {
+  position: absolute;
+  inset: 0;
+}
+
+.dhv__theater-video video {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: contain;
+}
+
+.dhv__theater-video iframe {
+  /* object-fit does nothing on <iframe> — width/height are computed in JS
+     (applyIframeCover) so the video cover-fills the stage on all viewports,
+     matching the homepage panels. */
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+
+.dhv__theater-playpause {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.dhv__theater-playpause-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dhv__theater.controls-visible .dhv__theater-playpause-icon {
+  opacity: 1;
+}
+
+.dhv__theater-playpause-pause,
+.dhv__theater-playpause-play {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.dhv__theater-playpause-pause .icon path,
+.dhv__theater-playpause-play .icon path {
+  stroke: #fff;
+  fill: #fff;
+}
+
+.dhv__theater-playpause-play {
+  display: none;
+}
+
+.dhv__theater-playpause[data-state="paused"] .dhv__theater-playpause-pause {
+  display: none;
+}
+
+.dhv__theater-playpause[data-state="paused"] .dhv__theater-playpause-play {
+  display: block;
+}
+
+.dhv__theater-chrome {
+  position: absolute;
+  right: 0;
+  bottom: 65px;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 32px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.dhv__theater.controls-visible .dhv__theater-chrome {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Per Figma: 40×40 round button, radius 1000px, 10px padding, #FFFFFF at
+   10%, background blur 100. */
+.dhv__theater-back {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 0;
+  border-radius: 1000px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  color: #fff;
+  cursor: pointer;
+}
+
+.dhv__theater-back .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.dhv__theater-back .icon path {
+  stroke: #fff;
+}
+
+/* Mute toggle — same round blur style as the back button. The theater
+   hides the video's native controls, so this is the only way to reach
+   sound; it also lets the user recover when the browser force-mutes the
+   unmuted autoplay. Not in the Figma — added for the "Play with sound"
+   promise to actually hold. */
+.dhv__theater-mute {
+  box-sizing: border-box;
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border: 0;
+  border-radius: 1000px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  cursor: pointer;
+}
+
+.dhv__theater-mute .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.dhv__theater-mute .icon path {
+  stroke: #fff;
+}
+
+.dhv__theater-mute-off {
+  display: none;
+}
+
+.dhv__theater-mute[data-muted="true"] .dhv__theater-mute-on {
+  display: none;
+}
+
+.dhv__theater-mute[data-muted="true"] .dhv__theater-mute-off {
+  display: block;
+}
+
+.dhv__theater-scrubber {
+  flex: 1 1 auto;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.dhv__theater-close {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 0;
+  border-radius: 1000px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  cursor: pointer;
+  top: 22px;
+  right: 25px;
+  position: absolute;
+  color: #fff;
+  z-index: 2;
+}
+
+/* icon-close hardcodes a dark stroke in the SVG — override to white so the X
+   reads over the video (matching the back button in the scrubber bar). */
+.dhv__theater-close svg path {
+  stroke: #fff;
+}
+
+/* Per Figma: 8px-tall pill track/fill, radius 50px, colour #D9D9D9 —
+   track at 25% opacity (unplayed), fill at 85% (played). No handle. */
+.dhv__theater-scrubber-track {
+  position: relative;
+  display: block;
+  height: 8px;
+  border-radius: 50px;
+  background: rgba(217, 217, 217, 0.25);
+}
+
+.dhv__theater-scrubber-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  border-radius: 50px;
+  background: rgba(217, 217, 217, 0.85);
+}
+
+.dhv__theater-scrubber-handle {
+  display: none;
+}
+
+/* Elapsed-time label floats above the track at the playhead and moves
+   with it — JS sets `left` in the timeupdate handler (same ratio as the
+   fill/handle). */
+.dhv__theater-time {
+  position: absolute;
+  bottom: 100%;
+  left: 0%;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 15px;
+  font-family: var(--font-abc-diatype);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.dhv__theater-watching {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 12px 32px;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-abc-diatype);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  opacity: 0.5;
+  text-align: left;
+}
+
+@media screen and (max-width: 749px) {
+  .dhv__theater-watching {
+    display: none;
+  }
+
+  .dhv-section {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .dhv__theater-chrome {
+    bottom: 32px;
+  }
+}
+
+/* Header reuse while theater mode is open: same header markup/JS as the
+   rest of the site (no clone, mega-menu still works), just promoted above
+   the theater overlay and restyled into a floating pill so it reads over
+   a full-bleed video instead of a solid white bar. */
+
+/* html.dhv-theater-open .header__wrapper {
+  z-index: 9010;
+} */
+
+html.dhv-theater-open .header__wrapper,
+html.dhv-theater-open .theme__header {
+  background: transparent;
+}
+
+html.dhv-theater-open .header__desktop__bar__l,
+html.dhv-theater-open .header__desktop__bar__r,
+html.dhv-theater-open .header__mobile .header__logo {
+  visibility: hidden;
+}
+
+html.dhv-theater-open .header__desktop__upper {
+  justify-content: center;
+}
+
+html.dhv-theater-open .header__menu {
+  padding: 8px 24px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+}
+@media screen and (min-width: 749px) {
+  .dhv__grid {
+    align-items: stretch;
+    aspect-ratio: 4/3;
+  }
+  .dhv__panel .dhv__media {
+    height: calc(100% - 78px);
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .dhv__grid {
+    aspect-ratio: 800 / 340;
+  }
+}

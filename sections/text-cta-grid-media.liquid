@@ -1,0 +1,333 @@
+{{ 'text-cta-grid-media.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section tcgm"
+  style="--padding-top: {{ section.settings.padding_top }}px; --padding-bottom: {{ section.settings.padding_bottom }}px; --padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;"
+>
+  <div class="wrapper-container">
+    <div class="tcgm__content">
+      <div class="tcgm__items">
+        {% for block in section.blocks %}
+          <div class="tcgm__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.cta_title != blank -%}
+              <h4 class="tcgm__title">{{ block.settings.cta_title }}</h4>
+            {%- endif -%}
+
+            {%- case block.type -%}
+              {%- when 'image_card' -%}
+                {%- comment -%} aspect_ratio ~ 382:393 from design — fluid box, scales with column width. Video takes priority; the image is its poster (shown until the video autoplays). {%- endcomment -%}
+                {%- if block.settings.video_url != blank -%}
+                  {%- assign video_source = block.settings.video_url.sources | last -%}
+                  <div class="tcgm__media tcgm__image">
+                    {% if block.settings.button_url %}
+                      <a href="{{ block.settings.button_url }}" title="{{ block.settings.cta_title | default: 'Card' }}">
+                    {% endif %}
+                    <video
+                      class="tcgm__video"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="auto"
+                      {% if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 800 }}"{% endif %}
+                    >
+                      <source src="{{ video_source.url }}" type="video/mp4">
+                    </video>
+                    {% if block.settings.button_url %}</a>{% endif %}
+                  </div>
+                {%- elsif block.settings.image != blank -%}
+                  <div class="tcgm__media tcgm__image">
+                    {% if block.settings.button_url %}
+                      <a href="{{ block.settings.button_url }}" title="{{ block.settings.cta_title | default: 'Card' }}">
+                    {% endif %}
+                      {%- render 'image', image: block.settings.image, aspect_ratio: 0.97, sizes: '(min-width: 990px) 30vw, 100vw' -%}
+                    {% if block.settings.button_url %}
+                      </a>
+                    {% endif %}   
+                  </div>
+                {%- endif -%}
+
+              {%- when 'environments' -%}
+                <div class="tcgm__media tcgm-env">
+                  {%- for i in (1..5) -%}
+                    {%- liquid
+                      assign image_key = 'env_image_' | append: i
+                      assign label_key = 'env_label_' | append: i
+                      assign url_key = 'env_url_' | append: i
+                      assign env_image = block.settings[image_key]
+                      assign env_label = block.settings[label_key]
+                      assign env_url = block.settings[url_key]
+                    -%}
+                    {%- if env_image != blank or env_label != blank -%}
+                      <div class="tcgm-env__bar">
+                        {%- if env_image != blank -%}
+                          {% if env_url != blank %}
+                            <a href="{{ env_url }}" title="{{ env_image.alt | default: env_label}}">
+                          {% endif %}
+                            {%- render 'image', image: env_image, cover: true, sizes: '(min-width: 990px) 30vw, 100vw' -%}
+                          {% if env_url != blank %}
+                            </a>
+                          {% endif %}
+                        {%- endif -%}
+                        {%- if env_label != blank -%}
+                          <a
+                            class="btn btn-icon btn-gray-blur tcgm-env__link"
+                            {% if env_url == blank %}role="link" aria-disabled="true"{% else %}href="{{ env_url }}"{% endif %}
+                          >
+                            <span>{{- env_label -}}</span>
+                          </a>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+            {%- endcase -%}
+
+            {%- if block.settings.button_text != blank -%}
+              <div class="tcgm__button">
+                <a
+                  {% if block.settings.button_url == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_url }}"
+                  {% endif %}
+                  class="btn btn-icon btn-green"
+                >
+                  <span>{{- block.settings.button_text -}}</span>
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text CTA Grid Media",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding on mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding on mobile",
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_card",
+      "name": "Image card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cta_title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video_url",
+          "label": "MP4 Video URL (Takes Priority Over Image)"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        }
+      ]
+    },
+    {
+      "type": "environments",
+      "name": "Environments list",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cta_title",
+          "label": "Heading",
+          "default": "Explore our Environments"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "env_image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "env_label_1",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "env_url_1",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "env_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "env_label_2",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "env_url_2",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "env_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "env_label_3",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "env_url_3",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Row 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "env_image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "env_label_4",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "env_url_4",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Row 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "env_image_5",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "env_label_5",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "env_url_5",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text CTA Grid Media",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "image_card"
+        },
+        {
+          "type": "environments"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

@@ -6415,6 +6415,7 @@ hover-disclosure {
 .header__wrapper {
   --bg: var(--COLOR-MENU-BG);
   position: relative;
+  z-index: 21;
   transition: top 0.2s linear;
 }
 
