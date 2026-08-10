@@ -114,7 +114,12 @@
       "scroll_to_product": "Scroll to product",
       "scroll_to_logo": "Scroll to logo",
       "footer_logo": "Footer logo",
-      "slide_image": "Slide image"
+      "slide_image": "Slide image",
+      "pause_video": "Pause video",
+      "play_video": "Play video",
+      "seek_video": "Seek video",
+      "mute_video": "Mute",
+      "unmute_video": "Unmute"
     },
     "social": {
       "share_on_facebook": "Share",

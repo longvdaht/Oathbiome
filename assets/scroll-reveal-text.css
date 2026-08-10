@@ -1,0 +1,86 @@
+.section-scroll-reveal {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  top: 0 !important;
+  padding: 0;
+  margin: 0;
+}
+
+.scroll-reveal__content__wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 35px;
+}
+@media (min-width: 1200px) {
+  .scroll-reveal__content__wrapper {
+    padding-left: 35px;
+  }
+}
+.scroll-reveal-line {
+  max-width: 1084px;
+  font-size: clamp(16px, 4vw, 27px);
+  line-height: 1.34;
+  letter-spacing: -0.03em;
+  font-weight: 300;
+}
+.scroll-reveal-line.big-text {
+  font-size: clamp(19px, 4vw, 37px);
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -0.01em;
+  font-family: var(--font-abc-diatype);
+}
+@media (min-width: 768px) {
+  .scroll-reveal-line {
+    line-height: 1.34;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+  }
+  .scroll-reveal-line.big-text {
+    line-height: 1.23;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Static mode: JS scroll disabled, container follows Section Intro Text */
+.section-scroll-reveal.is-static {
+  height: auto;
+  overflow: visible;
+  top: auto !important;
+}
+
+.section-scroll-reveal.is-static .scroll-reveal__content__wrapper {
+  display: block;
+  height: auto;
+  padding-left: 20px;
+}
+
+.section-scroll-reveal.is-static .scroll-reveal-line > p:first-child {
+  margin-top: 0;
+}
+
+.section-scroll-reveal.is-static .scroll-reveal-line > p:last-child {
+  margin-bottom: 0;
+}
+
+.section-scroll-reveal.is-static .scroll-reveal-line + .scroll-reveal-line {
+  margin-top: 26px;
+}
+
+.scroll-reveal-line.big-text {
+  padding-bottom: 100px;
+}
+
+@media (min-width: 901px) {
+  .section-scroll-reveal.is-static .scroll-reveal__content__wrapper {
+    padding-left: 90px;
+  }
+  .scroll-reveal-line.big-text {
+    padding-bottom: 65px;
+  }
+}

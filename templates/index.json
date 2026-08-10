@@ -9,25 +9,163 @@
  */
 {
   "sections": {
-    "section_hero_banner_VV8TAx": {
-      "type": "section-hero-banner",
-      "name": "Hero banner",
+    "section_double_hero_video_7xHgHT": {
+      "type": "section-double-hero-video",
+      "blocks": {
+        "ambient_video_QfVXLT": {
+          "type": "ambient_video",
+          "settings": {
+            "video_url": "https://vimeo.com/1211517914/de2b4973f1?share=copy&fl=sv&fe=ci",
+            "poster": "shopify://shop_images/Homepage.jpg",
+            "video_url_mobile": "https://vimeo.com/1211517925/77a20a8f3d?share=copy&fl=sv&fe=ci ",
+            "overlay_heading": "Life depends on soil.",
+            "title": "The Importance of Soil",
+            "duration": "2:20min",
+            "cta_rest": "Watch fullscreen",
+            "cta_hover": "Watch fullscreen"
+          }
+        },
+        "teaser_video_RRhQpb": {
+          "type": "teaser_video",
+          "settings": {
+            "video_url": "https://vimeo.com/1200625773/75c153a3dd?share=copy&fl=sv&fe=ci",
+            "poster": "shopify://shop_images/ScienceofOath_CoverImage.jpg",
+            "video_url_mobile": "",
+            "title": "The Science of Oath Biome",
+            "duration": "3:37min",
+            "cta_rest": "Watch fullscreen",
+            "cta_hover": "Play with sound",
+            "teaser_duration": 8
+          }
+        }
+      },
+      "block_order": [
+        "ambient_video_QfVXLT",
+        "teaser_video_RRhQpb"
+      ],
+      "name": "Double hero video",
       "settings": {
-        "media_type": "video",
-        "width": "wrapper--full",
-        "video_social_link": "https://vimeo.com/1104922172?share=copy",
-        "video_poster_image": "shopify://shop_images/Homepage.jpg",
-        "show_video_popup": false,
-        "title": "<p>Life depends on soil.</p>",
-        "text": "<p>Yet our soils are depleted of what sustains us. Oath brings life back to the soil with billions of living microorganisms in every spoonful.</p>",
-        "height": "screen-height-full",
-        "mobile_height": "screen-height-full--mobile",
+        "heading": "",
+        "layout_rule": "first",
+        "color_scheme": "",
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 40
+      }
+    },
+    "scroll_reveal_text_L6Tb87": {
+      "type": "scroll-reveal-text",
+      "blocks": {
+        "text_item_qeWNTr": {
+          "type": "text_item",
+          "settings": {
+            "use_big_text": true,
+            "text": "<p>Oath Biome returns diverse communities of essential microbial life to global soils, addressing some of the world’s greatest challenges, including food security, water availability, and climate resilience. </p>"
+          }
+        },
+        "text_item_K8g6U3": {
+          "type": "text_item",
+          "disabled": true,
+          "settings": {
+            "use_big_text": false,
+            "text": "<p>Soil feeds the world, holds water, and stabilizes the climate.<br/><br/>Yet a century of industrial agriculture has crippled the microbial communities that make soil productive, degrading 75% of the world's agricultural soils. Yield growth rates are plateauing while erosion and toxic runoff from synthetic fertilizers accelerate.<br/><br/>Oath Biome returns life to depleted soils — replenishing the microbiome with diverse communities of naturally occurring microorganisms, each selected for a proven role in restoring soil function. Our Microbial Discovery Engine uses whole-genome sequencing, advanced bioinformatics, and artificial intelligence to compose Oath Soil Life: non-GMO bacterial and fungal consortia delivered as a wettable powder. <br/><br/>The result: measurable yield gains and financial benefits across every scale of agriculture — from smallholder farms in the Global South to the most advanced commercial operations — while reducing water and fertilizer inputs and enhancing carbon sequestration.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_item_qeWNTr",
+        "text_item_K8g6U3"
+      ],
+      "name": "Scroll reveal text",
+      "settings": {
+        "disable_js_scroll": true,
+        "bg_color": "",
+        "text_white": false,
+        "padding_top": 100,
+        "padding_bottom": 0,
+        "padding_top_mobile": 76,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "section_double_hero_video_mLtmMc": {
+      "type": "section-double-hero-video",
+      "blocks": {
+        "ambient_video_Pkz7yX": {
+          "type": "ambient_video",
+          "settings": {
+            "video_url": "https://vimeo.com/1211517925/77a20a8f3d?share=copy&fl=sv&fe=ci",
+            "poster": "shopify://shop_images/Screenshot_2026-07-21_at_3.00.15_PM.png",
+            "video_url_mobile": "",
+            "overlay_heading": "",
+            "title": "The Importance of Soil",
+            "duration": "2:20min",
+            "cta_rest": "Watch fullscreen",
+            "cta_hover": "Play with sound"
+          }
+        },
+        "teaser_video_FfjkNA": {
+          "type": "teaser_video",
+          "settings": {
+            "video_url": "https://vimeo.com/1213975997/71ffc03d53?share=copy&fl=sv&fe=ci",
+            "poster": "shopify://shop_images/ScienceofOath_CoverImage.jpg",
+            "video_url_mobile": "",
+            "title": "The Science of Oath Biome",
+            "duration": "3:37min",
+            "cta_rest": "Watch fullscreen",
+            "cta_hover": "Play with sound",
+            "teaser_duration": 8
+          }
+        }
+      },
+      "block_order": [
+        "ambient_video_Pkz7yX",
+        "teaser_video_FfjkNA"
+      ],
+      "name": "Double hero video",
+      "settings": {
+        "heading": "",
+        "layout_rule": "second",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "scroll_reveal_text_Kdked8": {
+      "type": "scroll-reveal-text",
+      "blocks": {
+        "text_item_hbUVXG": {
+          "type": "text_item",
+          "disabled": true,
+          "settings": {
+            "use_big_text": true,
+            "text": "<p>Oath Biome returns diverse communities of essential microbial life to global soils, addressing some of the world’s greatest challenges, including food security, water availability, and climate resilience. </p>"
+          }
+        },
+        "text_item_dj9krK": {
+          "type": "text_item",
+          "settings": {
+            "use_big_text": false,
+            "text": "<p>Soil feeds the world, holds water, and stabilizes the climate.<br/><br/>Yet a century of industrial agriculture has crippled the microbial communities that make soil productive, degrading 75% of the world's agricultural soils. Yield growth rates are plateauing while erosion and toxic runoff from synthetic fertilizers accelerate.<br/><br/>Oath Biome returns life to depleted soils — replenishing the microbiome with diverse communities of naturally occurring microorganisms, each selected for a proven role in restoring soil function. Our Microbial Discovery Engine uses whole-genome sequencing, advanced bioinformatics, and artificial intelligence to compose Oath Soil Life: non-GMO bacterial and fungal consortia delivered as a wettable powder. <br/><br/>The result: measurable yield gains and financial benefits across every scale of agriculture — from smallholder farms in the Global South to the most advanced commercial operations — while reducing water and fertilizer inputs and enhancing carbon sequestration.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_item_hbUVXG",
+        "text_item_dj9krK"
+      ],
+      "name": "Scroll reveal text",
+      "settings": {
+        "disable_js_scroll": true,
+        "bg_color": "",
+        "text_white": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "section_intro_text_XbeQHV": {
       "type": "section-intro-text",
+      "disabled": true,
       "name": "Section Intro Text",
       "settings": {
         "heading": "Replenishing the soil microbiome.",
@@ -42,6 +180,7 @@
     },
     "section_dark_callout_pQrU3z": {
       "type": "section-dark-callout",
+      "disabled": true,
       "name": "Dark Callout Hero",
       "settings": {
         "heading": "Experience the journey to healthy soil.",
@@ -57,6 +196,7 @@
     },
     "section_intro_text_9bPk4L": {
       "type": "section-intro-text",
+      "disabled": true,
       "name": "Section Intro Text",
       "settings": {
         "heading": "Microorganisms with major impact.",
@@ -123,6 +263,7 @@
         "item_Mj6jUf",
         "item_CaEG64"
       ],
+      "disabled": true,
       "name": "Feature Cards Grid",
       "settings": {
         "sub_title": "Oath 10-Year Goals"
@@ -189,6 +330,7 @@
         "image_card_dCt6Bn",
         "image_card_mDNiwg"
       ],
+      "disabled": true,
       "name": "Image Card Row",
       "settings": {
         "title": "Fueling ecosystems and economies.",
@@ -202,44 +344,62 @@
         "padding_bottom_mobile": 100
       }
     },
-    "text_cta_grid_NrNiTN": {
-      "type": "text-cta-grid",
+    "text_cta_grid_media_JffVLi": {
+      "type": "text-cta-grid-media",
       "blocks": {
-        "text_cta_7e3epz": {
-          "type": "text_cta",
+        "image_card_y7XCLy": {
+          "type": "image_card",
           "settings": {
             "cta_title": "Rigor, results, world-class team.",
+            "image": "shopify://shop_images/Frame_28615.png",
+            "video_url": "shopify://files/videos/DSEN_Animation_Final_Preview.mp4",
             "button_text": "Oath Science & Innovation",
             "button_url": "shopify://pages/science-innovation"
           }
         },
-        "text_cta_LePhgt": {
-          "type": "text_cta",
+        "environments_W9CxRJ": {
+          "type": "environments",
           "settings": {
-            "cta_title": "Soil resilience on a global scale.",
-            "button_text": "Oath Africa",
-            "button_url": "shopify://pages/africa"
+            "cta_title": "Explore our Environments.",
+            "env_image_1": "shopify://shop_images/Img_1.png",
+            "env_label_1": "Agriculture",
+            "env_url_1": "shopify://pages/agriculture",
+            "env_image_2": "shopify://shop_images/Img_2.jpg",
+            "env_label_2": "Grasslands",
+            "env_url_2": "shopify://pages/grasslands",
+            "env_image_3": "shopify://shop_images/Img_4.png",
+            "env_label_3": "Forests",
+            "env_url_3": "shopify://pages/forests",
+            "env_image_4": "shopify://shop_images/Img_5.png",
+            "env_label_4": "Parklands & Turfgrass",
+            "env_url_4": "shopify://pages/parklands-turfgrass",
+            "env_image_5": "shopify://shop_images/OathBiome_Enviroments_TreeAndGarden.jpg",
+            "env_label_5": "Tree & Garden",
+            "env_url_5": "shopify://pages/tree-garden",
+            "button_text": "Oath Environments",
+            "button_url": "shopify://pages/agriculture"
           }
         },
-        "text_cta_XcimHK": {
-          "type": "text_cta",
+        "image_card_ggaRAU": {
+          "type": "image_card",
           "settings": {
             "cta_title": "Soil is making headlines.",
+            "image": "shopify://shop_images/Frame_28616_1.png",
             "button_text": "Media & Research",
             "button_url": "shopify://pages/media-research"
           }
         }
       },
       "block_order": [
-        "text_cta_7e3epz",
-        "text_cta_LePhgt",
-        "text_cta_XcimHK"
+        "image_card_y7XCLy",
+        "environments_W9CxRJ",
+        "image_card_ggaRAU"
       ],
-      "name": "Text CTA Grid",
+      "name": "Text CTA Grid Media",
       "settings": {
-        "padding_top": 86,
+        "padding_top": 100,
         "padding_bottom": 0,
-        "padding_top_mobile": 0,
+        "padding_top_mobile": 100,
         "padding_bottom_mobile": 0
       }
     },
@@ -263,13 +423,16 @@
     }
   },
   "order": [
-    "section_hero_banner_VV8TAx",
+    "section_double_hero_video_7xHgHT",
+    "scroll_reveal_text_L6Tb87",
+    "section_double_hero_video_mLtmMc",
+    "scroll_reveal_text_Kdked8",
     "section_intro_text_XbeQHV",
     "section_dark_callout_pQrU3z",
     "section_intro_text_9bPk4L",
     "feature_card_grid_RYDTnN",
     "image_card_row_CxTWmi",
-    "text_cta_grid_NrNiTN",
+    "text_cta_grid_media_JffVLi",
     "section_newsletter_ob_GwzYDR"
   ]
 }

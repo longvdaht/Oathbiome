@@ -1,0 +1,553 @@
+<!-- /sections/section-double-hero-video.liquid -->
+
+{{ 'double-hero-video.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'double-hero-video.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign ambient_block = section.blocks | where: 'type', 'ambient_video' | first
+  assign teaser_block = section.blocks | where: 'type', 'teaser_video' | first
+  assign color_scheme = 'color-' | append: section.settings.color_scheme
+
+  capture style
+    echo '--PT: ' | append: section.settings.padding_top | append: 'px;'
+    echo '--PB: ' | append: section.settings.padding_bottom | append: 'px;'
+  endcapture
+-%}
+
+<div
+  class="dhv-section section-padding {{ color_scheme }} dhv-section--layout-{{ section.settings.layout_rule | default: 'off' }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="double-hero-video"
+  style="{{ style }}"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="dhv-section__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- if ambient_block or teaser_block -%}
+    <double-hero-video class="dhv" data-dhv data-layout-rule="{{ section.settings.layout_rule | default: 'off' }}">
+      <div class="dhv__grid">
+        {%- if ambient_block -%}
+          {%- liquid
+            assign block = ambient_block
+            assign video = block.settings.video
+            assign vimeo_link = block.settings.video_url
+            assign poster = block.settings.poster | default: video.preview_image
+
+            assign video_type = ''
+            if video != blank
+              assign video_type = 'shopify'
+            elsif vimeo_link != blank
+              assign video_type = 'vimeo'
+            endif
+
+            assign has_mobile = false
+            if block.settings.video_mobile != blank or block.settings.video_url_mobile != blank or block.settings.poster_mobile != blank
+              assign has_mobile = true
+            endif
+
+            assign video_m = block.settings.video_mobile | default: video
+            assign vimeo_link_m = block.settings.video_url_mobile | default: vimeo_link
+            assign poster_m = block.settings.poster_mobile | default: poster
+            assign video_type_m = ''
+            if video_m != blank
+              assign video_type_m = 'shopify'
+            elsif vimeo_link_m != blank
+              assign video_type_m = 'vimeo'
+            endif
+          -%}
+
+          <div
+            class="dhv__panel dhv__panel--ambient"
+            data-dhv-panel="ambient"
+            {{ block.shopify_attributes }}
+          >
+            <div class="dhv__media">
+              {%- if has_mobile -%}
+                {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: 'desktop', loop: true, sizes: '66vw' -%}
+                {%- render 'dhv-media-asset', poster: poster_m, video: video_m, vimeo_link: vimeo_link_m, video_type: video_type_m, breakpoint: 'mobile', loop: true, sizes: '100vw' -%}
+              {%- else -%}
+                {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: '', loop: true, sizes: '(min-width: 750px) 66vw, 100vw' -%}
+              {%- endif -%}
+
+              {%- if block.settings.overlay_heading != blank -%}
+                <p class="dhv__overlay-heading">{{ block.settings.overlay_heading }}</p>
+              {%- endif -%}
+
+              {%- if video_type != '' -%}
+                <button
+                  type="button"
+                  class="dhv__pause-toggle"
+                  data-dhv-pause-toggle
+                  data-state="paused"
+                  data-label-pause="{{ 'general.accessibility.pause_video' | t | escape }}"
+                  data-label-play="{{ 'general.accessibility.play_video' | t | escape }}"
+                  aria-label="{{ 'general.accessibility.play_video' | t }}"
+                >
+                  <span class="dhv__pause-icon">{%- render 'icon-pause' -%}</span>
+                  <span class="dhv__play-icon">{%- render 'icon-play' -%}</span>
+                </button>
+              {%- endif -%}
+
+              {%- if video_type != '' and block.settings.cta_rest != blank -%}
+                <button
+                  type="button"
+                  class="dhv__cta dhv__cta--roll btn btn-icon btn-gray-blur"
+                  data-dhv-cta
+                  data-dhv-open-theater
+                  data-title="{{ block.settings.title | escape }}"
+                  data-duration="{{ block.settings.duration | escape }}"
+                >
+                  <span>
+                    <span class="dhv__cta-roll">
+                      <span class="dhv__cta-label dhv__cta-label--default">{{ block.settings.cta_rest }}</span>
+                      <span class="dhv__cta-label dhv__cta-label--hover">{{ block.settings.cta_hover }}</span>
+                    </span>
+                  </span>
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="dhv__footer">
+              {%- if block.settings.title != blank -%}
+                <p class="dhv__caption-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.duration != blank -%}
+                <p class="dhv__caption-duration">{{ block.settings.duration }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if teaser_block -%}
+          {%- liquid
+            assign block = teaser_block
+            assign video = block.settings.video
+            assign vimeo_link = block.settings.video_url
+            assign poster = block.settings.poster | default: video.preview_image
+
+            assign video_type = ''
+            if video != blank
+              assign video_type = 'shopify'
+            elsif vimeo_link != blank
+              assign video_type = 'vimeo'
+            endif
+
+            assign has_mobile = false
+            if block.settings.video_mobile != blank or block.settings.video_url_mobile != blank or block.settings.poster_mobile != blank
+              assign has_mobile = true
+            endif
+
+            assign video_m = block.settings.video_mobile | default: video
+            assign vimeo_link_m = block.settings.video_url_mobile | default: vimeo_link
+            assign poster_m = block.settings.poster_mobile | default: poster
+            assign video_type_m = ''
+            if video_m != blank
+              assign video_type_m = 'shopify'
+            elsif vimeo_link_m != blank
+              assign video_type_m = 'vimeo'
+            endif
+          -%}
+
+          <div
+            class="dhv__panel dhv__panel--teaser"
+            data-dhv-panel="teaser"
+            data-teaser-duration="{{ block.settings.teaser_duration | default: 8 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="dhv__media">
+              {%- if has_mobile -%}
+                {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: 'desktop', loop: false, sizes: '34vw' -%}
+                {%- render 'dhv-media-asset', poster: poster_m, video: video_m, vimeo_link: vimeo_link_m, video_type: video_type_m, breakpoint: 'mobile', loop: true, sizes: '100vw' -%}
+              {%- else -%}
+                {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: '', loop: false, sizes: '(min-width: 750px) 34vw, 100vw' -%}
+              {%- endif -%}
+
+              {%- if video_type != '' -%}
+                <button
+                  type="button"
+                  class="dhv__cta dhv__cta--roll btn btn-icon btn-gray-blur"
+                  data-dhv-cta
+                  data-dhv-open-theater
+                  data-title="{{ block.settings.title | escape }}"
+                  data-duration="{{ block.settings.duration | escape }}"
+                >
+                  <span>
+                    <span class="dhv__cta-roll">
+                      <span class="dhv__cta-label dhv__cta-label--default">{{ block.settings.cta_rest }}</span>
+                      <span class="dhv__cta-label dhv__cta-label--hover">{{ block.settings.cta_hover }}</span>
+                    </span>
+                  </span>
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="dhv__footer">
+              {%- if block.settings.title != blank -%}
+                <p class="dhv__caption-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.duration != blank -%}
+                <p class="dhv__caption-duration">{{ block.settings.duration }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="dhv__theater" data-dhv-theater hidden>
+        <div class="dhv__theater-stage">
+          <div class="dhv__theater-video" data-dhv-theater-video></div>
+        </div>
+
+        <button
+          type="button"
+          class="dhv__theater-playpause"
+          data-dhv-theater-playpause
+          data-state="playing"
+          data-label-pause="{{ 'general.accessibility.pause_video' | t | escape }}"
+          data-label-play="{{ 'general.accessibility.play_video' | t | escape }}"
+          aria-label="{{ 'general.accessibility.pause_video' | t }}"
+        >
+          <span class="dhv__theater-playpause-icon">
+            <span class="dhv__theater-playpause-pause">{%- render 'icon-pause' -%}</span>
+            <span class="dhv__theater-playpause-play">{%- render 'icon-play' -%}</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="dhv__theater-close"
+          data-dhv-theater-close
+          aria-label="{{ 'general.accessibility.close' | t }}"
+        >
+          {%- render 'icon-close' -%}
+        </button>
+
+        <div class="dhv__theater-chrome" data-dhv-theater-chrome>
+          <button
+            type="button"
+            class="dhv__theater-back"
+            data-dhv-theater-close
+            aria-label="{{ 'general.accessibility.close' | t }}"
+          >
+            {%- render 'icon-arrow-left' -%}
+          </button>
+
+          <div
+            class="dhv__theater-scrubber"
+            data-dhv-scrubber
+            role="slider"
+            tabindex="0"
+            aria-label="{{ 'general.accessibility.seek_video' | t }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span class="dhv__theater-scrubber-track">
+              <span class="dhv__theater-scrubber-fill" data-dhv-scrubber-fill></span>
+              <span class="dhv__theater-scrubber-handle" data-dhv-scrubber-handle></span>
+              <span class="dhv__theater-time" data-dhv-theater-time>0:00</span>
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="dhv__theater-mute"
+            data-dhv-theater-mute
+            data-muted="false"
+            data-label-mute="{{ 'general.accessibility.mute_video' | t | escape }}"
+            data-label-unmute="{{ 'general.accessibility.unmute_video' | t | escape }}"
+            aria-label="{{ 'general.accessibility.mute_video' | t }}"
+          >
+            <span class="dhv__theater-mute-on">{%- render 'icon-volume' -%}</span>
+            <span class="dhv__theater-mute-off">{%- render 'icon-mute' -%}</span>
+          </button>
+        </div>
+
+        <div class="dhv__theater-watching" data-dhv-theater-watching></div>
+      </div>
+    </double-hero-video>
+  {%- elsif request.design_mode -%}
+    {%- render 'no-blocks' -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Double hero video",
+  "class": "section-double-hero-video",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Layout rule",
+      "info": "Use this to split the two videos on mobile with another section (e.g. a text section) between them. Add this section twice with identical settings: set one to \"First\" and one to \"Second\", then place your text section between them. On desktop only the \"First\" copy shows (both videos side by side); on mobile the \"First\" copy shows video 1 and the \"Second\" copy shows video 2, with your text section in between."
+    },
+    {
+      "type": "select",
+      "id": "layout_rule",
+      "label": "Layout rule",
+      "options": [
+        {
+          "value": "off",
+          "label": "Off (desktop + mobile: both videos)"
+        },
+        {
+          "value": "first",
+          "label": "First (desktop: both, mobile: video 1)"
+        },
+        {
+          "value": "second",
+          "label": "Second (desktop: hidden, mobile: video 2)"
+        }
+      ],
+      "default": "off"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ambient_video",
+      "name": "Ambient video (left)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video link (Vimeo)",
+          "info": "Used when no Shopify-hosted video is selected above. Paste the full Vimeo link, e.g. https://vimeo.com/1211517914/de2b4973f1"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster image",
+          "info": "Shown before the video loads. Defaults to the Shopify video's cover image."
+        },
+        {
+          "type": "header",
+          "content": "Mobile asset (optional)",
+          "info": "Separate video/poster shown on mobile. Leave all blank to reuse the desktop asset above."
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video (Shopify) — mobile"
+        },
+        {
+          "type": "text",
+          "id": "video_url_mobile",
+          "label": "Video link (Vimeo) — mobile",
+          "info": "Paste the full Vimeo link. Used when no mobile Shopify video is selected."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_mobile",
+          "label": "Poster image — mobile"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "overlay_heading",
+          "label": "Overlay heading",
+          "default": "Life depends on soil."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Caption title",
+          "default": "The Importance of Soil"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Caption duration",
+          "info": "Format e.g. 2:20",
+          "default": "2:20"
+        },
+        {
+          "type": "header",
+          "content": "Call to action"
+        },
+        {
+          "type": "text",
+          "id": "cta_rest",
+          "label": "Button label (resting)",
+          "default": "Watch fullscreen"
+        },
+        {
+          "type": "text",
+          "id": "cta_hover",
+          "label": "Button label (on hover)",
+          "default": "Play with sound"
+        }
+      ]
+    },
+    {
+      "type": "teaser_video",
+      "name": "Teaser video (right)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (Shopify)"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video link (Vimeo)",
+          "info": "Used when no Shopify-hosted video is selected above. Paste the full Vimeo link, e.g. https://vimeo.com/1211517914/de2b4973f1"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster image",
+          "info": "Shown by default. Defaults to the Shopify video's cover image."
+        },
+        {
+          "type": "header",
+          "content": "Mobile asset (optional)",
+          "info": "Separate video/poster shown on mobile. Leave all blank to reuse the desktop asset above."
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video (Shopify) — mobile"
+        },
+        {
+          "type": "text",
+          "id": "video_url_mobile",
+          "label": "Video link (Vimeo) — mobile",
+          "info": "Paste the full Vimeo link. Used when no mobile Shopify video is selected."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_mobile",
+          "label": "Poster image — mobile"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Caption title",
+          "default": "The Science of Oath Biome"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Caption duration",
+          "info": "Format e.g. 3:37",
+          "default": "3:37"
+        },
+        {
+          "type": "header",
+          "content": "Call to action"
+        },
+        {
+          "type": "text",
+          "id": "cta_rest",
+          "label": "Button label (resting)",
+          "default": "Watch fullscreen"
+        },
+        {
+          "type": "text",
+          "id": "cta_hover",
+          "label": "Button label (on hover)",
+          "default": "Play with sound"
+        },
+        {
+          "type": "header",
+          "content": "Teaser"
+        },
+        {
+          "type": "range",
+          "id": "teaser_duration",
+          "label": "Teaser length",
+          "min": 3,
+          "max": 15,
+          "step": 1,
+          "unit": "s",
+          "default": 8
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Double hero video",
+      "category": "Video",
+      "blocks": [
+        {
+          "type": "ambient_video"
+        },
+        {
+          "type": "teaser_video"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside", "footer"]
+  }
+}
+{% endschema %}

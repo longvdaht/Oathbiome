@@ -139,7 +139,14 @@
         endif
       -%}
 
-      {% paginate blog.articles by limit %}
+      {%- comment -%}
+        This section runs on a PAGE template, where the paginate tag on a
+        fetched blog's articles isn't supported (Shopify: "Array
+        'blog.articles' is not paginateable"). Render the articles directly
+        instead — real pagination lives on the blog template (/blogs/...).
+        The guard also skips everything when no valid blog is set.
+      {%- endcomment -%}
+      {%- if blog != blank and blog.articles_count > 0 -%}
         <div class="grid-outer">
           <div class="grid blog-listing">
             {% for article in blog.articles %}
@@ -212,10 +219,7 @@
             {% endfor %}
           </div>
         </div>
-        
-        {%- render 'pagination', paginate: paginate -%}
-
-      {% endpaginate %}
+      {%- endif -%}
 
     </div>
   </div>

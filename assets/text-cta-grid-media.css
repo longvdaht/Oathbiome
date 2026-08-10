@@ -1,0 +1,217 @@
+/* Text CTA Grid Media — upgraded grid supporting image / environments / content-card blocks. */
+
+.tcgm__content {
+  --section-padding-top: var(--padding-top-mobile);
+  --section-padding-bottom: var(--padding-bottom-mobile);
+  padding-top: var(--section-padding-top);
+  padding-bottom: var(--section-padding-bottom);
+}
+
+.tcgm__items {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.tcgm__item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-top: 1px solid var(--color-medium-gray);
+  padding: 25px 20px 26px;
+  min-height: 370px;
+}
+
+.tcgm__title {
+  margin: 0;
+  max-width: 380px;
+  font-weight: 300;
+  font-size: 38px;
+  line-height: 100%;
+}
+
+.tcgm__media {
+  flex: 1 1 auto;
+  margin: 20px 0 30px;
+}
+
+.tcgm__button {
+  display: inline-flex;
+  margin-top: auto;
+}
+
+/* --- Image card block --- */
+.tcgm__image {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.tcgm__image .image-wrapper {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.tcgm__image .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Video shares the exact same box as the image (aspect_ratio 0.97), cropped to cover. */
+.tcgm__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.97;
+  object-fit: cover;
+}
+
+/* --- Environments block --- */
+.tcgm-env {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tcgm-env__bar {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  aspect-ratio: 387 / 75;
+  padding-top: 10px;
+  padding-left: 10px;
+  /* Mask the CTA's roll animation to the bar: the incoming arrow (btn-icon ::before,
+     offset -40px left of the pill) is clipped instead of spilling outside the container. */
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.tcgm-env__bar .image-wrapper {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.tcgm-env__bar .image-wrapper img {
+  border-radius: 0;
+}
+
+.tcgm-env__bar .btn.btn-icon span {
+  font-size: 15px;
+}
+
+.tcgm-env__link {
+  position: relative;
+  z-index: 1;
+  max-width: calc(100% - 24px);
+}
+
+/* --- Client update: CTA colour + simpler hover animation --- */
+
+/* New pill colour: solid #566E5B at 80% layer opacity (matches Figma "Opacity 80%",
+   which composites differently from an rgba alpha over the blurred backdrop). */
+.tcgm-env__link.btn.btn-icon.btn-gray-blur span {
+  background-color: #566E5B;
+  opacity: 0.8;
+}
+
+.tcgm-env__link.btn.btn-icon.btn-gray-blur::after {
+  background-color: #566E5B;
+}
+
+/* No arrow by default — it animates in (sliding to the right) only on hover.
+   Replaces the theme's "roll": no whole-button shift, no incoming left arrow. */
+.tcgm-env__link.btn.btn-icon::after,
+.tcgm__button .btn.btn-icon::after {
+  opacity: 0;
+  transform: translateX(-6px);
+}
+
+.tcgm-env__link.btn.btn-icon:hover,
+.tcgm__button .btn.btn-icon:hover {
+  transform: none;
+}
+
+/* Env arrow revealed at 80% (to match the pill); bottom CTA arrow fully opaque. */
+.tcgm-env__link.btn.btn-icon:hover::after {
+  opacity: 0.8;
+  transform: translateX(0);
+}
+
+.tcgm__button .btn.btn-icon:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tcgm-env__link.btn.btn-icon:hover::before,
+.tcgm__button .btn.btn-icon:hover::before {
+  opacity: 0;
+}
+
+/* On mobile the media pulls left to the wrapper border while the heading/button
+   stay indented — same handling as feature-card-grid (see section-card-grid.css). */
+@media screen and (max-width: 768px) {
+  .tcgm__media {
+    margin: 27px -16px 18px -35px;
+  }
+  .tcgm-env__bar {
+    aspect-ratio: 387 / 76;
+  }
+}
+
+/* Tablet: 2 columns (between the 1-column phone layout and 3-column desktop). */
+@media screen and (min-width: 769px) and (max-width: 989px) {
+  .tcgm__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tcgm__item {
+    border-right: 1px solid var(--color-medium-gray);
+  }
+
+  .tcgm__item:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+  .tcgm-env__bar .btn.btn-icon span {
+    padding-right: 20px;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .tcgm__content {
+    --section-padding-top: var(--padding-top);
+    --section-padding-bottom: var(--padding-bottom);
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+  }
+
+  .tcgm__items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tcgm__item {
+    padding: 24px 30px 97px;
+    min-height: 432px;
+    border-right: 1px solid var(--color-medium-gray);
+  }
+
+  .tcgm__item:nth-child(3n) {
+    border-right: none;
+  }
+
+  .tcgm__title {
+    font-size: 36px;
+    line-height: 112%;
+  }
+
+  /* Middle block only: the design rows are 387px wide vs the ~379.8px the shared
+     column padding yields at 1140px. Extend the environments media rightwards to
+     hit 387px (→ height 73px via aspect-ratio), without touching shared padding. */
+  .tcgm-env {
+    margin-right: -3.21px;
+    margin-left: -5px;
+  }
+}
