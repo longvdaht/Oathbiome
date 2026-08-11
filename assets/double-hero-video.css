@@ -51,7 +51,7 @@
 .dhv__media {
   position: relative;
   flex: 0 0 auto;
-  height: clamp(420px, 47.85vw, 720px);
+  height: calc((100vw - 26px) * 0.66 * 9 / 16);
   min-height: 0;
   overflow: hidden;
   border-radius: 20px;
