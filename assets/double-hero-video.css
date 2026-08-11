@@ -748,18 +748,3 @@ html.dhv-theater-open .header__menu {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(6px);
 }
-@media screen and (min-width: 749px) {
-  .dhv__grid {
-    align-items: stretch;
-    aspect-ratio: 4/3;
-  }
-  .dhv__panel .dhv__media {
-    height: calc(100% - 78px);
-  }
-}
-
-@media screen and (min-width: 1025px) {
-  .dhv__grid {
-    aspect-ratio: 800 / 340;
-  }
-}
