@@ -825,13 +825,13 @@
           this.theater = new Theater(theaterEl);
         }
 
-        // Playback mode from section settings. The two are resolved in Liquid
-        // so the markup and the behaviour can never disagree: a visible play
-        // button means no autoplay and audio on first press; autoplay mode
-        // starts muted (the only autoplay any browser permits) and shows a
-        // mute toggle instead.
-        this.showPlayButton = this.getAttribute('data-show-play-button') === 'true';
-        this.autoplayEnabled = this.getAttribute('data-autoplay') === 'true';
+        // Playback mode is per video, read off each panel. The two settings
+        // are resolved in Liquid so the markup and the behaviour can never
+        // disagree: a visible play button means no autoplay and audio on first
+        // press; autoplay mode starts muted (the only autoplay any browser
+        // permits) and shows a mute toggle instead.
+        this.ambientMode = this._readPanelMode(this.ambientPanel);
+        this.teaserMode = this._readPanelMode(this.teaserPanel);
 
         this.reduceMotion = prefersReducedMotion();
         this.ambientEngine = null;
@@ -856,6 +856,14 @@
           if (mq.addEventListener) mq.addEventListener('change', onBreakpointChange);
           else if (mq.addListener) mq.addListener(onBreakpointChange);
         }
+      }
+
+      _readPanelMode(panel) {
+        if (!panel) return { showPlayButton: false, autoplay: false };
+        return {
+          showPlayButton: panel.getAttribute('data-show-play-button') === 'true',
+          autoplay: panel.getAttribute('data-autoplay') === 'true',
+        };
       }
 
       _hasResponsiveAssets() {
@@ -900,7 +908,7 @@
             }
 
             self.ambientManuallyPaused = false;
-            self._playWithIntendedSound(self.ambientEngine);
+            self._playWithIntendedSound(self.ambientEngine, self.ambientMode);
           });
         }
 
@@ -982,7 +990,7 @@
           // Skipped entirely for layout "second" (this copy never shows its
           // ambient video). Respects a manual pause so it doesn't resume a
           // video the user paused.
-          if (!self.autoplayEnabled) return;
+          if (!self.ambientMode.autoplay) return;
 
           self._ambientObserver = autoplayInView(self.ambientPanel, {
             shouldPlay: function () {
@@ -1009,9 +1017,9 @@
        * thing inside the click's user activation, which is what browsers
        * require for audible playback.
        */
-      _playWithIntendedSound(engine) {
+      _playWithIntendedSound(engine, mode) {
         if (!engine) return;
-        if (!this.showPlayButton) {
+        if (!mode || !mode.showPlayButton) {
           engine.play();
           return;
         }
@@ -1109,7 +1117,7 @@
             // first press — but the unmute still has to happen inside this
             // click, hence the chained call rather than a bare play().
             ensureEngine().then(function (engine) {
-              self._playWithIntendedSound(engine);
+              self._playWithIntendedSound(engine, self.teaserMode);
             });
           });
         }
@@ -1122,7 +1130,7 @@
         // Hover preview is a form of autoplay, so it follows the same setting:
         // in play-button mode the teaser stays on its poster until pressed,
         // which is what "we do not need to autoplay the videos" asks for.
-        if (hasHoverInput() && !this.reduceMotion && this.autoplayEnabled) {
+        if (hasHoverInput() && !this.reduceMotion && this.teaserMode.autoplay) {
           this.teaserPanel.addEventListener('mouseenter', function () {
             self.setAttribute('data-hover', 'teaser');
             self.teaserPanel.classList.add('is-hover');
@@ -1202,7 +1210,7 @@
         // Mobile / touch (no hover): autoplay muted + looped, in view only (so
         // it doesn't contend with the other section's video on load). Skipped
         // for layout "first" (teaser hidden on mobile) and reduced motion.
-        if (!hasHoverInput() && !this.reduceMotion && this.autoplayEnabled && this.layoutRule !== 'first') {
+        if (!hasHoverInput() && !this.reduceMotion && this.teaserMode.autoplay && this.layoutRule !== 'first') {
           this._teaserObserver = autoplayInView(this.teaserPanel, {
             shouldPlay: function () {
               return !self.teaserManuallyPaused;
@@ -1227,6 +1235,9 @@
         if (engine) engine.pause();
 
         var cta = panel.querySelector('[data-dhv-open-theater]');
+        // Read the mode from the panel being opened, so one video can wait for
+        // a press in fullscreen while the other starts on its own.
+        var mode = this._readPanelMode(panel);
 
         // Fullscreen always starts from the beginning, in both modes. The
         // panel behind it is a teaser, so resuming its position would drop the
@@ -1235,7 +1246,7 @@
           title: cta ? cta.dataset.title : '',
           duration: cta ? cta.dataset.duration : '',
           startTime: 0,
-          waitForPress: this.showPlayButton,
+          waitForPress: mode.showPlayButton,
           onClose: options.onClose,
         });
       }

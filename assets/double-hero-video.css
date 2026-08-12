@@ -755,9 +755,10 @@ html.dhv-theater-open .header__menu {
 }
 
 /* ── Playback controls (section settings) ────────────────────────────────
-   Two mutually exclusive modes, resolved in Liquid:
-   .dhv--play-button  no autoplay, sound on from the first press
-   .dhv--autoplay     muted autoplay + a sound toggle
+   Two mutually exclusive modes, resolved in Liquid per video block, so the
+   classes live on the panel rather than the section:
+   .dhv__panel--play-button  no autoplay, sound on from the first press
+   .dhv__panel--autoplay     muted autoplay + a sound toggle
 
    Both reuse the theater's visual language (64px centred disc for the
    primary action, 36px corner disc for a secondary control) so the panel
@@ -766,7 +767,7 @@ html.dhv-theater-open .header__menu {
 /* Paused: a centred 64px disc, matching .dhv__theater-playpause-icon. It is
    deliberately NOT inset: 0 — the media wrapper opens the theater on click,
    so a full-stage button would swallow that interaction. */
-.dhv--play-button .dhv__pause-toggle {
+.dhv__panel--play-button .dhv__pause-toggle {
   top: 50%;
   right: auto;
   bottom: auto;
@@ -779,13 +780,13 @@ html.dhv-theater-open .header__menu {
   background: rgba(0, 0, 0, 0.45);
 }
 
-.dhv--play-button .dhv__pause-toggle .icon {
+.dhv__panel--play-button .dhv__pause-toggle .icon {
   width: 20px;
   height: 20px;
 }
 
 /* Playing: retreat to the corner so the disc stops covering the frame. */
-.dhv--play-button .dhv__panel.is-playing .dhv__pause-toggle {
+.dhv__panel--play-button.is-playing .dhv__pause-toggle {
   top: auto;
   right: 16px;
   bottom: 16px;
@@ -796,7 +797,7 @@ html.dhv-theater-open .header__menu {
   background: rgba(0, 0, 0, 0.35);
 }
 
-.dhv--play-button .dhv__panel.is-playing .dhv__pause-toggle .icon {
+.dhv__panel--play-button.is-playing .dhv__pause-toggle .icon {
   width: 14px;
   height: 14px;
 }
@@ -844,11 +845,11 @@ html.dhv-theater-open .header__menu {
    before the first press there is nothing to mute, and the centred play disc
    should be the only thing competing for attention. It sits beside the
    play/pause disc that has retreated to the corner, so the two do not stack. */
-.dhv--play-button .dhv__mute-toggle {
+.dhv__panel--play-button .dhv__mute-toggle {
   display: none;
 }
 
-.dhv--play-button .dhv__panel.is-playing .dhv__mute-toggle {
+.dhv__panel--play-button.is-playing .dhv__mute-toggle {
   right: 60px;
   display: flex;
 }

@@ -8,19 +8,6 @@
   assign teaser_block = section.blocks | where: 'type', 'teaser_video' | first
   assign color_scheme = 'color-' | append: section.settings.color_scheme
 
-  # Resolve the two playback settings into one coherent mode here, so the
-  # markup and the JS can never disagree about which controls exist.
-  # A visible play button wins: the rule is that a play button means no
-  # autoplay. With neither setting on the panels would sit on a dead poster,
-  # so that falls back to the play button.
-  assign show_play_button = section.settings.show_play_button
-  assign enable_autoplay = section.settings.enable_autoplay
-  if show_play_button
-    assign enable_autoplay = false
-  elsif enable_autoplay == false
-    assign show_play_button = true
-  endif
-
 
   capture style
     echo '--PT: ' | append: section.settings.padding_top | append: 'px;'
@@ -39,13 +26,7 @@
   {%- endif -%}
 
   {%- if ambient_block or teaser_block -%}
-    <double-hero-video
-      class="dhv{% if show_play_button %} dhv--play-button{% endif %}{% if enable_autoplay %} dhv--autoplay{% endif %}"
-      data-dhv
-      data-layout-rule="{{ section.settings.layout_rule | default: 'off' }}"
-      data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
-      data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
-    >
+    <double-hero-video class="dhv" data-dhv data-layout-rule="{{ section.settings.layout_rule | default: 'off' }}">
       <div class="dhv__grid">
         {%- if ambient_block -%}
           {%- liquid
@@ -75,11 +56,26 @@
             elsif vimeo_link_m != blank
               assign video_type_m = 'vimeo'
             endif
+
+            # Resolve this video's two playback settings into one coherent mode,
+            # so the markup and the JS can never disagree about which controls
+            # exist. A visible play button wins: a play button means no
+            # autoplay. With neither on the panel would sit on a dead poster,
+            # so that falls back to the play button.
+            assign show_play_button = block.settings.show_play_button
+            assign enable_autoplay = block.settings.enable_autoplay
+            if show_play_button
+              assign enable_autoplay = false
+            elsif enable_autoplay == false
+              assign show_play_button = true
+            endif
           -%}
 
           <div
-            class="dhv__panel dhv__panel--ambient"
+            class="dhv__panel dhv__panel--ambient{% if show_play_button %} dhv__panel--play-button{% endif %}{% if enable_autoplay %} dhv__panel--autoplay{% endif %}"
             data-dhv-panel="ambient"
+            data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
+            data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
             {{ block.shopify_attributes }}
           >
             <div class="dhv__media">
@@ -189,11 +185,26 @@
             elsif vimeo_link_m != blank
               assign video_type_m = 'vimeo'
             endif
+
+            # Resolve this video's two playback settings into one coherent mode,
+            # so the markup and the JS can never disagree about which controls
+            # exist. A visible play button wins: a play button means no
+            # autoplay. With neither on the panel would sit on a dead poster,
+            # so that falls back to the play button.
+            assign show_play_button = block.settings.show_play_button
+            assign enable_autoplay = block.settings.enable_autoplay
+            if show_play_button
+              assign enable_autoplay = false
+            elsif enable_autoplay == false
+              assign show_play_button = true
+            endif
           -%}
 
           <div
-            class="dhv__panel dhv__panel--teaser"
+            class="dhv__panel dhv__panel--teaser{% if show_play_button %} dhv__panel--play-button{% endif %}{% if enable_autoplay %} dhv__panel--autoplay{% endif %}"
             data-dhv-panel="teaser"
+            data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
+            data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
             data-teaser-duration="{{ block.settings.teaser_duration | default: 8 }}"
             {{ block.shopify_attributes }}
           >
@@ -366,24 +377,6 @@
     },
     {
       "type": "header",
-      "content": "Playback"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_play_button",
-      "label": "Show play button",
-      "default": false,
-      "info": "Videos stay on their poster until pressed, and the sound is on from the first press. Turns autoplay off."
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_autoplay",
-      "label": "Enable autoplay",
-      "default": true,
-      "info": "Videos play muted when scrolled into view (browsers do not allow autoplay with sound) and a sound button is shown instead of the play button. Ignored when \"Show play button\" is on."
-    },
-    {
-      "type": "header",
       "content": "Layout rule",
       "info": "Use this to split the two videos on mobile with another section (e.g. a text section) between them. Add this section twice with identical settings: set one to \"First\" and one to \"Second\", then place your text section between them. On desktop only the \"First\" copy shows (both videos side by side); on mobile the \"First\" copy shows video 1 and the \"Second\" copy shows video 2, with your text section in between."
     },
@@ -448,6 +441,24 @@
       "name": "Ambient video (left)",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "Playback"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play_button",
+          "label": "Show play button",
+          "default": false,
+          "info": "This video stays on its poster until pressed, and the sound is on from the first press. Turns autoplay off for this video."
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_autoplay",
+          "label": "Enable autoplay",
+          "default": true,
+          "info": "This video plays muted when scrolled into view (browsers do not allow autoplay with sound) and shows a sound button instead of the play button. Ignored when \"Show play button\" is on."
+        },
         {
           "type": "header",
           "content": "Video"
@@ -536,6 +547,24 @@
       "name": "Teaser video (right)",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "Playback"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play_button",
+          "label": "Show play button",
+          "default": false,
+          "info": "This video stays on its poster until pressed, and the sound is on from the first press. Turns autoplay off for this video."
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_autoplay",
+          "label": "Enable autoplay",
+          "default": true,
+          "info": "This video plays muted when scrolled into view (browsers do not allow autoplay with sound) and shows a sound button instead of the play button. Ignored when \"Show play button\" is on."
+        },
         {
           "type": "header",
           "content": "Video"
