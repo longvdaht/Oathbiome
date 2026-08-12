@@ -577,9 +577,14 @@
    sound; it also lets the user recover when the browser force-mutes the
    unmuted autoplay. Not in the Figma — added for the "Play with sound"
    promise to actually hold. */
+/* display: flex, not none — nothing ever turned this on, so the theater's
+   sound control was permanently invisible. Visibility is governed by
+   .controls-visible on the chrome wrapper, not by this button. */
 .dhv__theater-mute {
+
   box-sizing: border-box;
-  display: none;
+
+  display: flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
@@ -747,4 +752,103 @@ html.dhv-theater-open .header__menu {
   border-radius: 100px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(6px);
+}
+
+/* ── Playback controls (section settings) ────────────────────────────────
+   Two mutually exclusive modes, resolved in Liquid:
+   .dhv--play-button  no autoplay, sound on from the first press
+   .dhv--autoplay     muted autoplay + a sound toggle
+
+   Both reuse the theater's visual language (64px centred disc for the
+   primary action, 36px corner disc for a secondary control) so the panel
+   and the fullscreen player read as one system. */
+
+/* Paused: a centred 64px disc, matching .dhv__theater-playpause-icon. It is
+   deliberately NOT inset: 0 — the media wrapper opens the theater on click,
+   so a full-stage button would swallow that interaction. */
+.dhv--play-button .dhv__pause-toggle {
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.dhv--play-button .dhv__pause-toggle .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Playing: retreat to the corner so the disc stops covering the frame. */
+.dhv--play-button .dhv__panel.is-playing .dhv__pause-toggle {
+  top: auto;
+  right: 16px;
+  bottom: 16px;
+  left: auto;
+  width: 36px;
+  height: 36px;
+  transform: none;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.dhv--play-button .dhv__panel.is-playing .dhv__pause-toggle .icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Sound toggle — autoplay mode only, where playback must start muted. */
+.dhv__mute-toggle {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.dhv__mute-toggle .icon {
+  width: 14px;
+  height: 14px;
+  stroke: #fff;
+}
+
+.dhv__mute-toggle .icon path {
+  stroke: #fff;
+  fill: #fff;
+}
+
+.dhv__mute-on,
+.dhv__mute-off {
+  display: flex;
+}
+
+.dhv__mute-toggle[data-muted="true"] .dhv__mute-on,
+.dhv__mute-toggle[data-muted="false"] .dhv__mute-off {
+  display: none;
+}
+
+/* Play-button mode: the sound control appears only once playback starts —
+   before the first press there is nothing to mute, and the centred play disc
+   should be the only thing competing for attention. It sits beside the
+   play/pause disc that has retreated to the corner, so the two do not stack. */
+.dhv--play-button .dhv__mute-toggle {
+  display: none;
+}
+
+.dhv--play-button .dhv__panel.is-playing .dhv__mute-toggle {
+  right: 60px;
+  display: flex;
 }

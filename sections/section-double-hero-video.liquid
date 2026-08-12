@@ -8,6 +8,20 @@
   assign teaser_block = section.blocks | where: 'type', 'teaser_video' | first
   assign color_scheme = 'color-' | append: section.settings.color_scheme
 
+  # Resolve the two playback settings into one coherent mode here, so the
+  # markup and the JS can never disagree about which controls exist.
+  # A visible play button wins: the rule is that a play button means no
+  # autoplay. With neither setting on the panels would sit on a dead poster,
+  # so that falls back to the play button.
+  assign show_play_button = section.settings.show_play_button
+  assign enable_autoplay = section.settings.enable_autoplay
+  if show_play_button
+    assign enable_autoplay = false
+  elsif enable_autoplay == false
+    assign show_play_button = true
+  endif
+
+
   capture style
     echo '--PT: ' | append: section.settings.padding_top | append: 'px;'
     echo '--PB: ' | append: section.settings.padding_bottom | append: 'px;'
@@ -25,7 +39,13 @@
   {%- endif -%}
 
   {%- if ambient_block or teaser_block -%}
-    <double-hero-video class="dhv" data-dhv data-layout-rule="{{ section.settings.layout_rule | default: 'off' }}">
+    <double-hero-video
+      class="dhv{% if show_play_button %} dhv--play-button{% endif %}{% if enable_autoplay %} dhv--autoplay{% endif %}"
+      data-dhv
+      data-layout-rule="{{ section.settings.layout_rule | default: 'off' }}"
+      data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
+      data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
+    >
       <div class="dhv__grid">
         {%- if ambient_block -%}
           {%- liquid
@@ -74,7 +94,7 @@
                 <p class="dhv__overlay-heading">{{ block.settings.overlay_heading }}</p>
               {%- endif -%}
 
-              {%- if video_type != '' -%}
+              {%- if video_type != '' and show_play_button -%}
                 <button
                   type="button"
                   class="dhv__pause-toggle"
@@ -86,6 +106,28 @@
                 >
                   <span class="dhv__pause-icon">{%- render 'icon-pause' -%}</span>
                   <span class="dhv__play-icon">{%- render 'icon-play' -%}</span>
+                </button>
+              {%- endif -%}
+
+              {%- comment -%}
+                Both modes need a sound control. Autoplay starts muted and this
+                is the only way to turn sound on; play-button mode starts
+                unmuted and this is the only way to turn it off. It begins as
+                muted either way because the panel iframe/video is created
+                muted — the play button unmutes it on press.
+              {%- endcomment -%}
+              {%- if video_type != '' -%}
+                <button
+                  type="button"
+                  class="dhv__mute-toggle"
+                  data-dhv-mute-toggle
+                  data-muted="true"
+                  data-label-mute="{{ 'general.accessibility.mute_video' | t | escape }}"
+                  data-label-unmute="{{ 'general.accessibility.unmute_video' | t | escape }}"
+                  aria-label="{{ 'general.accessibility.unmute_video' | t }}"
+                >
+                  <span class="dhv__mute-on">{%- render 'icon-volume' -%}</span>
+                  <span class="dhv__mute-off">{%- render 'icon-mute' -%}</span>
                 </button>
               {%- endif -%}
 
@@ -163,6 +205,42 @@
                 {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: '', loop: false, sizes: '(min-width: 750px) 34vw, 100vw' -%}
               {%- endif -%}
 
+              {%- if video_type != '' and show_play_button -%}
+                <button
+                  type="button"
+                  class="dhv__pause-toggle"
+                  data-dhv-pause-toggle
+                  data-state="paused"
+                  data-label-pause="{{ 'general.accessibility.pause_video' | t | escape }}"
+                  data-label-play="{{ 'general.accessibility.play_video' | t | escape }}"
+                  aria-label="{{ 'general.accessibility.play_video' | t }}"
+                >
+                  <span class="dhv__pause-icon">{%- render 'icon-pause' -%}</span>
+                  <span class="dhv__play-icon">{%- render 'icon-play' -%}</span>
+                </button>
+              {%- endif -%}
+
+              {%- comment -%}
+                Both modes need a sound control. Autoplay starts muted and this
+                is the only way to turn sound on; play-button mode starts
+                unmuted and this is the only way to turn it off. It begins as
+                muted either way because the panel iframe/video is created
+                muted — the play button unmutes it on press.
+              {%- endcomment -%}
+              {%- if video_type != '' -%}
+                <button
+                  type="button"
+                  class="dhv__mute-toggle"
+                  data-dhv-mute-toggle
+                  data-muted="true"
+                  data-label-mute="{{ 'general.accessibility.mute_video' | t | escape }}"
+                  data-label-unmute="{{ 'general.accessibility.unmute_video' | t | escape }}"
+                  aria-label="{{ 'general.accessibility.unmute_video' | t }}"
+                >
+                  <span class="dhv__mute-on">{%- render 'icon-volume' -%}</span>
+                  <span class="dhv__mute-off">{%- render 'icon-mute' -%}</span>
+                </button>
+              {%- endif -%}
               {%- if video_type != '' -%}
                 <button
                   type="button"
@@ -285,6 +363,24 @@
       "type": "text",
       "id": "heading",
       "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Playback"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_button",
+      "label": "Show play button",
+      "default": false,
+      "info": "Videos stay on their poster until pressed, and the sound is on from the first press. Turns autoplay off."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true,
+      "info": "Videos play muted when scrolled into view (browsers do not allow autoplay with sound) and a sound button is shown instead of the play button. Ignored when \"Show play button\" is on."
     },
     {
       "type": "header",
