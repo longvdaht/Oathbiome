@@ -761,14 +761,6 @@
     "section_expert_gallery_hwY8HU": {
       "type": "section-expert-gallery",
       "blocks": {
-        "expert_xph3DP": {
-          "type": "expert",
-          "settings": {
-            "title": "Robert Bonnie",
-            "infor": "<p>Former US Under Secretary of Agriculture (advisor)<br/><a href=\"https://www.linkedin.com/in/robert-bonnie-894068367/\" target=\"_blank\" title=\"https://www.linkedin.com/in/robert-bonnie-894068367/\">LinkedIn</a></p>",
-            "image": "shopify://shop_images/Robert.jpg"
-          }
-        },
         "expert_3AaETw": {
           "type": "expert",
           "settings": {
@@ -795,7 +787,6 @@
         }
       },
       "block_order": [
-        "expert_xph3DP",
         "expert_3AaETw",
         "expert_wtpzh4",
         "expert_FnpnAJ"
