@@ -1127,13 +1127,17 @@
         // Desktop (mouse): hover previews the teaser and pauses the ambient.
         // Mobile autoplay is wired in _setupTeaserEngine instead. Bound once —
         // input type doesn't change on resize, only the asset does.
-        // Hover preview is a form of autoplay, so it follows the same setting:
-        // in play-button mode the teaser stays on its poster until pressed,
-        // which is what "we do not need to autoplay the videos" asks for.
-        if (hasHoverInput() && !this.reduceMotion && this.teaserMode.autoplay) {
+        // The hover panel-expand runs in every mode: data-hover drives the
+        // flex-grow split between the two panels, which is layout, not
+        // playback. Only the preview playback inside it follows the autoplay
+        // setting — in play-button mode the teaser widens on hover but stays
+        // on its poster until pressed.
+        if (hasHoverInput() && !this.reduceMotion) {
           this.teaserPanel.addEventListener('mouseenter', function () {
             self.setAttribute('data-hover', 'teaser');
             self.teaserPanel.classList.add('is-hover');
+
+            if (!self.teaserMode.autoplay) return;
 
             if (self.ambientEngine && !self.ambientManuallyPaused) {
               self.ambientEngine.pause();
@@ -1150,6 +1154,8 @@
           this.teaserPanel.addEventListener('mouseleave', function () {
             self.removeAttribute('data-hover');
             self.teaserPanel.classList.remove('is-hover');
+
+            if (!self.teaserMode.autoplay) return;
 
             if (self.teaserEngine) {
               self.teaserEngine.pause();
