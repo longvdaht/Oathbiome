@@ -50,6 +50,36 @@
     return window.matchMedia(MOBILE_QUERY).matches;
   }
 
+  /**
+   * Whether there is positive evidence of an expensive or slow link.
+   * navigator.connection does not exist on Safari/iOS, so a false here means
+   * "no evidence", never "the link is fast" — the viewport check in
+   * pickRendition is what covers iOS.
+   */
+  function isSlowConnection() {
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!conn) return false;
+    if (conn.saveData) return true;
+    return ['slow-2g', '2g', '3g'].indexOf(conn.effectiveType) !== -1;
+  }
+
+  /**
+   * Choose which Shopify rendition a panel should download. Panels are muted
+   * background loops, so a fast first frame beats resolution — the opposite
+   * trade from the theater, which streams adaptively (attachAdaptiveSource).
+   * Returns null for mounts with no rendition data (Vimeo, or an empty video).
+   */
+  function pickRendition(video) {
+    var low = video.getAttribute('data-src-low');
+    var mid = video.getAttribute('data-src-mid');
+    var high = video.getAttribute('data-src-high');
+    if (!low && !mid && !high) return null;
+
+    if (isSlowConnection()) return low || mid || high;
+    if (isMobileViewport()) return mid || low || high;
+    return high || mid || low;
+  }
+
   function fullscreenElement() {
     return document.fullscreenElement || document.webkitFullscreenElement || null;
   }
@@ -146,10 +176,13 @@
     });
   };
 
-  function NativeVideoEngine(video) {
+  function NativeVideoEngine(video, hls) {
     Emitter.call(this);
     this.type = 'native';
     this.video = video;
+    // hls.js instance when this element is fed an adaptive stream. Held so
+    // destroy() can tear it down — dropped on its own it keeps buffering.
+    this.hls = hls || null;
 
     var self = this;
     video.addEventListener('timeupdate', function () {
@@ -169,12 +202,31 @@
     });
   }
   NativeVideoEngine.prototype = Object.create(Emitter.prototype);
+  /**
+   * Assign the rendition on first use. The element ships without a src so the
+   * inactive breakpoint's copy costs nothing, which means every entry point
+   * into playback has to come through here — hence the call in both play paths
+   * rather than a single eager attach. Idempotent: a src already set (including
+   * the blob URL hls.js installs) is left alone.
+   */
+  NativeVideoEngine.prototype.ensureSource = function () {
+    if (this.video.getAttribute('src')) return;
+
+    var url = pickRendition(this.video);
+    if (!url) return;
+
+    this.video.setAttribute('src', url);
+    this.video.preload = 'auto';
+    this.video.load();
+  };
   NativeVideoEngine.prototype.play = function () {
+    this.ensureSource();
     var promise = this.video.play();
     return promise && promise.catch ? promise.catch(function () {}) : Promise.resolve();
   };
   // Raw (non-swallowing) play so the caller can detect an autoplay block.
   NativeVideoEngine.prototype.rawPlay = function () {
+    this.ensureSource();
     return this.video.play() || Promise.resolve();
   };
   NativeVideoEngine.prototype.pause = function () {
@@ -204,6 +256,10 @@
   };
   NativeVideoEngine.prototype.destroy = function () {
     this.video.pause();
+    if (this.hls) {
+      this.hls.destroy();
+      this.hls = null;
+    }
     this.video.removeAttribute('src');
     this.video.load();
   };
@@ -356,6 +412,42 @@
     // hidden→shown transition is unreliable — the theater calls this again
     // once it's visible so the cover math uses the real dimensions.
     return resize;
+  }
+
+  /**
+   * Point a fullscreen <video> at the best stream available, copying the
+   * rendition attributes off the panel's element. Fullscreen is where the film
+   * is actually watched, so this prefers the adaptive HLS stream — it opens on
+   * a low rendition and climbs to whatever the connection sustains, which is
+   * the right trade here and the inverse of pickRendition's.
+   *
+   * Native HLS on Safari, hls.js elsewhere (already loaded by the theme and
+   * used the same way in custom.js), falling back to the largest progressive
+   * rendition when neither is available.
+   *
+   * @returns {object|null} the hls.js instance, for the engine to destroy.
+   */
+  function attachAdaptiveSource(video, sourceEl) {
+    var hlsUrl = sourceEl.getAttribute('data-src-hls');
+
+    if (hlsUrl && video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = hlsUrl;
+      return null;
+    }
+
+    if (hlsUrl && window.Hls && window.Hls.isSupported()) {
+      var hls = new window.Hls();
+      hls.loadSource(hlsUrl);
+      hls.attachMedia(video);
+      return hls;
+    }
+
+    var progressive =
+      sourceEl.getAttribute('data-src-high') ||
+      sourceEl.getAttribute('data-src-mid') ||
+      sourceEl.getAttribute('data-src-low');
+    if (progressive) video.src = progressive;
+    return null;
   }
 
   /**
@@ -666,17 +758,25 @@
     var enginePromise;
 
     if (type === 'shopify') {
-      var original = panelMount.querySelector('video');
-      if (!original) return;
+      var panelVideo = panelMount.querySelector('video');
+      if (!panelVideo) return;
 
-      var clone = original.cloneNode(true);
-      clone.removeAttribute('autoplay');
-      clone.loop = false;
-      clone.muted = false;
-      clone.setAttribute('playsinline', '');
-      clone.controls = false;
-      this.videoMount.appendChild(clone);
-      enginePromise = Promise.resolve(new NativeVideoEngine(clone));
+      // Built fresh rather than cloned: a clone would inherit the panel's
+      // deliberately small rendition, and the whole point of fullscreen is to
+      // stream the good one.
+      var stageVideo = document.createElement('video');
+      stageVideo.setAttribute('playsinline', '');
+      stageVideo.loop = false;
+      stageVideo.muted = false;
+      stageVideo.controls = false;
+      // The viewer asked for this one, so buffer ahead rather than waiting to be
+      // told. (No effect on the HLS path, where hls.js manages its own buffer.)
+      stageVideo.preload = 'auto';
+      this.videoMount.appendChild(stageVideo);
+
+      enginePromise = Promise.resolve(
+        new NativeVideoEngine(stageVideo, attachAdaptiveSource(stageVideo, panelVideo))
+      );
     } else if (type === 'vimeo') {
       var vimeoMount = document.createElement('div');
       vimeoMount.setAttribute('data-video-type', 'vimeo');
@@ -900,6 +1000,30 @@
         return pickMount(panel) !== currentMount;
       }
 
+      /**
+       * Run `onNear` once the panel comes within a viewport of the fold, then
+       * stop watching. This is the "preload sooner" lever: the copy at the top
+       * of the page is already in range and fires on load, while one further
+       * down waits its turn instead of contending with the hero for bandwidth.
+       */
+      _observePreload(panel, onNear) {
+        if (typeof IntersectionObserver === 'undefined') {
+          onNear();
+          return null;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            if (!entries[0].isIntersecting) return;
+            observer.disconnect();
+            onNear();
+          },
+          { rootMargin: '100% 0px' }
+        );
+        observer.observe(panel);
+        return observer;
+      }
+
       _refreshPanelModes() {
         this.ambientMode = this._readPanelMode(this.ambientPanel);
         this.teaserMode = this._readPanelMode(this.teaserPanel);
@@ -1004,6 +1128,10 @@
           this._ambientObserver.disconnect();
           this._ambientObserver = null;
         }
+        if (this._ambientPreloadObserver) {
+          this._ambientPreloadObserver.disconnect();
+          this._ambientPreloadObserver = null;
+        }
         if (this.ambientEngine) {
           this.ambientEngine.destroy();
           this.ambientEngine = null;
@@ -1026,6 +1154,14 @@
           engine.on('pause', function () {
             self.ambientPanel.classList.remove('is-playing');
             self._setToggleState(toggle, 'paused');
+          });
+
+          // Begin the download before the panel is reached. Runs in both
+          // playback modes: in play-button mode it is what makes the first
+          // press instant, and on a slow link the rendition already chosen is
+          // the smallest one, so committing to it early is cheap.
+          self._ambientPreloadObserver = self._observePreload(self.ambientPanel, function () {
+            if (engine.ensureSource) engine.ensureSource();
           });
 
           // Keep the mute toggle in sync with whatever changed the volume,
@@ -1252,6 +1388,10 @@
           this._teaserObserver.disconnect();
           this._teaserObserver = null;
         }
+        if (this._teaserPreloadObserver) {
+          this._teaserPreloadObserver.disconnect();
+          this._teaserPreloadObserver = null;
+        }
         if (this.teaserEngine) {
           this.teaserEngine.destroy();
           this.teaserEngine = null;
@@ -1261,6 +1401,18 @@
         this._setMuteToggleState(this._teaserMuteToggle, true);
 
         this.teaserMount = pickMount(this.teaserPanel);
+
+        // Shopify-hosted only: the <video> element already exists, so priming
+        // it early costs one request and makes the first play instant. A Vimeo
+        // teaser stays lazy — building its iframe ahead of time is exactly the
+        // expense this is meant to avoid.
+        if (this.teaserMount && this.teaserMount.getAttribute('data-video-type') === 'shopify') {
+          this._teaserPreloadObserver = this._observePreload(this.teaserPanel, function () {
+            self._teaserEnsureEngine().then(function (engine) {
+              if (engine && engine.ensureSource) engine.ensureSource();
+            });
+          });
+        }
 
         // Mobile / touch (no hover): autoplay muted + looped, in view only (so
         // it doesn't contend with the other section's video on load). Skipped
