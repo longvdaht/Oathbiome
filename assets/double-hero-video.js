@@ -44,6 +44,12 @@
     return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }
 
+  var MOBILE_QUERY = '(max-width: 749px)';
+
+  function isMobileViewport() {
+    return window.matchMedia(MOBILE_QUERY).matches;
+  }
+
   function fullscreenElement() {
     return document.fullscreenElement || document.webkitFullscreenElement || null;
   }
@@ -98,7 +104,7 @@
   function pickMount(panel) {
     var mounts = panel.querySelectorAll('[data-dhv-video]');
     if (mounts.length <= 1) return mounts[0] || null;
-    var wanted = window.matchMedia('(max-width: 749px)').matches ? 'mobile' : 'desktop';
+    var wanted = isMobileViewport() ? 'mobile' : 'desktop';
     for (var i = 0; i < mounts.length; i++) {
       if (mounts[i].getAttribute('data-breakpoint') === wanted) return mounts[i];
     }
@@ -825,13 +831,7 @@
           this.theater = new Theater(theaterEl);
         }
 
-        // Playback mode is per video, read off each panel. The two settings
-        // are resolved in Liquid so the markup and the behaviour can never
-        // disagree: a visible play button means no autoplay and audio on first
-        // press; autoplay mode starts muted (the only autoplay any browser
-        // permits) and shows a mute toggle instead.
-        this.ambientMode = this._readPanelMode(this.ambientPanel);
-        this.teaserMode = this._readPanelMode(this.teaserPanel);
+        this._refreshPanelModes();
 
         this.reduceMotion = prefersReducedMotion();
         this.ambientEngine = null;
@@ -842,35 +842,80 @@
         if (this.ambientPanel) this._initAmbientPanel();
         if (this.teaserPanel) this._initTeaserPanel();
 
-        // Separate desktop/mobile assets: re-pick the active mount when the
-        // viewport crosses the mobile breakpoint (device rotation, or a desktop
-        // window resized across 749px). Only wired up when a panel actually has
-        // two mounts, so single-asset sections pay nothing.
-        if (this._hasResponsiveAssets()) {
-          var self = this;
-          var mq = window.matchMedia('(max-width: 749px)');
-          var onBreakpointChange = function () {
-            if (self.ambientPanel) self._setupAmbientEngine();
-            if (self.teaserPanel) self._setupTeaserEngine();
-          };
-          if (mq.addEventListener) mq.addEventListener('change', onBreakpointChange);
-          else if (mq.addListener) mq.addListener(onBreakpointChange);
-        }
+        // Crossing the mobile breakpoint (device rotation, or a desktop window
+        // resized across 749px) can change two things: which asset mount is
+        // active, and which playback mode applies. Wired up unconditionally —
+        // a panel can share one asset across breakpoints and still switch
+        // playback mode between them.
+        var self = this;
+        var mq = window.matchMedia(MOBILE_QUERY);
+        var onBreakpointChange = function () {
+          var prevAmbient = self.ambientMode;
+          var prevTeaser = self.teaserMode;
+          self._refreshPanelModes();
+
+          // Rebuild only what actually changed. Crossing the breakpoint is
+          // often a no-op for playback (one asset, same mode either side), and
+          // tearing a player down restarts the video for nothing.
+          if (self.ambientPanel && self._needsRebuild(self.ambientPanel, prevAmbient, self.ambientMode, self.ambientMount)) {
+            self._setupAmbientEngine();
+          }
+          if (self.teaserPanel && self._needsRebuild(self.teaserPanel, prevTeaser, self.teaserMode, self.teaserMount)) {
+            self._setupTeaserEngine();
+          }
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onBreakpointChange);
+        else if (mq.addListener) mq.addListener(onBreakpointChange);
       }
 
+      /**
+       * Playback settings are per breakpoint, so the mode is resolved at
+       * runtime rather than baked into the markup: a video can autoplay on
+       * desktop and wait for a press on mobile, where autoplay is unreliable
+       * (iOS refuses it outright in Low Power Mode).
+       */
       _readPanelMode(panel) {
-        if (!panel) return { showPlayButton: false, autoplay: false };
+        if (!panel) return { showPlayButton: false, autoplay: false, showSound: false };
+
+        var suffix = isMobileViewport() ? '-mobile' : '-desktop';
+        var showPlayButton = panel.getAttribute('data-play-button' + suffix) === 'true';
+
         return {
-          showPlayButton: panel.getAttribute('data-show-play-button') === 'true',
-          autoplay: panel.getAttribute('data-autoplay') === 'true',
+          showPlayButton: showPlayButton,
+          // Derived, not a setting of its own: a play button means no autoplay,
+          // and a panel with neither would sit on a dead poster.
+          autoplay: !showPlayButton,
+          showSound: panel.getAttribute('data-sound' + suffix) === 'true',
         };
       }
 
-      _hasResponsiveAssets() {
-        return (
-          (this.ambientPanel && this.ambientPanel.querySelectorAll('[data-dhv-video]').length > 1) ||
-          (this.teaserPanel && this.teaserPanel.querySelectorAll('[data-dhv-video]').length > 1)
-        );
+      /**
+       * Whether a breakpoint crossing invalidates this panel's engine. Only the
+       * play-button/autoplay split does, because mute state and "wait for a
+       * press" are fixed when the engine is created; a change to the sound
+       * button is pure CSS and _applyPanelMode has already handled it.
+       */
+      _needsRebuild(panel, prevMode, nextMode, currentMount) {
+        if (!prevMode || prevMode.showPlayButton !== nextMode.showPlayButton) return true;
+        return pickMount(panel) !== currentMount;
+      }
+
+      _refreshPanelModes() {
+        this.ambientMode = this._readPanelMode(this.ambientPanel);
+        this.teaserMode = this._readPanelMode(this.teaserPanel);
+        this._applyPanelMode(this.ambientPanel, this.ambientMode);
+        this._applyPanelMode(this.teaserPanel, this.teaserMode);
+      }
+
+      // Mirror the resolved mode onto the panel for CSS. Done here rather than
+      // by duplicating every control rule under two media queries — which would
+      // drift the moment either mode's styling changes. The controls are hidden
+      // by default in CSS, so nothing flashes before this runs.
+      _applyPanelMode(panel, mode) {
+        if (!panel) return;
+        panel.classList.toggle('dhv__panel--play-button', mode.showPlayButton);
+        panel.classList.toggle('dhv__panel--autoplay', mode.autoplay);
+        panel.classList.toggle('dhv__panel--sound', mode.showSound);
       }
 
       disconnectedCallback() {
@@ -964,6 +1009,9 @@
           this.ambientEngine = null;
         }
         this.ambientPanel.classList.remove('is-playing', 'is-revealed');
+        // A rebuilt engine always starts muted, so the toggle must not keep
+        // showing an unmuted state carried over from the previous breakpoint.
+        this._setMuteToggleState(this._ambientMuteToggle, true);
 
         this.ambientMount = pickMount(this.ambientPanel);
 
@@ -1210,6 +1258,7 @@
         }
         this.teaserPanel.classList.remove('is-playing', 'is-revealed', 'is-hover');
         this.removeAttribute('data-hover');
+        this._setMuteToggleState(this._teaserMuteToggle, true);
 
         this.teaserMount = pickMount(this.teaserPanel);
 

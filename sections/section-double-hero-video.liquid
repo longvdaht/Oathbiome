@@ -57,25 +57,30 @@
               assign video_type_m = 'vimeo'
             endif
 
-            # Resolve this video's two playback settings into one coherent mode,
-            # so the markup and the JS can never disagree about which controls
-            # exist. A visible play button wins: a play button means no
-            # autoplay. With neither on the panel would sit on a dead poster,
-            # so that falls back to the play button.
-            assign show_play_button = block.settings.show_play_button
-            assign enable_autoplay = block.settings.enable_autoplay
-            if show_play_button
-              assign enable_autoplay = false
-            elsif enable_autoplay == false
-              assign show_play_button = true
-            endif
+            # Playback controls are set per breakpoint, so both controls are
+            # always in the markup and the ACTIVE pair is resolved at runtime
+            # (_readPanelMode / _applyPanelMode in the JS) — the alternative,
+            # duplicating every control rule under two media queries, drifts
+            # the moment either mode changes.
+            #
+            # "Show play button" is a playback mode, not just a visible control:
+            # a play button means no autoplay and sound from the first press.
+            # Autoplay is therefore its exact inverse, derived rather than a
+            # second setting that could contradict it (with both off a panel
+            # would sit on a dead poster).
+            assign play_button_d = block.settings.show_play_button_desktop
+            assign play_button_m = block.settings.show_play_button_mobile
+            assign sound_d = block.settings.show_sound_button_desktop
+            assign sound_m = block.settings.show_sound_button_mobile
           -%}
 
           <div
-            class="dhv__panel dhv__panel--ambient{% if show_play_button %} dhv__panel--play-button{% endif %}{% if enable_autoplay %} dhv__panel--autoplay{% endif %}"
+            class="dhv__panel dhv__panel--ambient"
             data-dhv-panel="ambient"
-            data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
-            data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
+            data-play-button-desktop="{% if play_button_d %}true{% else %}false{% endif %}"
+            data-play-button-mobile="{% if play_button_m %}true{% else %}false{% endif %}"
+            data-sound-desktop="{% if sound_d %}true{% else %}false{% endif %}"
+            data-sound-mobile="{% if sound_m %}true{% else %}false{% endif %}"
             {{ block.shopify_attributes }}
           >
             <div class="dhv__media">
@@ -90,7 +95,13 @@
                 <p class="dhv__overlay-heading">{{ block.settings.overlay_heading }}</p>
               {%- endif -%}
 
-              {%- if video_type != '' and show_play_button -%}
+              {%- comment -%}
+                Rendered in both modes; CSS shows it only on breakpoints set to
+                play-button mode. Hidden by default, so it never flashes before
+                the JS resolves the mode (and before that there is no engine
+                behind it anyway).
+              {%- endcomment -%}
+              {%- if video_type != '' -%}
                 <button
                   type="button"
                   class="dhv__pause-toggle"
@@ -106,8 +117,8 @@
               {%- endif -%}
 
               {%- comment -%}
-                Both modes need a sound control. Autoplay starts muted and this
-                is the only way to turn sound on; play-button mode starts
+                Both modes can use a sound control. Autoplay starts muted and
+                this is the only way to turn sound on; play-button mode starts
                 unmuted and this is the only way to turn it off. It begins as
                 muted either way because the panel iframe/video is created
                 muted — the play button unmutes it on press.
@@ -186,25 +197,22 @@
               assign video_type_m = 'vimeo'
             endif
 
-            # Resolve this video's two playback settings into one coherent mode,
-            # so the markup and the JS can never disagree about which controls
-            # exist. A visible play button wins: a play button means no
-            # autoplay. With neither on the panel would sit on a dead poster,
-            # so that falls back to the play button.
-            assign show_play_button = block.settings.show_play_button
-            assign enable_autoplay = block.settings.enable_autoplay
-            if show_play_button
-              assign enable_autoplay = false
-            elsif enable_autoplay == false
-              assign show_play_button = true
-            endif
+            # Per-breakpoint playback controls — see the ambient block above for
+            # why autoplay is derived from the play button rather than being a
+            # setting of its own.
+            assign play_button_d = block.settings.show_play_button_desktop
+            assign play_button_m = block.settings.show_play_button_mobile
+            assign sound_d = block.settings.show_sound_button_desktop
+            assign sound_m = block.settings.show_sound_button_mobile
           -%}
 
           <div
-            class="dhv__panel dhv__panel--teaser{% if show_play_button %} dhv__panel--play-button{% endif %}{% if enable_autoplay %} dhv__panel--autoplay{% endif %}"
+            class="dhv__panel dhv__panel--teaser"
             data-dhv-panel="teaser"
-            data-show-play-button="{% if show_play_button %}true{% else %}false{% endif %}"
-            data-autoplay="{% if enable_autoplay %}true{% else %}false{% endif %}"
+            data-play-button-desktop="{% if play_button_d %}true{% else %}false{% endif %}"
+            data-play-button-mobile="{% if play_button_m %}true{% else %}false{% endif %}"
+            data-sound-desktop="{% if sound_d %}true{% else %}false{% endif %}"
+            data-sound-mobile="{% if sound_m %}true{% else %}false{% endif %}"
             data-teaser-duration="{{ block.settings.teaser_duration | default: 8 }}"
             {{ block.shopify_attributes }}
           >
@@ -216,7 +224,13 @@
                 {%- render 'dhv-media-asset', poster: poster, video: video, vimeo_link: vimeo_link, video_type: video_type, breakpoint: '', loop: false, sizes: '(min-width: 750px) 34vw, 100vw' -%}
               {%- endif -%}
 
-              {%- if video_type != '' and show_play_button -%}
+              {%- comment -%}
+                Rendered in both modes; CSS shows it only on breakpoints set to
+                play-button mode. Hidden by default, so it never flashes before
+                the JS resolves the mode (and before that there is no engine
+                behind it anyway).
+              {%- endcomment -%}
+              {%- if video_type != '' -%}
                 <button
                   type="button"
                   class="dhv__pause-toggle"
@@ -232,8 +246,8 @@
               {%- endif -%}
 
               {%- comment -%}
-                Both modes need a sound control. Autoplay starts muted and this
-                is the only way to turn sound on; play-button mode starts
+                Both modes can use a sound control. Autoplay starts muted and
+                this is the only way to turn sound on; play-button mode starts
                 unmuted and this is the only way to turn it off. It begins as
                 muted either way because the panel iframe/video is created
                 muted — the play button unmutes it on press.
@@ -447,17 +461,30 @@
         },
         {
           "type": "checkbox",
-          "id": "show_play_button",
-          "label": "Show play button",
+          "id": "show_play_button_desktop",
+          "label": "Show play button — desktop",
           "default": false,
-          "info": "This video stays on its poster until pressed, and the sound is on from the first press. Turns autoplay off for this video."
+          "info": "On: the video waits on its poster until pressed, with sound on from the first press. Off: it autoplays muted when scrolled into view (browsers do not allow autoplay with sound)."
         },
         {
           "type": "checkbox",
-          "id": "enable_autoplay",
-          "label": "Enable autoplay",
+          "id": "show_play_button_mobile",
+          "label": "Show play button — mobile",
+          "default": false,
+          "info": "Worth turning on: iOS refuses autoplay entirely in Low Power Mode, so a play button is the only reliable way to start a video on mobile."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sound_button_desktop",
+          "label": "Show sound button — desktop",
           "default": true,
-          "info": "This video plays muted when scrolled into view (browsers do not allow autoplay with sound) and shows a sound button instead of the play button. Ignored when \"Show play button\" is on."
+          "info": "In autoplay mode this is the only way to turn sound on. In play-button mode it appears once playback starts."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sound_button_mobile",
+          "label": "Show sound button — mobile",
+          "default": true
         },
         {
           "type": "header",
@@ -553,17 +580,30 @@
         },
         {
           "type": "checkbox",
-          "id": "show_play_button",
-          "label": "Show play button",
+          "id": "show_play_button_desktop",
+          "label": "Show play button — desktop",
           "default": false,
-          "info": "This video stays on its poster until pressed, and the sound is on from the first press. Turns autoplay off for this video."
+          "info": "On: the video waits on its poster until pressed, with sound on from the first press. Off: it autoplays muted when scrolled into view (browsers do not allow autoplay with sound)."
         },
         {
           "type": "checkbox",
-          "id": "enable_autoplay",
-          "label": "Enable autoplay",
+          "id": "show_play_button_mobile",
+          "label": "Show play button — mobile",
+          "default": false,
+          "info": "Worth turning on: iOS refuses autoplay entirely in Low Power Mode, so a play button is the only reliable way to start a video on mobile."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sound_button_desktop",
+          "label": "Show sound button — desktop",
           "default": true,
-          "info": "This video plays muted when scrolled into view (browsers do not allow autoplay with sound) and shows a sound button instead of the play button. Ignored when \"Show play button\" is on."
+          "info": "In autoplay mode this is the only way to turn sound on. In play-button mode it appears once playback starts."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sound_button_mobile",
+          "label": "Show sound button — mobile",
+          "default": true
         },
         {
           "type": "header",

@@ -802,13 +802,14 @@ html.dhv-theater-open .header__menu {
   height: 14px;
 }
 
-/* Sound toggle — autoplay mode only, where playback must start muted. */
+/* Sound toggle. Hidden until the JS resolves the active breakpoint's mode, so
+   it can never appear on a breakpoint the merchant turned it off for. */
 .dhv__mute-toggle {
   position: absolute;
   right: 16px;
   bottom: 16px;
   z-index: 2;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 36px;
@@ -841,15 +842,17 @@ html.dhv-theater-open .header__menu {
   display: none;
 }
 
+/* Autoplay mode: available immediately — playback starts muted, so this is the
+   only route to sound. */
+.dhv__panel--sound.dhv__panel--autoplay .dhv__mute-toggle {
+  display: flex;
+}
+
 /* Play-button mode: the sound control appears only once playback starts —
    before the first press there is nothing to mute, and the centred play disc
    should be the only thing competing for attention. It sits beside the
    play/pause disc that has retreated to the corner, so the two do not stack. */
-.dhv__panel--play-button .dhv__mute-toggle {
-  display: none;
-}
-
-.dhv__panel--play-button.is-playing .dhv__mute-toggle {
+.dhv__panel--sound.dhv__panel--play-button.is-playing .dhv__mute-toggle {
   right: 60px;
   display: flex;
 }
