@@ -32,7 +32,8 @@
       "settings": {
         "media_type": "video",
         "width": "wrapper--full",
-        "video_social_link": "https://vimeo.com/1104923774?share=copy",
+        "video": "shopify://files/videos/tree&garden_header (1080p).mp4",
+        "video_social_link": "",
         "video_poster_image": "shopify://shop_images/Tree_Garden.jpg",
         "show_video_popup": false,
         "title": "<p>Tree & Garden</p>",

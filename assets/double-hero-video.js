@@ -44,6 +44,42 @@
     return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }
 
+  var MOBILE_QUERY = '(max-width: 749px)';
+
+  function isMobileViewport() {
+    return window.matchMedia(MOBILE_QUERY).matches;
+  }
+
+  /**
+   * Whether there is positive evidence of an expensive or slow link.
+   * navigator.connection does not exist on Safari/iOS, so a false here means
+   * "no evidence", never "the link is fast" — the viewport check in
+   * pickRendition is what covers iOS.
+   */
+  function isSlowConnection() {
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!conn) return false;
+    if (conn.saveData) return true;
+    return ['slow-2g', '2g', '3g'].indexOf(conn.effectiveType) !== -1;
+  }
+
+  /**
+   * Choose which Shopify rendition a panel should download. Panels are muted
+   * background loops, so a fast first frame beats resolution — the opposite
+   * trade from the theater, which streams adaptively (attachAdaptiveSource).
+   * Returns null for mounts with no rendition data (Vimeo, or an empty video).
+   */
+  function pickRendition(video) {
+    var low = video.getAttribute('data-src-low');
+    var mid = video.getAttribute('data-src-mid');
+    var high = video.getAttribute('data-src-high');
+    if (!low && !mid && !high) return null;
+
+    if (isSlowConnection()) return low || mid || high;
+    if (isMobileViewport()) return mid || low || high;
+    return high || mid || low;
+  }
+
   function fullscreenElement() {
     return document.fullscreenElement || document.webkitFullscreenElement || null;
   }
@@ -98,7 +134,7 @@
   function pickMount(panel) {
     var mounts = panel.querySelectorAll('[data-dhv-video]');
     if (mounts.length <= 1) return mounts[0] || null;
-    var wanted = window.matchMedia('(max-width: 749px)').matches ? 'mobile' : 'desktop';
+    var wanted = isMobileViewport() ? 'mobile' : 'desktop';
     for (var i = 0; i < mounts.length; i++) {
       if (mounts[i].getAttribute('data-breakpoint') === wanted) return mounts[i];
     }
@@ -140,10 +176,13 @@
     });
   };
 
-  function NativeVideoEngine(video) {
+  function NativeVideoEngine(video, hls) {
     Emitter.call(this);
     this.type = 'native';
     this.video = video;
+    // hls.js instance when this element is fed an adaptive stream. Held so
+    // destroy() can tear it down — dropped on its own it keeps buffering.
+    this.hls = hls || null;
 
     var self = this;
     video.addEventListener('timeupdate', function () {
@@ -163,12 +202,31 @@
     });
   }
   NativeVideoEngine.prototype = Object.create(Emitter.prototype);
+  /**
+   * Assign the rendition on first use. The element ships without a src so the
+   * inactive breakpoint's copy costs nothing, which means every entry point
+   * into playback has to come through here — hence the call in both play paths
+   * rather than a single eager attach. Idempotent: a src already set (including
+   * the blob URL hls.js installs) is left alone.
+   */
+  NativeVideoEngine.prototype.ensureSource = function () {
+    if (this.video.getAttribute('src')) return;
+
+    var url = pickRendition(this.video);
+    if (!url) return;
+
+    this.video.setAttribute('src', url);
+    this.video.preload = 'auto';
+    this.video.load();
+  };
   NativeVideoEngine.prototype.play = function () {
+    this.ensureSource();
     var promise = this.video.play();
     return promise && promise.catch ? promise.catch(function () {}) : Promise.resolve();
   };
   // Raw (non-swallowing) play so the caller can detect an autoplay block.
   NativeVideoEngine.prototype.rawPlay = function () {
+    this.ensureSource();
     return this.video.play() || Promise.resolve();
   };
   NativeVideoEngine.prototype.pause = function () {
@@ -187,14 +245,21 @@
   NativeVideoEngine.prototype.getDuration = function () {
     return this.video.duration || 0;
   };
+  // Returns a promise so callers can chain setMuted().then(play) identically
+  // across both engines — the Vimeo one is inherently async.
   NativeVideoEngine.prototype.setMuted = function (muted) {
     this.video.muted = muted;
+    return Promise.resolve(muted);
   };
   NativeVideoEngine.prototype.getMuted = function () {
     return this.video.muted;
   };
   NativeVideoEngine.prototype.destroy = function () {
     this.video.pause();
+    if (this.hls) {
+      this.hls.destroy();
+      this.hls = null;
+    }
     this.video.removeAttribute('src');
     this.video.load();
   };
@@ -214,9 +279,17 @@
     player.getMuted().then(function (m) {
       self._muted = m;
     });
+    // iOS reports volume: 1 even while muted (volume is hardware-controlled),
+    // so only an explicit muted flag is trustworthy; volume 0 still means
+    // muted, and anything else leaves the local state alone.
     player.on('volumechange', function (data) {
-      // Vimeo reports volume (0–1); treat volume 0 as muted.
-      self._muted = data.volume === 0;
+      if (typeof data.muted === 'boolean') {
+        self._muted = data.muted;
+      } else if (data.volume === 0) {
+        self._muted = true;
+      } else {
+        return;
+      }
       self.emit('volumechange', { muted: self._muted });
     });
     player.on('timeupdate', function (data) {
@@ -254,28 +327,30 @@
   VimeoVideoEngine.prototype.getDuration = function () {
     return this._duration;
   };
+  /**
+   * setMuted() is the only reliable audio control on iOS: volume there is
+   * hardware-controlled, so setVolume() is a documented no-op and can reject.
+   * Chaining it after a successful setMuted() used to drag the whole promise
+   * into .catch(), which callers read as "unmuted playback was blocked" and
+   * answered by re-muting.
+   */
   VimeoVideoEngine.prototype.setMuted = function (muted) {
-  var self = this;
-  this._muted = muted;
+    var self = this;
+    this._muted = muted;
 
-  var action;
+    var action;
+    if (typeof this.player.setMuted === 'function') {
+      action = this.player.setMuted(muted);
+    } else {
+      action = this.player.setVolume(muted ? 0 : 1);
+    }
 
-  if (typeof this.player.setMuted === 'function') {
-    action = this.player.setMuted(muted);
-  } else {
-    action = this.player.setVolume(muted ? 0 : 1);
-  }
-
-  return Promise.resolve(action)
-    .then(function () {
-      if (!muted && typeof self.player.setVolume === 'function') {
-        return self.player.setVolume(1);
-      }
-    })
-    .then(function () {
-      self.emit('volumechange', { muted: muted });
-    })
-    .catch(function () {});
+    return Promise.resolve(action)
+      .catch(function () {})
+      .then(function () {
+        self.emit('volumechange', { muted: muted });
+        return muted;
+      });
   };
   VimeoVideoEngine.prototype.getMuted = function () {
     return this._muted;
@@ -337,6 +412,42 @@
     // hidden→shown transition is unreliable — the theater calls this again
     // once it's visible so the cover math uses the real dimensions.
     return resize;
+  }
+
+  /**
+   * Point a fullscreen <video> at the best stream available, copying the
+   * rendition attributes off the panel's element. Fullscreen is where the film
+   * is actually watched, so this prefers the adaptive HLS stream — it opens on
+   * a low rendition and climbs to whatever the connection sustains, which is
+   * the right trade here and the inverse of pickRendition's.
+   *
+   * Native HLS on Safari, hls.js elsewhere (already loaded by the theme and
+   * used the same way in custom.js), falling back to the largest progressive
+   * rendition when neither is available.
+   *
+   * @returns {object|null} the hls.js instance, for the engine to destroy.
+   */
+  function attachAdaptiveSource(video, sourceEl) {
+    var hlsUrl = sourceEl.getAttribute('data-src-hls');
+
+    if (hlsUrl && video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = hlsUrl;
+      return null;
+    }
+
+    if (hlsUrl && window.Hls && window.Hls.isSupported()) {
+      var hls = new window.Hls();
+      hls.loadSource(hlsUrl);
+      hls.attachMedia(video);
+      return hls;
+    }
+
+    var progressive =
+      sourceEl.getAttribute('data-src-high') ||
+      sourceEl.getAttribute('data-src-mid') ||
+      sourceEl.getAttribute('data-src-low');
+    if (progressive) video.src = progressive;
+    return null;
   }
 
   /**
@@ -442,11 +553,26 @@
 
     this.playPauseButton.addEventListener('click', function () {
       if (!self.engine) return;
+
       if (self.playPauseButton.getAttribute('data-state') === 'playing') {
         self.engine.pause();
-      } else {
-        self.engine.play();
+        return;
       }
+
+      // The very first press in play-button mode is the gesture that
+      // authorises audio, so unmute inside it rather than leaving the viewer
+      // to find the sound button afterwards. Later presses are plain resumes
+      // and must not undo a deliberate mute.
+      if (self.awaitingFirstPress) {
+        self.awaitingFirstPress = false;
+        self.engine.setMuted(false).then(function () {
+          self._setMuteState(false);
+          self.engine.play();
+        });
+        return;
+      }
+
+      self.engine.play();
     });
 
     this.muteButton.addEventListener('click', function (event) {
@@ -454,6 +580,7 @@
       event.stopPropagation();
       if (!self.engine) return;
       var nextMuted = self.muteButton.getAttribute('data-muted') !== 'true';
+      self.awaitingFirstPress = false;
       self.engine.setMuted(nextMuted);
       self._setMuteState(nextMuted);
     });
@@ -538,6 +665,11 @@
     this.root.classList.add('controls-visible');
 
     clearTimeout(this.idleTimer);
+    // Never idle-hide while paused: the play disc is the only way back into
+    // playback, so fading it out would leave a still frame and no controls.
+    if (this.playPauseButton && this.playPauseButton.getAttribute('data-state') === 'paused') {
+      return;
+    }
     this.idleTimer = setTimeout(function () {
       self.root.classList.remove('controls-visible');
     }, 2500);
@@ -611,26 +743,40 @@
     meta = meta || {};
 
     var type = panelMount.getAttribute('data-video-type');
+    // Play-button mode means the viewer presses play; "Watch fullscreen" only
+    // opens the stage. Autoplay mode keeps the old behaviour of starting
+    // straight away, which is what its CTA promises.
+    var waitForPress = meta.waitForPress === true;
+    this.awaitingFirstPress = false;
+
     this.videoMount.innerHTML = '';
     this.onCloseCallback = meta.onClose || null;
-    this._setPlayPauseState('playing');
+    this._setPlayPauseState(waitForPress ? 'paused' : 'playing');
     this._setMuteState(false);
     this._resetScrubber(meta.startTime || 0);
 
     var enginePromise;
 
     if (type === 'shopify') {
-      var original = panelMount.querySelector('video');
-      if (!original) return;
+      var panelVideo = panelMount.querySelector('video');
+      if (!panelVideo) return;
 
-      var clone = original.cloneNode(true);
-      clone.removeAttribute('autoplay');
-      clone.loop = false;
-      clone.muted = false;
-      clone.setAttribute('playsinline', '');
-      clone.controls = false;
-      this.videoMount.appendChild(clone);
-      enginePromise = Promise.resolve(new NativeVideoEngine(clone));
+      // Built fresh rather than cloned: a clone would inherit the panel's
+      // deliberately small rendition, and the whole point of fullscreen is to
+      // stream the good one.
+      var stageVideo = document.createElement('video');
+      stageVideo.setAttribute('playsinline', '');
+      stageVideo.loop = false;
+      stageVideo.muted = false;
+      stageVideo.controls = false;
+      // The viewer asked for this one, so buffer ahead rather than waiting to be
+      // told. (No effect on the HLS path, where hls.js manages its own buffer.)
+      stageVideo.preload = 'auto';
+      this.videoMount.appendChild(stageVideo);
+
+      enginePromise = Promise.resolve(
+        new NativeVideoEngine(stageVideo, attachAdaptiveSource(stageVideo, panelVideo))
+      );
     } else if (type === 'vimeo') {
       var vimeoMount = document.createElement('div');
       vimeoMount.setAttribute('data-video-type', 'vimeo');
@@ -655,7 +801,21 @@
       if (!engine) return;
 
       self._bindEngine(engine);
-      if (meta.startTime) engine.seek(meta.startTime);
+      // Unconditional: a player reused across opens keeps its old position,
+      // so "start at 0" has to be an explicit seek rather than a skipped one.
+      engine.seek(meta.startTime || 0);
+
+      if (waitForPress) {
+        // Stay on the first frame with the play disc showing. Pre-unmuting is
+        // pointless here — the press will do it inside its own gesture, which
+        // is where browsers actually grant audio.
+        self.awaitingFirstPress = true;
+        engine.setMuted(true).then(function () {
+          self._setMuteState(true);
+        });
+        self._showControls();
+        return;
+      }
 
       // Try to play WITH sound (the theater opened from a user gesture, and
       // the CTA promises "Play with sound"). If the browser blocks unmuted
@@ -663,16 +823,17 @@
       // muted so the video still plays — the mute button then unmutes on a
       // fresh click. rawPlay() rejects on a block (play() swallows it).
       engine
-  .setMuted(false)
-  .then(function () {
-    self._setMuteState(false);
-    return engine.rawPlay();
-  }).catch(function () {
-    return engine.setMuted(true).then(function () {
-      self._setMuteState(true);
-      return engine.play();
-    });
-  });
+        .setMuted(false)
+        .then(function () {
+          self._setMuteState(false);
+          return engine.rawPlay();
+        })
+        .catch(function () {
+          return engine.setMuted(true).then(function () {
+            self._setMuteState(true);
+            return engine.play();
+          });
+        });
 
       // Recompute the Vimeo cover now that the theater is visible and laid
       // out (the initial measure ran while it was still display:none).
@@ -770,35 +931,115 @@
           this.theater = new Theater(theaterEl);
         }
 
+        this._refreshPanelModes();
+
         this.reduceMotion = prefersReducedMotion();
         this.ambientEngine = null;
         this.ambientManuallyPaused = false;
         this.teaserEngine = null;
+        this.teaserManuallyPaused = false;
 
         if (this.ambientPanel) this._initAmbientPanel();
         if (this.teaserPanel) this._initTeaserPanel();
 
-        // Separate desktop/mobile assets: re-pick the active mount when the
-        // viewport crosses the mobile breakpoint (device rotation, or a desktop
-        // window resized across 749px). Only wired up when a panel actually has
-        // two mounts, so single-asset sections pay nothing.
-        if (this._hasResponsiveAssets()) {
-          var self = this;
-          var mq = window.matchMedia('(max-width: 749px)');
-          var onBreakpointChange = function () {
-            if (self.ambientPanel) self._setupAmbientEngine();
-            if (self.teaserPanel) self._setupTeaserEngine();
-          };
-          if (mq.addEventListener) mq.addEventListener('change', onBreakpointChange);
-          else if (mq.addListener) mq.addListener(onBreakpointChange);
-        }
+        // Crossing the mobile breakpoint (device rotation, or a desktop window
+        // resized across 749px) can change two things: which asset mount is
+        // active, and which playback mode applies. Wired up unconditionally —
+        // a panel can share one asset across breakpoints and still switch
+        // playback mode between them.
+        var self = this;
+        var mq = window.matchMedia(MOBILE_QUERY);
+        var onBreakpointChange = function () {
+          var prevAmbient = self.ambientMode;
+          var prevTeaser = self.teaserMode;
+          self._refreshPanelModes();
+
+          // Rebuild only what actually changed. Crossing the breakpoint is
+          // often a no-op for playback (one asset, same mode either side), and
+          // tearing a player down restarts the video for nothing.
+          if (self.ambientPanel && self._needsRebuild(self.ambientPanel, prevAmbient, self.ambientMode, self.ambientMount)) {
+            self._setupAmbientEngine();
+          }
+          if (self.teaserPanel && self._needsRebuild(self.teaserPanel, prevTeaser, self.teaserMode, self.teaserMount)) {
+            self._setupTeaserEngine();
+          }
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onBreakpointChange);
+        else if (mq.addListener) mq.addListener(onBreakpointChange);
       }
 
-      _hasResponsiveAssets() {
-        return (
-          (this.ambientPanel && this.ambientPanel.querySelectorAll('[data-dhv-video]').length > 1) ||
-          (this.teaserPanel && this.teaserPanel.querySelectorAll('[data-dhv-video]').length > 1)
+      /**
+       * Playback settings are per breakpoint, so the mode is resolved at
+       * runtime rather than baked into the markup: a video can autoplay on
+       * desktop and wait for a press on mobile, where autoplay is unreliable
+       * (iOS refuses it outright in Low Power Mode).
+       */
+      _readPanelMode(panel) {
+        if (!panel) return { showPlayButton: false, autoplay: false, showSound: false };
+
+        var suffix = isMobileViewport() ? '-mobile' : '-desktop';
+        var showPlayButton = panel.getAttribute('data-play-button' + suffix) === 'true';
+
+        return {
+          showPlayButton: showPlayButton,
+          // Derived, not a setting of its own: a play button means no autoplay,
+          // and a panel with neither would sit on a dead poster.
+          autoplay: !showPlayButton,
+          showSound: panel.getAttribute('data-sound' + suffix) === 'true',
+        };
+      }
+
+      /**
+       * Whether a breakpoint crossing invalidates this panel's engine. Only the
+       * play-button/autoplay split does, because mute state and "wait for a
+       * press" are fixed when the engine is created; a change to the sound
+       * button is pure CSS and _applyPanelMode has already handled it.
+       */
+      _needsRebuild(panel, prevMode, nextMode, currentMount) {
+        if (!prevMode || prevMode.showPlayButton !== nextMode.showPlayButton) return true;
+        return pickMount(panel) !== currentMount;
+      }
+
+      /**
+       * Run `onNear` once the panel comes within a viewport of the fold, then
+       * stop watching. This is the "preload sooner" lever: the copy at the top
+       * of the page is already in range and fires on load, while one further
+       * down waits its turn instead of contending with the hero for bandwidth.
+       */
+      _observePreload(panel, onNear) {
+        if (typeof IntersectionObserver === 'undefined') {
+          onNear();
+          return null;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            if (!entries[0].isIntersecting) return;
+            observer.disconnect();
+            onNear();
+          },
+          { rootMargin: '100% 0px' }
         );
+        observer.observe(panel);
+        return observer;
+      }
+
+      _refreshPanelModes() {
+        this.ambientMode = this._readPanelMode(this.ambientPanel);
+        this.teaserMode = this._readPanelMode(this.teaserPanel);
+        this._applyPanelMode(this.ambientPanel, this.ambientMode);
+        this._applyPanelMode(this.teaserPanel, this.teaserMode);
+      }
+
+      // Mirror the resolved mode onto the panel for CSS. Done here rather than
+      // by duplicating every control rule under two media queries — which would
+      // drift the moment either mode's styling changes. The controls are hidden
+      // by default in CSS, so nothing flashes before this runs.
+      _applyPanelMode(panel, mode) {
+        if (!panel) return;
+        panel.classList.toggle('dhv__panel--play-button', mode.showPlayButton);
+        panel.classList.toggle('dhv__panel--autoplay', mode.autoplay);
+        panel.classList.toggle('dhv__panel--sound', mode.showSound);
       }
 
       disconnectedCallback() {
@@ -818,7 +1059,9 @@
         var toggle = this.ambientPanel.querySelector('[data-dhv-pause-toggle]');
         var cta = this.ambientPanel.querySelector('[data-dhv-open-theater]');
         var media = this.ambientPanel.querySelector('.dhv__media');
+        var muteToggle = this.ambientPanel.querySelector('[data-dhv-mute-toggle]');
         this._ambientToggle = toggle;
+        this._ambientMuteToggle = muteToggle;
 
         // Static listeners bound once. They read self.ambientEngine /
         // self.ambientMount, which _setupAmbientEngine swaps on breakpoint
@@ -830,12 +1073,15 @@
             if (self.ambientPanel.classList.contains('is-playing')) {
               self.ambientManuallyPaused = true;
               self.ambientEngine.pause();
-            } else {
-              self.ambientManuallyPaused = false;
-              self.ambientEngine.play();
+              return;
             }
+
+            self.ambientManuallyPaused = false;
+            self._playWithIntendedSound(self.ambientEngine, self.ambientMode);
           });
         }
+
+        if (muteToggle) this._bindMuteToggle(muteToggle, 'ambient');
 
         // Hover only rolls the CTA label ("Watch fullscreen" -> "Play with
         // sound") to match the teaser CTA. No width swap or preview here —
@@ -882,11 +1128,18 @@
           this._ambientObserver.disconnect();
           this._ambientObserver = null;
         }
+        if (this._ambientPreloadObserver) {
+          this._ambientPreloadObserver.disconnect();
+          this._ambientPreloadObserver = null;
+        }
         if (this.ambientEngine) {
           this.ambientEngine.destroy();
           this.ambientEngine = null;
         }
         this.ambientPanel.classList.remove('is-playing', 'is-revealed');
+        // A rebuilt engine always starts muted, so the toggle must not keep
+        // showing an unmuted state carried over from the previous breakpoint.
+        this._setMuteToggleState(this._ambientMuteToggle, true);
 
         this.ambientMount = pickMount(this.ambientPanel);
 
@@ -903,14 +1156,33 @@
             self._setToggleState(toggle, 'paused');
           });
 
-          // Autoplay in view. Skipped entirely for layout "second" (this copy
-          // never shows its ambient video). Respects a manual pause so it
-          // doesn't resume a video the user paused.
+          // Begin the download before the panel is reached. Runs in both
+          // playback modes: in play-button mode it is what makes the first
+          // press instant, and on a slow link the rendition already chosen is
+          // the smallest one, so committing to it early is cheap.
+          self._ambientPreloadObserver = self._observePreload(self.ambientPanel, function () {
+            if (engine.ensureSource) engine.ensureSource();
+          });
+
+          // Keep the mute toggle in sync with whatever changed the volume,
+          // including Vimeo's own controls in fullscreen.
+          engine.on('volumechange', function (data) {
+            self._setMuteToggleState(self._ambientMuteToggle, !!data.muted);
+          });
+
+          // Autoplay in view — only when the section is set to autoplay.
+          // Skipped entirely for layout "second" (this copy never shows its
+          // ambient video). Respects a manual pause so it doesn't resume a
+          // video the user paused.
+          if (!self.ambientMode.autoplay) return;
+
           self._ambientObserver = autoplayInView(self.ambientPanel, {
             shouldPlay: function () {
               return !self.reduceMotion && self.layoutRule !== 'second' && !self.ambientManuallyPaused;
             },
             play: function () {
+              // Muted is mandatory here: no gesture has happened yet, so an
+              // audible autoplay would simply be refused.
               engine.setMuted(true);
               engine.play();
             },
@@ -919,6 +1191,55 @@
             },
           });
         });
+      }
+
+      /**
+       * Starts playback with the sound state the current mode implies. In
+       * play-button mode the press itself is the viewer's consent for audio,
+       * so it unmutes first rather than starting silent and making them hunt
+       * for a second control. Unmuting before play() also keeps the whole
+       * thing inside the click's user activation, which is what browsers
+       * require for audible playback.
+       */
+      _playWithIntendedSound(engine, mode) {
+        if (!engine) return;
+        if (!mode || !mode.showPlayButton) {
+          engine.play();
+          return;
+        }
+        engine.setMuted(false).then(function () {
+          engine.play();
+        });
+      }
+
+      _bindMuteToggle(button, which) {
+        var self = this;
+
+        button.addEventListener('click', function (event) {
+          // The media wrapper opens the theater on click, so this must not
+          // bubble up to it.
+          event.stopPropagation();
+          var engine = which === 'ambient' ? self.ambientEngine : self.teaserEngine;
+          if (!engine) return;
+
+          var nextMuted = button.getAttribute('data-muted') !== 'true';
+          engine.setMuted(nextMuted).then(function () {
+            self._setMuteToggleState(button, nextMuted);
+            // Re-issue play() when unmuting: this click is the user gesture
+            // that authorises audio, and some browsers only apply the new
+            // volume state on the next play call.
+            if (!nextMuted) engine.play();
+          });
+        });
+      }
+
+      _setMuteToggleState(button, muted) {
+        if (!button) return;
+        button.setAttribute('data-muted', muted ? 'true' : 'false');
+        button.setAttribute(
+          'aria-label',
+          muted ? button.dataset.labelUnmute : button.dataset.labelMute
+        );
       }
 
       _setToggleState(toggle, state) {
@@ -934,6 +1255,10 @@
         var self = this;
         var cta = this.teaserPanel.querySelector('[data-dhv-open-theater]');
         var media = this.teaserPanel.querySelector('.dhv__media');
+        var toggle = this.teaserPanel.querySelector('[data-dhv-pause-toggle]');
+        var muteToggle = this.teaserPanel.querySelector('[data-dhv-mute-toggle]');
+        this._teaserToggle = toggle;
+        this._teaserMuteToggle = muteToggle;
 
         // Creates the teaser engine for the CURRENT mount (self.teaserMount) on
         // demand and binds its play/pause events. Cached until torn down by
@@ -947,22 +1272,56 @@
             self.teaserEngine = engine;
             engine.on('play', function () {
               self.teaserPanel.classList.add('is-playing', 'is-revealed');
+              self._setToggleState(self._teaserToggle, 'playing');
             });
             engine.on('pause', function () {
               self.teaserPanel.classList.remove('is-playing');
+              self._setToggleState(self._teaserToggle, 'paused');
+            });
+            engine.on('volumechange', function (data) {
+              self._setMuteToggleState(self._teaserMuteToggle, !!data.muted);
             });
             return engine;
           });
         }
         this._teaserEnsureEngine = ensureEngine;
 
+        if (toggle) {
+          toggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+
+            if (self.teaserPanel.classList.contains('is-playing')) {
+              self.teaserManuallyPaused = true;
+              if (self.teaserEngine) self.teaserEngine.pause();
+              return;
+            }
+
+            self.teaserManuallyPaused = false;
+            // The engine is lazy on this panel, so it may not exist until the
+            // first press — but the unmute still has to happen inside this
+            // click, hence the chained call rather than a bare play().
+            ensureEngine().then(function (engine) {
+              self._playWithIntendedSound(engine, self.teaserMode);
+            });
+          });
+        }
+
+        if (muteToggle) this._bindMuteToggle(muteToggle, 'teaser');
+
         // Desktop (mouse): hover previews the teaser and pauses the ambient.
         // Mobile autoplay is wired in _setupTeaserEngine instead. Bound once —
         // input type doesn't change on resize, only the asset does.
+        // The hover panel-expand runs in every mode: data-hover drives the
+        // flex-grow split between the two panels, which is layout, not
+        // playback. Only the preview playback inside it follows the autoplay
+        // setting — in play-button mode the teaser widens on hover but stays
+        // on its poster until pressed.
         if (hasHoverInput() && !this.reduceMotion) {
           this.teaserPanel.addEventListener('mouseenter', function () {
             self.setAttribute('data-hover', 'teaser');
             self.teaserPanel.classList.add('is-hover');
+
+            if (!self.teaserMode.autoplay) return;
 
             if (self.ambientEngine && !self.ambientManuallyPaused) {
               self.ambientEngine.pause();
@@ -980,6 +1339,8 @@
             self.removeAttribute('data-hover');
             self.teaserPanel.classList.remove('is-hover');
 
+            if (!self.teaserMode.autoplay) return;
+
             if (self.teaserEngine) {
               self.teaserEngine.pause();
               self.teaserEngine.seek(0);
@@ -992,13 +1353,7 @@
         }
 
         function openTheater() {
-          var startTime =
-            self.teaserEngine && self.teaserPanel.classList.contains('is-playing')
-              ? self.teaserEngine.getCurrentTime()
-              : 0;
-
           self._openTheater(self.teaserPanel, self.teaserMount, self.teaserEngine, {
-            startTime: startTime,
             onClose: function () {
               self.removeAttribute('data-hover');
               self.teaserPanel.classList.remove('is-hover');
@@ -1033,22 +1388,39 @@
           this._teaserObserver.disconnect();
           this._teaserObserver = null;
         }
+        if (this._teaserPreloadObserver) {
+          this._teaserPreloadObserver.disconnect();
+          this._teaserPreloadObserver = null;
+        }
         if (this.teaserEngine) {
           this.teaserEngine.destroy();
           this.teaserEngine = null;
         }
         this.teaserPanel.classList.remove('is-playing', 'is-revealed', 'is-hover');
         this.removeAttribute('data-hover');
+        this._setMuteToggleState(this._teaserMuteToggle, true);
 
         this.teaserMount = pickMount(this.teaserPanel);
+
+        // Shopify-hosted only: the <video> element already exists, so priming
+        // it early costs one request and makes the first play instant. A Vimeo
+        // teaser stays lazy — building its iframe ahead of time is exactly the
+        // expense this is meant to avoid.
+        if (this.teaserMount && this.teaserMount.getAttribute('data-video-type') === 'shopify') {
+          this._teaserPreloadObserver = this._observePreload(this.teaserPanel, function () {
+            self._teaserEnsureEngine().then(function (engine) {
+              if (engine && engine.ensureSource) engine.ensureSource();
+            });
+          });
+        }
 
         // Mobile / touch (no hover): autoplay muted + looped, in view only (so
         // it doesn't contend with the other section's video on load). Skipped
         // for layout "first" (teaser hidden on mobile) and reduced motion.
-        if (!hasHoverInput() && !this.reduceMotion && this.layoutRule !== 'first') {
+        if (!hasHoverInput() && !this.reduceMotion && this.teaserMode.autoplay && this.layoutRule !== 'first') {
           this._teaserObserver = autoplayInView(this.teaserPanel, {
             shouldPlay: function () {
-              return true;
+              return !self.teaserManuallyPaused;
             },
             play: function () {
               self._teaserEnsureEngine().then(function (engine) {
@@ -1070,11 +1442,18 @@
         if (engine) engine.pause();
 
         var cta = panel.querySelector('[data-dhv-open-theater]');
+        // Read the mode from the panel being opened, so one video can wait for
+        // a press in fullscreen while the other starts on its own.
+        var mode = this._readPanelMode(panel);
 
+        // Fullscreen always starts from the beginning, in both modes. The
+        // panel behind it is a teaser, so resuming its position would drop the
+        // viewer into an arbitrary mid-point of the film.
         this.theater.open(mount, {
           title: cta ? cta.dataset.title : '',
           duration: cta ? cta.dataset.duration : '',
-          startTime: options.startTime != null ? options.startTime : engine ? engine.getCurrentTime() : 0,
+          startTime: 0,
+          waitForPress: mode.showPlayButton,
           onClose: options.onClose,
         });
       }

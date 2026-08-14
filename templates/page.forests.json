@@ -32,7 +32,8 @@
       "settings": {
         "media_type": "video",
         "width": "wrapper--full",
-        "video_social_link": "https://vimeo.com/1101552314",
+        "video": "shopify://files/videos/_forests (1080p).mp4",
+        "video_social_link": "",
         "video_poster_image": "shopify://shop_images/Forests.jpg",
         "show_video_popup": false,
         "title": "<p>Forests</p>",

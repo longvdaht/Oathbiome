@@ -15,9 +15,15 @@
         "ambient_video_QfVXLT": {
           "type": "ambient_video",
           "settings": {
-            "video_url": "https://vimeo.com/1211517914/de2b4973f1?share=copy&fl=sv&fe=ci",
+            "show_play_button_desktop": false,
+            "show_play_button_mobile": false,
+            "show_sound_button_desktop": false,
+            "show_sound_button_mobile": false,
+            "video": "shopify://files/videos/osl_type-video_desktop_v01 (1080p).mp4",
+            "video_url": "",
             "poster": "shopify://shop_images/Homepage.jpg",
-            "video_url_mobile": "https://vimeo.com/1211517925/77a20a8f3d?share=copy&fl=sv&fe=ci ",
+            "video_mobile": "shopify://files/videos/oath_vertical_260708_v02 (1080p)_869f5ca3-52cf-4957-940f-9ff04b5b92f5.mp4",
+            "video_url_mobile": "",
             "overlay_heading": "Life depends on soil.",
             "title": "The Importance of Soil",
             "duration": "2:20min",
@@ -28,9 +34,14 @@
         "teaser_video_RRhQpb": {
           "type": "teaser_video",
           "settings": {
-            "video_url": "https://vimeo.com/1200625773/75c153a3dd?share=copy&fl=sv&fe=ci",
+            "show_play_button_desktop": false,
+            "show_play_button_mobile": false,
+            "show_sound_button_desktop": true,
+            "show_sound_button_mobile": true,
+            "video": "shopify://files/videos/the_science_of_oath_biome_in_3.5_minutes_(subbed) (1080p)_51c2d819-399e-441b-a681-3f702d122dcb.mp4",
+            "video_url": "",
             "poster": "shopify://shop_images/ScienceofOath_CoverImage.jpg",
-            "video_url_mobile": "https://vimeo.com/1211520757/f17d246b82?share=copy&fl=sv&fe=ci",
+            "video_url_mobile": "",
             "title": "The Science of Oath Biome",
             "duration": "3:37min",
             "cta_rest": "Watch fullscreen",
@@ -92,6 +103,10 @@
         "ambient_video_Pkz7yX": {
           "type": "ambient_video",
           "settings": {
+            "show_play_button_desktop": false,
+            "show_play_button_mobile": false,
+            "show_sound_button_desktop": true,
+            "show_sound_button_mobile": true,
             "video_url": "https://vimeo.com/1211517925/77a20a8f3d?share=copy&fl=sv&fe=ci",
             "poster": "shopify://shop_images/Screenshot_2026-07-21_at_3.00.15_PM.png",
             "video_url_mobile": "",
@@ -105,8 +120,14 @@
         "teaser_video_FfjkNA": {
           "type": "teaser_video",
           "settings": {
-            "video_url": "https://vimeo.com/1213975997/71ffc03d53?share=copy&fl=sv&fe=ci",
+            "show_play_button_desktop": false,
+            "show_play_button_mobile": false,
+            "show_sound_button_desktop": false,
+            "show_sound_button_mobile": true,
+            "video": "shopify://files/videos/the_science_of_oath_biome_in_3.5_minutes_(subbed) (1080p)_51c2d819-399e-441b-a681-3f702d122dcb.mp4",
+            "video_url": "",
             "poster": "shopify://shop_images/ScienceofOath_CoverImage.jpg",
+            "video_mobile": "shopify://files/videos/oath_master_vertical_7.18.26 (720p)_f3b20980-13c2-4d7e-b0e7-a39ca1b47ea7.mp4",
             "video_url_mobile": "",
             "title": "The Science of Oath Biome",
             "duration": "3:37min",
