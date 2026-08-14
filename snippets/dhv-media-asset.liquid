@@ -20,8 +20,63 @@
 {%- endif -%}
 
 {%- if video_type == 'shopify' -%}
+  {%- liquid
+    # Shopify transcodes one upload into several progressive renditions plus an
+    # HLS stream. `video_tag` emits them all and lets the browser choose, which
+    # gives away the one decision that matters here — phones tend to land on the
+    # largest file for what is only a muted background loop. So the renditions
+    # are published as attributes and the JS picks (see pickRendition).
+    assign mp4_sources = video.sources | where: 'format', 'mp4'
+    assign hls_source = video.sources | where: 'format', 'm3u8' | first
+
+    # Every Shopify upload transcodes to progressive mp4, but fall back to the
+    # whole source list rather than emit a <video> with nothing to play.
+    if mp4_sources.size == 0
+      assign mp4_sources = video.sources
+    endif
+
+    # Picked by comparison rather than by sorting: `sort: 'height'` would order
+    # lexicographically if the heights ever arrived as strings, which silently
+    # inverts the tiers ("1080" sorts below "540").
+    assign src_low = mp4_sources | first
+    assign src_high = mp4_sources | first
+    for source in mp4_sources
+      if source.height < src_low.height
+        assign src_low = source
+      endif
+      if source.height > src_high.height
+        assign src_high = source
+      endif
+    endfor
+
+    # Largest rendition at or below 720p — the mobile default. Stays at the
+    # smallest when every rendition is taller than that.
+    assign src_mid = src_low
+    for source in mp4_sources
+      if source.height <= 720 and source.height > src_mid.height
+        assign src_mid = source
+      endif
+    endfor
+  -%}
+
   <div class="dhv__video-mount" data-dhv-video data-breakpoint="{{ breakpoint }}" data-video-type="shopify">
-    {{ video | video_tag: image_size: '1500x', autoplay: false, loop: loop, muted: true, controls: false, preload: 'metadata' }}
+    {%- comment -%}
+      No src and no <source> children: the inactive breakpoint's element must
+      not cost a request, and preload="none" means nothing is fetched until the
+      JS assigns the chosen rendition. `playsinline` is mandatory — without it
+      iOS refuses inline playback and tries to go fullscreen instead, which
+      kills the muted autoplay outright.
+    {%- endcomment -%}
+    <video
+      preload="none"
+      muted
+      playsinline
+      {% if loop %}loop{% endif %}
+      data-src-low="{{ src_low.url }}"
+      data-src-mid="{{ src_mid.url }}"
+      data-src-high="{{ src_high.url }}"
+      {% if hls_source %}data-src-hls="{{ hls_source.url }}"{% endif %}
+    ></video>
   </div>
 {%- elsif video_type == 'vimeo' -%}
   <div
