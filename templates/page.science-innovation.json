@@ -498,14 +498,6 @@
             "image": "shopify://shop_images/Vacaville.jpg"
           }
         },
-        "expert_CPfPbB": {
-          "type": "expert",
-          "settings": {
-            "title": "Shib Sankar Basu, PhD",
-            "infor": "<p>Principal Scientist R&D Lead<br/><a href=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\" target=\"_blank\" title=\"https://www.linkedin.com/in/shib-sankar-basu-107250116/\">LinkedIn</a></p>",
-            "image": "shopify://shop_images/Shib-shanka.jpg"
-          }
-        },
         "expert_RiWrVt": {
           "type": "expert",
           "settings": {
@@ -530,7 +522,6 @@
         "expert_WHgBtq",
         "expert_fXYaBD",
         "expert_LGVfiG",
-        "expert_CPfPbB",
         "expert_RiWrVt",
         "expert_tYBK76"
       ],
