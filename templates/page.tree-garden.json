@@ -165,7 +165,7 @@
           "settings": {
             "image_align": "left",
             "testimonial_author": "Andy Freeman",
-            "testimonial_company": "Ohio Tree MD",
+            "testimonial_company": "Ohio Tree MD, Certified Arborist",
             "testimonial_image": "shopify://shop_images/Andy-Thumbnail-2.jpg",
             "testimonial_text": "I've been treating my clients' properties with Oath Soil Life for over 2 years. Soil Health Care has become 30% of my business, and increased my profit margins by 50%.",
             "button_text": "Meet Andy",
@@ -174,10 +174,9 @@
         },
         "olny_text_eEhTDH": {
           "type": "olny-text",
-          "disabled": true,
           "settings": {
             "name_1": "Tad Jacobs",
-            "title_1": "Treemasters",
+            "title_1": "Treemasters, Founder",
             "content_1": "After applying Oath Soil Life, I saw substantial improvement in the health and vigor of historically declining trees. We've since used this system across many of our clients' properties, consistently achieving excellent results.",
             "name_2": "Leslie Lyles",
             "title_2": "Stewardship Horticultural",
@@ -203,7 +202,7 @@
           "type": "olny-text",
           "settings": {
             "name_1": "Zack Shier",
-            "title_1": "Joseph Tree",
+            "title_1": "Joseph Tree, Master Arborist",
             "content_1": "Tree health and plant health in general starts in the soil. You can't really talk about maintaining or improving tree health without talking about the soil.",
             "name_2": "Moses Cooper",
             "title_2": "Momentum Tree Experts",
@@ -218,7 +217,7 @@
           "settings": {
             "image_align": "left",
             "testimonial_author": "Dennise Vidosh",
-            "testimonial_company": "RE-TREE",
+            "testimonial_company": "RE-TREE, Owner & Co-Founder",
             "testimonial_image": "shopify://shop_images/Dennise_Vidosh-web.jpg",
             "testimonial_text": "Every tree has a history, a legacy, and a memory. Because of your product and the revitalization that we did together, I think these trees are going to live very long lives--their legacies were preserved.",
             "button_text": "Meet Dennise",
